@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { getPunkSongs } from '@/data/demo.punk-songs'
-import { PunkSong } from '@/types'
 
 export const Route = createFileRoute('/demo/start/ssr/full-ssr')({
   component: RouteComponent,
@@ -8,7 +7,7 @@ export const Route = createFileRoute('/demo/start/ssr/full-ssr')({
 })
 
 function RouteComponent() {
-  const punkSongs: PunkSong[] = Route.useLoaderData()
+  const punkSongs = Route.useLoaderData()
 
   return (
     <div
