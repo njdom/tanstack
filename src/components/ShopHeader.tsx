@@ -1,7 +1,6 @@
-import { Link, useNavigate } from '@tanstack/react-router'
+import { Link } from '@tanstack/react-router'
 
 export function ShopHeader() {
-  const navigate = useNavigate()
   return (
     <header className="sticky top-0 z-50 glass-panel border-b border-white/10 px-6 py-3">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-8">
@@ -15,14 +14,18 @@ export function ShopHeader() {
             </h2>
           </Link>
           <nav className="hidden lg:flex items-center gap-8">
-            <a className="text-sm font-medium hover:text-[#00a388] transition-colors" onClick={() => navigate({ to: '/shop' })}>
+            <Link
+              to="/shop"
+              className="text-sm font-medium hover:text-[#00a388] transition-colors"
+              activeProps={{ className: 'text-sm font-medium text-[#00a388] transition-colors' }}
+            >
               Products
-            </a>
+            </Link>
             <a className="text-sm font-medium hover:text-[#00a388] transition-colors" href="#">
               Categories
             </a>
             <a className="text-sm font-medium hover:text-[#00a388] transition-colors" href="#">
-              Trending
+              Deals
             </a>
           </nav>
         </div>

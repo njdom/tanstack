@@ -1,5 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { ShopProductCard } from '../../components/ShopProductCard'
+import { ShopHeader } from '../../components/ShopHeader'
+import { ShopFooter } from '../../components/ShopFooter'
 import { allProducts } from '../../data/shop'
 
 export const Route = createFileRoute('/shop/')({
@@ -21,61 +23,7 @@ function ShopPage() {
 
   return (
     <div className="dark bg-[#0d1217] text-white min-h-screen font-['Space_Grotesk']">
-      {/* Top Navigation */}
-      <header className="sticky top-0 z-50 glass-panel border-b border-white/5 px-6 lg:px-12 py-4">
-        <div className="max-w-[1600px] mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-12">
-            <div className="flex items-center gap-3">
-              <div className="bg-[#00a388] p-1.5 rounded-lg shadow-[0_0_15px_rgba(0,163,136,0.4)]">
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="none"
-                  viewBox="0 0 48 48"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M6 6H42L36 24L42 42H6L12 24L6 6Z" fill="currentColor"></path>
-                </svg>
-              </div>
-              <h2 className="text-xl font-bold tracking-tighter uppercase italic">TechStore</h2>
-            </div>
-            <nav className="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide">
-              <a className="hover:text-[#00a388] transition-colors" href="/">
-                HOME
-              </a>
-              <a className="hover:text-[#00a388] transition-colors text-[#00a388]/80" href="#">
-                SHOP
-              </a>
-              <a className="hover:text-[#00a388] transition-colors" href="#">
-                CATEGORIES
-              </a>
-              <a className="hover:text-[#00a388] transition-colors" href="#">
-                DEALS
-              </a>
-            </nav>
-          </div>
-          <div className="flex items-center gap-6">
-            <div className="relative hidden sm:block">
-              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#00a388] text-xl">
-                search
-              </span>
-              <input
-                className="bg-[#161b22]/50 border-white/10 rounded-xl pl-10 pr-4 py-2 text-sm focus:ring-[#00a388] focus:border-[#00a388] w-64 transition-all"
-                placeholder="Search components..."
-                type="text"
-              />
-            </div>
-            <div className="flex items-center gap-3">
-              <button className="p-2 hover:bg-white/5 rounded-xl transition-colors relative">
-                <span className="material-symbols-outlined">shopping_cart</span>
-                <span className="absolute top-1 right-1 w-2 h-2 bg-[#E6FF00] rounded-full"></span>
-              </button>
-              <button className="p-2 hover:bg-white/5 rounded-xl transition-colors">
-                <span className="material-symbols-outlined">person</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <ShopHeader />
 
       <main className="max-w-[1600px] mx-auto px-6 lg:px-12 py-8">
         {/* Breadcrumbs */}
@@ -283,41 +231,7 @@ function ShopPage() {
         </div>
       </main>
 
-      {/* Simple Footer */}
-      <footer className="border-t border-white/5 py-12 mt-12 bg-[#161b22]/20">
-        <div className="max-w-[1600px] mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex items-center gap-3">
-            <div className="bg-[#00a388]/20 p-1 rounded-lg">
-              <svg
-                className="w-5 h-5 text-[#00a388]"
-                fill="none"
-                viewBox="0 0 48 48"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M6 6H42L36 24L42 42H6L12 24L6 6Z" fill="currentColor"></path>
-              </svg>
-            </div>
-            <h2 className="text-lg font-bold tracking-tighter uppercase italic">TechStore</h2>
-          </div>
-          <div className="flex gap-8 text-sm text-slate-400">
-            <a className="hover:text-[#00a388]" href="#">
-              Privacy
-            </a>
-            <a className="hover:text-[#00a388]" href="#">
-              Terms
-            </a>
-            <a className="hover:text-[#00a388]" href="#">
-              Shipping
-            </a>
-            <a className="hover:text-[#00a388]" href="#">
-              API
-            </a>
-          </div>
-          <p className="text-xs text-slate-500 uppercase tracking-widest font-medium">
-            © 2024 TechStore Dynamics. All Rights Reserved.
-          </p>
-        </div>
-      </footer>
+      <ShopFooter />
     </div>
   )
 }

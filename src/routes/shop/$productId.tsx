@@ -1,4 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { ShopHeader } from '../../components/ShopHeader'
+import { ShopFooter } from '../../components/ShopFooter'
 import { allProducts } from '../../data/shop'
 
 export const Route = createFileRoute('/shop/$productId')({
@@ -22,49 +24,7 @@ function ProductDetailPage() {
 
   return (
     <div className="dark bg-[#0d1217] text-slate-100 min-h-screen font-['Space_Grotesk']">
-      {/* Top Navigation Bar */}
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0d1217]/80 backdrop-blur-md px-6 lg:px-20 py-4">
-        <div className="max-w-[1440px] mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-12">
-            <div className="flex items-center gap-2">
-              <div className="size-8 bg-[#00a388] rounded-lg flex items-center justify-center text-white">
-                <span className="material-symbols-outlined">bolt</span>
-              </div>
-              <h2 className="text-xl font-black tracking-tighter uppercase">Nexus</h2>
-            </div>
-            <nav className="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide uppercase">
-              <a className="hover:text-[#00a388] transition-colors" href="/">
-                Catalog
-              </a>
-              <a className="hover:text-[#00a388] transition-colors" href="/shop">
-                Performance
-              </a>
-              <a className="hover:text-[#00a388] transition-colors" href="#">
-                Labs
-              </a>
-            </nav>
-          </div>
-          <div className="flex items-center gap-6">
-            <div className="hidden lg:flex items-center bg-white/5 border border-white/10 rounded-full px-4 py-1.5 gap-3">
-              <span className="material-symbols-outlined text-slate-400 text-sm">search</span>
-              <input
-                className="bg-transparent border-none focus:ring-0 text-sm w-48 placeholder:text-slate-500"
-                placeholder="Search tech..."
-                type="text"
-              />
-            </div>
-            <div className="flex items-center gap-4">
-              <button className="relative p-2 hover:bg-white/10 rounded-full transition-all">
-                <span className="material-symbols-outlined">shopping_cart</span>
-                <span className="absolute top-1 right-1 size-2 bg-[#e6ff00] rounded-full"></span>
-              </button>
-              <button className="p-2 hover:bg-white/10 rounded-full transition-all">
-                <span className="material-symbols-outlined">person</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <ShopHeader />
 
       <main className="max-w-[1440px] mx-auto px-6 lg:px-20 py-8">
         {/* Breadcrumbs */}
@@ -322,30 +282,7 @@ function ProductDetailPage() {
         </section>
       </main>
 
-      <footer className="bg-[#161c24] border-t border-white/5 py-12 px-6 lg:px-20 mt-12">
-        <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex items-center gap-2">
-            <div className="size-6 bg-slate-700 rounded flex items-center justify-center text-white">
-              <span className="material-symbols-outlined text-[16px]">bolt</span>
-            </div>
-            <h2 className="text-sm font-black tracking-tighter uppercase">Nexus Hardware Solutions</h2>
-          </div>
-          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-            © 2024 Optimized for Decentralized Commerce
-          </p>
-          <div className="flex gap-6">
-            <a className="text-slate-500 hover:text-white transition-colors" href="#">
-              <span className="material-symbols-outlined">public</span>
-            </a>
-            <a className="text-slate-500 hover:text-white transition-colors" href="#">
-              <span className="material-symbols-outlined">mail</span>
-            </a>
-            <a className="text-slate-500 hover:text-white transition-colors" href="#">
-              <span className="material-symbols-outlined">terminal</span>
-            </a>
-          </div>
-        </div>
-      </footer>
+      <ShopFooter />
     </div>
   )
 }
