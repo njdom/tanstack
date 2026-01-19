@@ -42,12 +42,15 @@ export function ShopHeader() {
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <button className="p-2 hover:bg-white/5 rounded-full transition-colors relative">
+          <Link
+            to="/cart"
+            className="p-2 hover:bg-white/5 rounded-full transition-colors relative block"
+          >
             <span className="material-symbols-outlined">shopping_bag</span>
             <span className="absolute top-1 right-1 size-4 bg-[#00a388] text-[10px] font-bold flex items-center justify-center rounded-full">
               3
             </span>
-          </button>
+          </Link>
           <button className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 hover:bg-white/10 transition-colors">
             <span className="material-symbols-outlined text-xl text-[#00a388]">
               account_circle

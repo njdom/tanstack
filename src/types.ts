@@ -45,3 +45,14 @@ export interface TrendingProduct extends Omit<Product, 'brand' | 'inStock' | 'ra
   matchPercentage: number
   trendReason: string
 }
+
+export interface CartItem {
+  id: string
+  productId: string
+  name: string
+  description: string
+  price: number
+  quantity: number
+  image: string
+  badge?: 'best-value' | 'limited' | 'new'
+}

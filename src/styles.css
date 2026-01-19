@@ -70,3 +70,13 @@ code {
   background-image: radial-gradient(circle at 2px 2px, rgba(0, 163, 136, 0.05) 1px, transparent 0);
   background-size: 24px 24px;
 }
+
+/* Cart Page Styles */
+.grid-overlay {
+  background-image: radial-gradient(circle at 2px 2px, rgba(176, 184, 196, 0.05) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+.ai-glow {
+  box-shadow: 0 0 20px rgba(230, 255, 0, 0.1);
+}
