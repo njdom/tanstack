@@ -15,7 +15,6 @@ import { CategoryCardLarge } from '../components/CategoryCardLarge'
 
 export const Route = createFileRoute('/')({
   component: Homepage,
-  // Full SSR - loader runs on server and data is included in HTML
   loader: async () => {
     // Simulating server-side data fetching
     // In a real app, this would fetch from a database or API

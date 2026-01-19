@@ -1,6 +1,7 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
 
 export function ShopHeader() {
+  const navigate = useNavigate()
   return (
     <header className="sticky top-0 z-50 glass-panel border-b border-white/10 px-6 py-3">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-8">
@@ -14,20 +15,14 @@ export function ShopHeader() {
             </h2>
           </Link>
           <nav className="hidden lg:flex items-center gap-8">
-            <div className="group relative py-2">
-              <button className="text-sm font-medium hover:text-[#00a388] transition-colors flex items-center gap-1">
-                Neural Tech{' '}
-                <span className="material-symbols-outlined text-xs">keyboard_arrow_down</span>
-              </button>
-            </div>
-            <a className="text-sm font-medium hover:text-[#00a388] transition-colors" href="#">
-              Cyber-Chic
+            <a className="text-sm font-medium hover:text-[#00a388] transition-colors" onClick={() => navigate({ to: '/shop' })}>
+              Products
             </a>
             <a className="text-sm font-medium hover:text-[#00a388] transition-colors" href="#">
-              Home
+              Categories
             </a>
             <a className="text-sm font-medium hover:text-[#00a388] transition-colors" href="#">
-              Deals
+              Trending
             </a>
           </nav>
         </div>

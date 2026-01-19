@@ -13,9 +13,14 @@ export interface Product {
   id: string
   name: string
   category: string
+  brand: string
   price: number
+  originalPrice?: number
   image: string
   description?: string
+  rating: number
+  inStock: boolean
+  badge?: 'trending' | 'new' | 'sale' | 'out-of-stock'
 }
 
 export interface Deal {
@@ -36,7 +41,7 @@ export interface Category {
   slug: string
 }
 
-export interface TrendingProduct extends Product {
+export interface TrendingProduct extends Omit<Product, 'brand' | 'inStock' | 'rating'> {
   matchPercentage: number
   trendReason: string
 }
