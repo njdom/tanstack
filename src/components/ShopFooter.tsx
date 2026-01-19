@@ -103,7 +103,7 @@ export function ShopFooter() {
           </div>
         </div>
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-slate-500">© 2024 Modern Shop Labs. All rights reserved.</p>
+          <p className="text-xs text-slate-500">© 2026 Modern Shop Labs. All rights reserved.</p>
           <div className="flex gap-8 text-xs text-slate-500">
             <a className="hover:text-white" href="#">
               Privacy Protocol

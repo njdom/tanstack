@@ -11,6 +11,7 @@ import {
   trendingProducts,
   deals,
 } from '../data/shop'
+import { CategoryCardLarge } from '../components/CategoryCardLarge'
 
 export const Route = createFileRoute('/')({
   component: Homepage,
@@ -94,24 +95,9 @@ function Homepage() {
         <section className="mb-20">
           <h2 className="text-3xl font-bold tracking-tight mb-8 px-2">Category Highlights</h2>
           <div className="grid grid-cols-12 grid-rows-2 gap-4 h-[600px]">
-            {/* Electronics - Large */}
-            <CategoryCard
-              category={categories[0]}
-              size="large"
-              className="col-span-12 md:col-span-7 row-span-2"
-            />
-            {/* Fashion - Small */}
-            <CategoryCard
-              category={categories[1]}
-              size="small"
-              className="col-span-12 md:col-span-5 row-span-1"
-            />
-            {/* Home - Small */}
-            <CategoryCard
-              category={categories[2]}
-              size="small"
-              className="col-span-12 md:col-span-5 row-span-1"
-            />
+            <CategoryCardLarge category={categories[0]} />
+            <CategoryCard category={categories[1]} />
+            <CategoryCard category={categories[2]} />
           </div>
         </section>
 

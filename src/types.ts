@@ -36,11 +36,7 @@ export interface Category {
   slug: string
 }
 
-export interface TrendingProduct {
-  id: string
-  name: string
-  category: string
+export interface TrendingProduct extends Product {
   matchPercentage: number
   trendReason: string
-  image: string
 }
