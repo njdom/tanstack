@@ -1,3 +1,5 @@
+import { Database, AtSign, Globe, Share2, ArrowRight } from 'lucide-react'
+
 export function ShopFooter() {
   return (
     <footer className="bg-[#1C1E22] border-t border-white/10 pt-20 pb-10 px-6">
@@ -6,7 +8,7 @@ export function ShopFooter() {
           <div className="space-y-6">
             <div className="flex items-center gap-3">
               <div className="size-8 bg-[#00a388] rounded-lg flex items-center justify-center text-white">
-                <span className="material-symbols-outlined text-sm">dataset</span>
+                <Database size={14} />
               </div>
               <h2 className="text-lg font-bold uppercase">
                 Modern<span className="text-[#00a388]">Shop</span>
@@ -21,19 +23,19 @@ export function ShopFooter() {
                 className="size-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-[#00a388] transition-colors"
                 href="#"
               >
-                <span className="material-symbols-outlined">alternate_email</span>
+                <AtSign size={18} />
               </a>
               <a
                 className="size-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-[#00a388] transition-colors"
                 href="#"
               >
-                <span className="material-symbols-outlined">public</span>
+                <Globe size={18} />
               </a>
               <a
                 className="size-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-[#00a388] transition-colors"
                 href="#"
               >
-                <span className="material-symbols-outlined">share</span>
+                <Share2 size={18} />
               </a>
             </div>
           </div>
@@ -97,7 +99,7 @@ export function ShopFooter() {
                 type="email"
               />
               <button className="absolute right-2 top-1.5 bg-[#00a388] text-white p-1.5 rounded-lg hover:opacity-90">
-                <span className="material-symbols-outlined">arrow_forward</span>
+                <ArrowRight size={16} />
               </button>
             </div>
           </div>

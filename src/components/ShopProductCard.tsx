@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import type { Product } from '../types'
+import { Star, ShoppingCart, Bell } from 'lucide-react'
 
 interface ShopProductCardProps {
   product: Product
@@ -112,13 +113,10 @@ export function ShopProductCard({ product }: ShopProductCardProps) {
           )}
 
           <div className={`flex items-center gap-1 ${isOutOfStock ? 'text-slate-500' : ''}`}>
-            <span
-              className={`material-symbols-outlined text-sm ${
-                !isOutOfStock ? 'text-[#E6FF00] fill-1' : ''
-              }`}
-            >
-              star
-            </span>
+            <Star 
+              size={14}
+              className={!isOutOfStock ? 'text-[#E6FF00] fill-[#E6FF00]' : ''}
+            />
             <span className="text-xs font-bold">{product.rating.toFixed(1)}</span>
           </div>
         </div>
@@ -131,9 +129,7 @@ export function ShopProductCard({ product }: ShopProductCardProps) {
           }`}
           disabled={isOutOfStock}
         >
-          <span className="material-symbols-outlined text-lg">
-            {isOutOfStock ? 'notifications' : 'add_shopping_cart'}
-          </span>
+          {isOutOfStock ? <Bell size={18} /> : <ShoppingCart size={18} />}
           {isOutOfStock ? 'Notify Me' : 'Add to Cart'}
         </button>
       </div>

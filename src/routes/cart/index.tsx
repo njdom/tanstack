@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { ShopHeader } from '../../components/ShopHeader'
 import { ShopFooter } from '../../components/ShopFooter'
 import { cartItems, recommendedProducts } from '../../data/shop'
+import { Minus, Plus, Heart, Trash2, Sparkles, TrendingUp, ArrowRight, CreditCard, Wallet, Bitcoin, ShoppingCart } from 'lucide-react'
 
 export const Route = createFileRoute('/cart/')({
   component: CartPage,
@@ -86,23 +87,23 @@ function CartPage() {
                         <div className="flex items-center gap-6">
                           <div className="flex items-center bg-white/5 rounded-lg p-1 border border-white/10">
                             <button className="size-8 flex items-center justify-center hover:bg-white/10 rounded-md transition-colors">
-                              <span className="material-symbols-outlined text-sm">remove</span>
+                              <Minus size={14} />
                             </button>
                             <span className="w-10 text-center font-bold">
                               {item.quantity.toString().padStart(2, '0')}
                             </span>
                             <button className="size-8 flex items-center justify-center bg-[#00a388]/20 text-[#00a388] hover:bg-[#00a388]/30 rounded-md transition-colors">
-                              <span className="material-symbols-outlined text-sm">add</span>
+                              <Plus size={14} />
                             </button>
                           </div>
 
                           <div className="flex gap-4">
                             <button className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-[#00a388] transition-colors">
-                              <span className="material-symbols-outlined text-lg">favorite</span>
+                              <Heart size={18} />
                               Save
                             </button>
                             <button className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-red-400 transition-colors">
-                              <span className="material-symbols-outlined text-lg">delete</span>
+                              <Trash2 size={18} />
                               Remove
                             </button>
                           </div>
@@ -110,7 +111,7 @@ function CartPage() {
 
                         {item.badge === 'best-value' && (
                           <div className="flex items-center gap-2 text-[10px] font-bold text-[#E6FF00] px-2 py-1 bg-[#E6FF00]/10 rounded border border-[#E6FF00]/20">
-                            <span className="material-symbols-outlined text-xs">auto_awesome</span>
+                            <Sparkles size={12} />
                             BEST VALUE
                           </div>
                         )}
@@ -130,7 +131,7 @@ function CartPage() {
 
               <h2 className="text-2xl font-bold mb-8 flex items-center gap-2">
                 Summary
-                <span className="material-symbols-outlined text-[#00a388] text-sm">analytics</span>
+                <TrendingUp className="text-[#00a388]" size={14} />
               </h2>
 
               <div className="space-y-6">
@@ -170,15 +171,13 @@ function CartPage() {
 
                 <button className="w-full bg-[#00a388] hover:bg-[#00a388]/90 text-white font-black py-4 rounded-xl flex items-center justify-center gap-3 group transition-all transform active:scale-[0.98]">
                   PROCEED TO CHECKOUT
-                  <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">
-                    arrow_forward
-                  </span>
+                  <ArrowRight className="group-hover:translate-x-1 transition-transform" size={18} />
                 </button>
 
                 <div className="flex items-center justify-center gap-4 py-2 opacity-50">
-                  <span className="material-symbols-outlined">payments</span>
-                  <span className="material-symbols-outlined">account_balance_wallet</span>
-                  <span className="material-symbols-outlined">currency_bitcoin</span>
+                  <CreditCard size={20} />
+                  <Wallet size={20} />
+                  <Bitcoin size={20} />
                 </div>
               </div>
             </div>
@@ -191,9 +190,7 @@ function CartPage() {
             <div className="h-px grow bg-linear-to-r from-transparent to-white/10"></div>
             <div className="flex flex-col items-center">
               <div className="flex items-center gap-2 mb-2">
-                <span className="material-symbols-outlined text-[#E6FF00] animate-pulse">
-                  auto_awesome
-                </span>
+                <Sparkles className="text-[#E6FF00] animate-pulse" size={20} />
                 <h2 className="text-xl font-bold uppercase tracking-widest text-[#E6FF00]">
                   Recommended for You
                 </h2>
@@ -240,7 +237,7 @@ function CartPage() {
                 <div className="flex items-center justify-between">
                   <span className="font-black text-xl">${product.price.toFixed(2)}</span>
                   <button className="size-10 bg-white/5 hover:bg-[#E6FF00] hover:text-[#0d1217] rounded-full flex items-center justify-center transition-all">
-                    <span className="material-symbols-outlined">add_shopping_cart</span>
+                    <ShoppingCart size={18} />
                   </button>
                 </div>
               </div>

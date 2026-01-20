@@ -12,12 +12,10 @@ import {
   deals,
 } from '../data/shop'
 import { CategoryCardLarge } from '../components/CategoryCardLarge'
+import { Zap, ArrowRight, Sparkles } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
   component: Homepage,
-  staticData: {
-    breadcrumb: "Home",
-  },
   loader: async () => {
     // Simulating server-side data fetching
     // In a real app, this would fetch from a database or API
@@ -50,7 +48,7 @@ function Homepage() {
             />
             <div className="relative h-full flex flex-col justify-center px-16 max-w-2xl gap-6">
               <div className="inline-flex items-center gap-2 bg-[#00a388]/20 text-[#00a388] border border-[#00a388]/30 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest w-fit">
-                <span className="material-symbols-outlined text-sm">bolt</span> New Arrival
+                <Zap size={14} /> New Arrival
               </div>
               <h1 className="text-6xl font-bold leading-tight tracking-tighter">
                 ELEVATE YOUR <br />
@@ -83,7 +81,7 @@ function Homepage() {
               className="text-[#00a388] font-semibold flex items-center gap-1 hover:underline"
               href="#"
             >
-              View All <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              View All <ArrowRight size={14} />
             </a>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -106,7 +104,7 @@ function Homepage() {
         {/* AI Trending Section */}
         <section className="mb-20 grid-bg p-12 rounded-3xl bg-white/5 border border-white/10 relative overflow-hidden">
           <div className="absolute top-0 right-0 p-8 opacity-20">
-            <span className="material-symbols-outlined text-9xl">auto_awesome</span>
+            <Sparkles size={144} />
           </div>
           <div className="relative z-10">
             <div className="flex items-center gap-3 mb-8">

@@ -1,4 +1,5 @@
 import type { Deal } from '../types'
+import { Timer, Clock } from 'lucide-react'
 
 interface DealCardProps {
   deal: Deal
@@ -8,11 +9,11 @@ export function DealCard({ deal }: DealCardProps) {
   return (
     <div className="relative bg-[#1C1E22] rounded-2xl p-6 border-l-4 border-[#FF008C] flex flex-col justify-between group overflow-hidden">
       <div className="absolute -right-8 -top-8 text-[#FF008C]/10 rotate-12 transition-transform group-hover:rotate-0">
-        <span className="material-symbols-outlined text-[160px]">timer</span>
+        <Timer size={160} />
       </div>
       <div className="relative z-10">
         <div className="flex items-center gap-2 text-[#FF008C] font-bold mb-4">
-          <span className="material-symbols-outlined text-sm">schedule</span>
+          <Clock size={14} />
           ENDS IN: {deal.endsIn}
         </div>
         <h3 className="text-2xl font-bold mb-2">{deal.productName}</h3>
