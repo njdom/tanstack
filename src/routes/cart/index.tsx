@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { ShopHeader } from '../../components/ShopHeader'
 import { ShopFooter } from '../../components/ShopFooter'
-import { cartItems, recommendedProducts } from '../../data/shop'
+import { cartItemsData, allProducts, getProductsByIds, recommendedProducts } from '../../data/shop'
 import { Minus, Plus, Heart, Trash2, Sparkles, TrendingUp, ArrowRight, CreditCard, Wallet, Bitcoin, ShoppingCart } from 'lucide-react'
 
 export const Route = createFileRoute('/cart/')({
@@ -11,8 +11,15 @@ export const Route = createFileRoute('/cart/')({
 })
 
 function CartPage() {
+  const populatedCartItems = cartItemsData.map(({ productId, quantity }) => {
+    const product = allProducts.find(p => p.id === productId)
+    return product ? { ...product, quantity } : null
+  }).filter((item): item is NonNullable<typeof item> => item !== null)
+  
+  const recommendedProductsList = getProductsByIds(recommendedProducts)
+  
   // Calculate cart totals
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  const subtotal = populatedCartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
   const shipping = 0 // Free shipping
   const tax = subtotal * 0.08 // 8% tax
   const total = subtotal + shipping + tax
@@ -55,12 +62,12 @@ function CartPage() {
             <div className="mb-8">
               <h1 className="text-5xl font-black mb-2 tracking-tighter uppercase">Your Items</h1>
               <p className="text-slate-500 font-medium">
-                {cartItems.length} premium items ready for processing
+                {populatedCartItems.length} premium items ready for processing
               </p>
             </div>
 
             <div className="space-y-4">
-              {cartItems.map((item) => (
+              {populatedCartItems.map((item) => (
                 <div
                   key={item.id}
                   className="bg-[#1C1E22]/40 backdrop-blur-sm border border-white/5 rounded-xl p-5 group hover:border-[#00a388]/30 transition-all duration-300"
@@ -109,7 +116,7 @@ function CartPage() {
                           </div>
                         </div>
 
-                        {item.badge === 'best-value' && (
+                        {item.badge === 'sale' && (
                           <div className="flex items-center gap-2 text-[10px] font-bold text-[#E6FF00] px-2 py-1 bg-[#E6FF00]/10 rounded border border-[#E6FF00]/20">
                             <Sparkles size={12} />
                             BEST VALUE
@@ -201,7 +208,7 @@ function CartPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {recommendedProducts.map((product, index) => (
+            {recommendedProductsList.map((product, index) => (
               <div
                 key={product.id}
                 className="bg-[#1C1E22]/40 border border-white/5 rounded-xl p-4 group hover:border-[#E6FF00]/40 transition-all cursor-pointer ai-glow relative overflow-hidden"

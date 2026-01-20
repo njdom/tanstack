@@ -10,7 +10,7 @@ export interface Todo {
 }
 
 export interface Product {
-  id: string
+  id: number
   name: string
   category: string
   brand: string

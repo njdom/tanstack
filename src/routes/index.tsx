@@ -8,8 +8,9 @@ import { ShopFooter } from '../components/ShopFooter'
 import {
   featuredProducts,
   categories,
-  trendingProducts,
   deals,
+  getProductsByIds,
+  getTrendingProducts,
 } from '../data/shop'
 import { CategoryCardLarge } from '../components/CategoryCardLarge'
 import { Zap, ArrowRight, Sparkles } from 'lucide-react'
@@ -20,9 +21,9 @@ export const Route = createFileRoute('/')({
     // Simulating server-side data fetching
     // In a real app, this would fetch from a database or API
     return {
-      featuredProducts,
+      featuredProducts: getProductsByIds(featuredProducts),
       categories,
-      trendingProducts,
+      trendingProducts: getTrendingProducts(),
       deals,
     }
   },

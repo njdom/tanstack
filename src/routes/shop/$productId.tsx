@@ -12,7 +12,8 @@ export const Route = createFileRoute('/shop/$productId')({
   },
   // Full SSR - Critical for SEO on product pages
   loader: async ({ params }) => {
-    const product = allProducts.find((p) => p.id === params.productId)
+    const productId = Number(params.productId)
+    const product = allProducts.find((p) => p.id === productId)
     
     if (!product) throw new Error('Product not found')
 
