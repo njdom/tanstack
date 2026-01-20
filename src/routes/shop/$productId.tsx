@@ -1,9 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { ShopHeader } from '../../components/ShopHeader'
 import { ShopFooter } from '../../components/ShopFooter'
 import { RouterBreadcrumb } from '../../components/RouterBreadcrumb'
 import { allProducts } from '../../data/shop'
 import { Star, Zap, Heart, AlertCircle, ArrowLeft, ArrowRight } from 'lucide-react'
+import { useCart } from '../../hooks/useCart'
 
 export const Route = createFileRoute('/shop/$productId')({
   component: ProductDetailPage,
@@ -27,6 +28,14 @@ export const Route = createFileRoute('/shop/$productId')({
 
 function ProductDetailPage() {
   const { product, similarProducts } = Route.useLoaderData()
+  const { addItem, isInCart } = useCart()
+  const navigate = useNavigate()
+  const inCart = isInCart(product.id)
+
+  const handleAddToCart = () => {
+    addItem(product)
+    navigate({ to: '/cart' })
+  }
 
   return (
     <div className="dark bg-[#0d1217] text-slate-100 min-h-screen font-['Space_Grotesk']">
@@ -146,9 +155,19 @@ function ProductDetailPage() {
             {/* Actions */}
             <div className="space-y-4">
               <div className="flex gap-4">
-                <button className="flex-1 bg-[#00a388] hover:bg-[#008f77] text-white py-5 rounded-xl font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all active:scale-95 group">
+                <button 
+                  onClick={handleAddToCart}
+                  disabled={!product.inStock}
+                  className={`flex-1 py-5 rounded-xl font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all active:scale-95 group ${
+                    !product.inStock
+                      ? 'bg-white/5 text-slate-500 cursor-not-allowed'
+                      : inCart
+                      ? 'bg-[#00a388] text-white'
+                      : 'bg-[#00a388] hover:bg-[#008f77] text-white'
+                  }`}
+                >
                   <Zap className="group-hover:rotate-12 transition-transform" size={18} />
-                  Initialize Order
+                  {inCart ? 'Go to Cart' : 'Add to Cart'}
                 </button>
                 <button className="p-5 border border-white/10 rounded-xl hover:bg-white/5 transition-colors">
                   <Heart size={20} />
@@ -157,7 +176,7 @@ function ProductDetailPage() {
               {!product.inStock && (
                 <div className="flex items-center gap-2 text-[10px] font-bold text-[#e6ff00] uppercase tracking-widest bg-[#e6ff00]/5 p-3 rounded-lg border border-[#e6ff00]/20">
                   <AlertCircle size={14} />
-                  Scarcity Alert: Only 2 units remaining in current batch.
+                  Out of Stock: Notify when available.
                 </div>
               )}
             </div>

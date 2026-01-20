@@ -1,18 +1,21 @@
 import { Link } from '@tanstack/react-router'
 import type { Product } from '../types'
 import { Star, ShoppingCart, Bell } from 'lucide-react'
+import { useCart } from '../hooks/useCart'
 
 interface ShopProductCardProps {
   product: Product
 }
 
 export function ShopProductCard({ product }: ShopProductCardProps) {
+  const { addItem, isInCart } = useCart()
   const isOutOfStock = !product.inStock
+  const inCart = isInCart(product.id)
 
   return (
     <Link
       to="/shop/$productId"
-      params={{ productId: product.id }}
+      params={{ productId: String(product.id) }}
       className="product-card group relative bg-[#161b22] border border-white/5 rounded-2xl overflow-hidden hover:border-[#00a388]/40 hover:shadow-[0_0_30px_rgba(0,163,136,0.15)] transition-all duration-300 block"
     >
       {/* Badge */}
@@ -122,15 +125,23 @@ export function ShopProductCard({ product }: ShopProductCardProps) {
         </div>
 
         <button
+          onClick={(e) => {
+            e.preventDefault()
+            if (!isOutOfStock) {
+              addItem(product)
+            }
+          }}
           className={`w-full py-2.5 rounded-xl text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 ${
             isOutOfStock
               ? 'bg-white/5 border border-white/10 text-slate-500 cursor-not-allowed'
+              : inCart
+              ? 'bg-[#00a388] border-[#00a388] text-white'
               : 'bg-white/5 border border-white/10 hover:bg-[#00a388] hover:border-[#00a388]'
           }`}
           disabled={isOutOfStock}
         >
           {isOutOfStock ? <Bell size={18} /> : <ShoppingCart size={18} />}
-          {isOutOfStock ? 'Notify Me' : 'Add to Cart'}
+          {isOutOfStock ? 'Notify Me' : inCart ? 'Added to Cart' : 'Add to Cart'}
         </button>
       </div>
     </Link>

@@ -1,8 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { ShopHeader } from '../../components/ShopHeader'
 import { ShopFooter } from '../../components/ShopFooter'
-import { cartItemsData, allProducts, getProductsByIds, recommendedProducts } from '../../data/shop'
-import { Minus, Plus, Heart, Trash2, Sparkles, TrendingUp, ArrowRight, CreditCard, Wallet, Bitcoin, ShoppingCart } from 'lucide-react'
+import { allProducts, getProductsByIds, recommendedProducts } from '../../data/shop'
+import { Minus, Plus, Heart, Trash2, Sparkles, TrendingUp, ArrowRight, CreditCard, Wallet, Bitcoin, ShoppingCart, ShoppingBag } from 'lucide-react'
+import { useCart } from '../../hooks/useCart'
 
 export const Route = createFileRoute('/cart/')({
   component: CartPage,
@@ -11,7 +12,9 @@ export const Route = createFileRoute('/cart/')({
 })
 
 function CartPage() {
-  const populatedCartItems = cartItemsData.map(({ productId, quantity }) => {
+  const { items, incrementQuantity, decrementQuantity, removeItem, addItem } = useCart()
+  
+  const populatedCartItems = items.map(({ productId, quantity }) => {
     const product = allProducts.find(p => p.id === productId)
     return product ? { ...product, quantity } : null
   }).filter((item): item is NonNullable<typeof item> => item !== null)
@@ -34,29 +37,48 @@ function CartPage() {
       <ShopHeader />
 
       <main className="max-w-[1400px] mx-auto px-6 md:px-12 py-10">
-        {/* Progress Bar */}
-        <div className="mb-10 max-w-2xl">
-          <div className="flex justify-between items-end mb-2">
-            <p className="text-sm font-medium text-slate-400 uppercase tracking-widest">
-              Free Express Shipping
+        {populatedCartItems.length === 0 ? (
+          <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
+            <div className="size-32 bg-white/5 rounded-full flex items-center justify-center mb-6">
+              <ShoppingBag size={64} className="text-slate-600" />
+            </div>
+            <h2 className="text-3xl font-black mb-3 uppercase tracking-tight">Your cart is empty</h2>
+            <p className="text-slate-500 mb-8 max-w-md">
+              Discover cutting-edge hardware and add items to your cart to get started
             </p>
-            {amountToFreeShipping > 0 ? (
-              <p className="text-sm font-bold text-[#00a388]">
-                ${amountToFreeShipping.toFixed(2)} more to go
-              </p>
-            ) : (
-              <p className="text-sm font-bold text-[#E6FF00]">Unlocked!</p>
-            )}
+            <Link
+              to="/shop"
+              className="px-8 py-4 bg-[#00a388] hover:bg-[#008f77] text-white font-bold rounded-xl uppercase tracking-widest text-sm transition-all flex items-center gap-2"
+            >
+              Browse Products
+              <ArrowRight size={18} />
+            </Link>
           </div>
-          <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-[#00a388] transition-all duration-500"
-              style={{ width: `${shippingProgress}%` }}
-            ></div>
-          </div>
-        </div>
+        ) : (
+          <>
+            {/* Progress Bar */}
+            <div className="mb-10 max-w-2xl">
+              <div className="flex justify-between items-end mb-2">
+                <p className="text-sm font-medium text-slate-400 uppercase tracking-widest">
+                  Free Express Shipping
+                </p>
+                {amountToFreeShipping > 0 ? (
+                  <p className="text-sm font-bold text-[#00a388]">
+                    ${amountToFreeShipping.toFixed(2)} more to go
+                  </p>
+                ) : (
+                  <p className="text-sm font-bold text-[#E6FF00]">Unlocked!</p>
+                )}
+              </div>
+              <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-[#00a388] transition-all duration-500"
+                  style={{ width: `${shippingProgress}%` }}
+                ></div>
+              </div>
+            </div>
 
-        <div className="flex flex-col lg:flex-row gap-12">
+            <div className="flex flex-col lg:flex-row gap-12">
           {/* Left: Cart Items List */}
           <div className="grow">
             <div className="mb-8">
@@ -93,13 +115,19 @@ function CartPage() {
                       <div className="flex flex-wrap items-center justify-between gap-4 mt-6">
                         <div className="flex items-center gap-6">
                           <div className="flex items-center bg-white/5 rounded-lg p-1 border border-white/10">
-                            <button className="size-8 flex items-center justify-center hover:bg-white/10 rounded-md transition-colors">
+                            <button 
+                              onClick={() => decrementQuantity(item.id)}
+                              className="size-8 flex items-center justify-center hover:bg-white/10 rounded-md transition-colors"
+                            >
                               <Minus size={14} />
                             </button>
                             <span className="w-10 text-center font-bold">
                               {item.quantity.toString().padStart(2, '0')}
                             </span>
-                            <button className="size-8 flex items-center justify-center bg-[#00a388]/20 text-[#00a388] hover:bg-[#00a388]/30 rounded-md transition-colors">
+                            <button 
+                              onClick={() => incrementQuantity(item.id)}
+                              className="size-8 flex items-center justify-center bg-[#00a388]/20 text-[#00a388] hover:bg-[#00a388]/30 rounded-md transition-colors"
+                            >
                               <Plus size={14} />
                             </button>
                           </div>
@@ -109,7 +137,10 @@ function CartPage() {
                               <Heart size={18} />
                               Save
                             </button>
-                            <button className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-red-400 transition-colors">
+                            <button 
+                              onClick={() => removeItem(item.id)}
+                              className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-red-400 transition-colors"
+                            >
                               <Trash2 size={18} />
                               Remove
                             </button>
@@ -189,7 +220,9 @@ function CartPage() {
               </div>
             </div>
           </aside>
-        </div>
+            </div>
+          </>
+        )}
 
         {/* AI Powered Recommendations Section */}
         <section className="mt-24 mb-20">
@@ -243,7 +276,13 @@ function CartPage() {
 
                 <div className="flex items-center justify-between">
                   <span className="font-black text-xl">${product.price.toFixed(2)}</span>
-                  <button className="size-10 bg-white/5 hover:bg-[#E6FF00] hover:text-[#0d1217] rounded-full flex items-center justify-center transition-all">
+                  <button 
+                    onClick={(e) => {
+                      e.preventDefault()
+                      addItem(product)
+                    }}
+                    className="size-10 bg-white/5 hover:bg-[#E6FF00] hover:text-[#0d1217] rounded-full flex items-center justify-center transition-all"
+                  >
                     <ShoppingCart size={18} />
                   </button>
                 </div>
