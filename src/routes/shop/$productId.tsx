@@ -1,10 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { ShopHeader } from '../../components/ShopHeader'
 import { ShopFooter } from '../../components/ShopFooter'
+import { RouterBreadcrumb } from '../../components/RouterBreadcrumb'
 import { allProducts } from '../../data/shop'
+import { Star, Zap, Heart, AlertCircle, ArrowLeft, ArrowRight } from 'lucide-react'
 
 export const Route = createFileRoute('/shop/$productId')({
   component: ProductDetailPage,
+  staticData: {
+    breadcrumb: [{ label: 'Home', path: '/' }, { label: 'Products', path: '/shop' }],
+  },
   // Full SSR - Critical for SEO on product pages
   loader: async ({ params }) => {
     const product = allProducts.find((p) => p.id === params.productId)
@@ -28,17 +33,7 @@ function ProductDetailPage() {
 
       <main className="max-w-[1440px] mx-auto px-6 lg:px-20 py-8">
         {/* Breadcrumbs */}
-        <nav className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-500 mb-8">
-          <a className="hover:text-[#00a388] transition-colors" href="/">
-            Inventory
-          </a>
-          <span className="material-symbols-outlined text-[12px]">chevron_right</span>
-          <a className="hover:text-[#00a388] transition-colors" href="/shop">
-            {product.category}
-          </a>
-          <span className="material-symbols-outlined text-[12px]">chevron_right</span>
-          <span className="text-[#00a388]">{product.name}</span>
-        </nav>
+        <RouterBreadcrumb variant="product" />
 
         {/* Product Hero Section */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-24">
@@ -79,9 +74,11 @@ function ProductDetailPage() {
               <div className="flex items-center gap-2 mb-4">
                 <div className="flex text-[#e6ff00]">
                   {[...Array(5)].map((_, i) => (
-                    <span key={i} className={`material-symbols-outlined text-sm ${i < 4 ? 'fill-1' : ''}`}>
-                      {i === 4 ? 'star_half' : 'star'}
-                    </span>
+                    <Star 
+                      key={i} 
+                      size={14}
+                      className={i < 4 ? 'fill-[#e6ff00]' : ''}
+                    />
                   ))}
                 </div>
                 <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">
@@ -149,18 +146,16 @@ function ProductDetailPage() {
             <div className="space-y-4">
               <div className="flex gap-4">
                 <button className="flex-1 bg-[#00a388] hover:bg-[#008f77] text-white py-5 rounded-xl font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all active:scale-95 group">
-                  <span className="material-symbols-outlined group-hover:rotate-12 transition-transform">
-                    bolt
-                  </span>
+                  <Zap className="group-hover:rotate-12 transition-transform" size={18} />
                   Initialize Order
                 </button>
                 <button className="p-5 border border-white/10 rounded-xl hover:bg-white/5 transition-colors">
-                  <span className="material-symbols-outlined">favorite</span>
+                  <Heart size={20} />
                 </button>
               </div>
               {!product.inStock && (
                 <div className="flex items-center gap-2 text-[10px] font-bold text-[#e6ff00] uppercase tracking-widest bg-[#e6ff00]/5 p-3 rounded-lg border border-[#e6ff00]/20">
-                  <span className="material-symbols-outlined text-sm">error</span>
+                  <AlertCircle size={14} />
                   Scarcity Alert: Only 2 units remaining in current batch.
                 </div>
               )}
@@ -248,10 +243,10 @@ function ProductDetailPage() {
             </div>
             <div className="flex gap-2">
               <button className="size-12 rounded-full border border-white/10 flex items-center justify-center hover:border-[#00a388] transition-all">
-                <span className="material-symbols-outlined">arrow_back</span>
+                <ArrowLeft size={20} />
               </button>
               <button className="size-12 rounded-full border border-white/10 flex items-center justify-center hover:border-[#00a388] transition-all">
-                <span className="material-symbols-outlined">arrow_forward</span>
+                <ArrowRight size={20} />
               </button>
             </div>
           </div>

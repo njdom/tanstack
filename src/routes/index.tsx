@@ -15,6 +15,9 @@ import { CategoryCardLarge } from '../components/CategoryCardLarge'
 
 export const Route = createFileRoute('/')({
   component: Homepage,
+  staticData: {
+    breadcrumb: "Home",
+  },
   loader: async () => {
     // Simulating server-side data fetching
     // In a real app, this would fetch from a database or API

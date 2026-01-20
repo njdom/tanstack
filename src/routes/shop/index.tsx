@@ -2,10 +2,15 @@ import { createFileRoute } from '@tanstack/react-router'
 import { ShopProductCard } from '../../components/ShopProductCard'
 import { ShopHeader } from '../../components/ShopHeader'
 import { ShopFooter } from '../../components/ShopFooter'
+import { RouterBreadcrumb } from '../../components/RouterBreadcrumb'
 import { allProducts } from '../../data/shop'
+import { SlidersHorizontal, LayoutGrid, List, X, ChevronDown, Zap, Star } from 'lucide-react'
 
 export const Route = createFileRoute('/shop/')({
   component: ShopPage,
+  staticData: {
+    breadcrumb: [{ label: 'Home', path: '/' }, { label: 'Products' }],
+  },
   // Data-Only SSR - server fetches data, client renders
   ssr: 'data-only',
   loader: async () => {
@@ -27,13 +32,7 @@ function ShopPage() {
 
       <main className="max-w-[1600px] mx-auto px-6 lg:px-12 py-8">
         {/* Breadcrumbs */}
-        <div className="flex items-center gap-2 mb-8 text-sm text-slate-500 dark:text-slate-400">
-          <a className="hover:text-[#00a388]" href="/">
-            Home
-          </a>
-          <span className="material-symbols-outlined text-xs">chevron_right</span>
-          <span className="text-white font-medium">Shop All Products</span>
-        </div>
+        <RouterBreadcrumb variant="shop" />
 
         {/* Hero Heading Area */}
         <div className="relative mb-12 p-8 rounded-3xl overflow-hidden bg-linear-to-br from-[#161b22] to-[#0d1217] border border-white/5">
@@ -59,7 +58,7 @@ function ShopPage() {
           <aside className="w-full lg:w-72 shrink-0 space-y-8">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-bold uppercase tracking-widest flex items-center gap-2">
-                <span className="material-symbols-outlined text-[#00a388]">tune</span> Filters
+                <SlidersHorizontal className="text-[#00a388]" size={20} /> Filters
               </h3>
               <button className="text-xs text-slate-400 hover:text-[#00a388] underline uppercase tracking-tighter">
                 Reset All
@@ -113,12 +112,11 @@ function ShopPage() {
                   <div key={rating} className="flex items-center gap-2 cursor-pointer text-[#E6FF00] group">
                     <div className="flex">
                       {[...Array(5)].map((_, i) => (
-                        <span
+                        <Star
                           key={i}
-                          className={`material-symbols-outlined text-sm ${i < rating ? '' : 'opacity-30'}`}
-                        >
-                          star
-                        </span>
+                          size={14}
+                          className={i < rating ? 'fill-[#E6FF00]' : 'opacity-30'}
+                        />
                       ))}
                     </div>
                     <span className="text-xs text-slate-400 group-hover:text-white">& up</span>
@@ -152,10 +150,10 @@ function ShopPage() {
                 <div className="h-4 w-px bg-white/10"></div>
                 <div className="flex items-center gap-1">
                   <button className="p-1.5 bg-[#00a388] rounded-lg text-white">
-                    <span className="material-symbols-outlined text-[20px]">grid_view</span>
+                    <LayoutGrid size={20} />
                   </button>
                   <button className="p-1.5 hover:bg-white/5 rounded-lg text-slate-500 transition-colors">
-                    <span className="material-symbols-outlined text-[20px]">view_list</span>
+                    <List size={20} />
                   </button>
                 </div>
               </div>
@@ -163,17 +161,17 @@ function ShopPage() {
                 <div className="flex gap-2">
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-[#00a388]/10 border border-[#00a388]/20 rounded-full text-xs text-[#00a388] font-medium">
                     Brand: Apex{' '}
-                    <span className="material-symbols-outlined text-xs cursor-pointer">close</span>
+                    <X size={12} className="cursor-pointer" />
                   </div>
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-[#00a388]/10 border border-[#00a388]/20 rounded-full text-xs text-[#00a388] font-medium">
                     $200 - $800{' '}
-                    <span className="material-symbols-outlined text-xs cursor-pointer">close</span>
+                    <X size={12} className="cursor-pointer" />
                   </div>
                 </div>
                 <div className="relative group">
                   <button className="flex items-center gap-2 bg-[#161b22] border border-white/10 px-4 py-2 rounded-xl text-sm font-medium hover:border-[#00a388]/50 transition-colors">
                     Sort by: Newest{' '}
-                    <span className="material-symbols-outlined text-xs">keyboard_arrow_down</span>
+                    <ChevronDown size={12} />
                   </button>
                 </div>
               </div>
@@ -190,7 +188,7 @@ function ShopPage() {
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#00a388]/20 blur-[100px] rounded-full -mr-20 -mt-20"></div>
                 <div className="relative z-10 space-y-4 max-w-lg">
                   <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-[#00a388] fill-1">bolt</span>
+                    <Zap className="text-[#00a388] fill-[#00a388]" size={16} />
                     <span className="text-xs font-bold text-[#00a388] uppercase tracking-[0.2em]">
                       AI Intelligence Best Value
                     </span>
