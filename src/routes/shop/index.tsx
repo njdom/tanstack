@@ -99,14 +99,31 @@ function ShopPage() {
                 Price Range
               </h4>
               <div className="px-2">
-                <div className="h-1 bg-white/10 rounded-full relative">
-                  <div className="absolute left-1/4 right-1/4 h-full bg-[#00a388] rounded-full"></div>
-                  <div className="absolute left-1/4 top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 bg-white border-2 border-[#00a388] rounded-full shadow-[0_0_10px_rgba(0,163,136,0.5)] cursor-pointer"></div>
-                  <div className="absolute right-1/4 top-1/2 -translate-y-1/2 translate-x-1/2 w-4 h-4 bg-white border-2 border-[#00a388] rounded-full shadow-[0_0_10px_rgba(0,163,136,0.5)] cursor-pointer"></div>
-                </div>
-                <div className="flex justify-between mt-4 text-xs font-medium text-slate-400">
-                  <span>$100</span>
-                  <span>$2,500</span>
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-xs text-slate-400 mb-1 block">Min: ${searchState.priceRange.min}</label>
+                    <input
+                      type="range"
+                      min="0"
+                      max="3000"
+                      step="10"
+                      value={searchState.priceRange.min}
+                      onChange={(e) => searchActions.setPriceRange(Number(e.target.value), searchState.priceRange.max)}
+                      className="w-full h-1 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-[#00a388] [&::-webkit-slider-thumb]:shadow-[0_0_10px_rgba(0,163,136,0.5)] [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-[#00a388] [&::-moz-range-thumb]:shadow-[0_0_10px_rgba(0,163,136,0.5)]"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs text-slate-400 mb-1 block">Max: ${searchState.priceRange.max}</label>
+                    <input
+                      type="range"
+                      min="0"
+                      max="3000"
+                      step="10"
+                      value={searchState.priceRange.max}
+                      onChange={(e) => searchActions.setPriceRange(searchState.priceRange.min, Number(e.target.value))}
+                      className="w-full h-1 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-[#00a388] [&::-webkit-slider-thumb]:shadow-[0_0_10px_rgba(0,163,136,0.5)] [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-[#00a388] [&::-moz-range-thumb]:shadow-[0_0_10px_rgba(0,163,136,0.5)]"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -117,20 +134,52 @@ function ShopPage() {
                 Customer Rating
               </h4>
               <div className="space-y-2">
-                {[4, 3].map((rating) => (
-                  <div key={rating} className="flex items-center gap-2 cursor-pointer text-[#E6FF00] group">
-                    <div className="flex">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          size={14}
-                          className={i < rating ? 'fill-[#E6FF00]' : 'opacity-30'}
-                        />
-                      ))}
+                {[4, 3, 2].map((rating) => (
+                  <label key={rating} className="cursor-pointer group block">
+                    <input
+                      className="sr-only"
+                      type="radio"
+                      name="rating"
+                      checked={searchState.minRating === rating}
+                      onChange={() => searchActions.setMinRating(rating)}
+                    />
+                    <div className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
+                      searchState.minRating === rating 
+                        ? 'bg-[#00a388]/20 border border-[#00a388]/50 shadow-[0_0_15px_rgba(0,163,136,0.2)]' 
+                        : 'bg-transparent border border-transparent hover:bg-white/5'
+                    }`}>
+                      <div className="flex">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            size={14}
+                            className={`transition-all ${
+                              i < rating 
+                                ? searchState.minRating === rating
+                                  ? 'fill-[#E6FF00] text-[#E6FF00]'
+                                  : 'fill-[#E6FF00]/70 text-[#E6FF00]/70'
+                                : 'opacity-30'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      <span className={`text-xs transition-colors ${
+                        searchState.minRating === rating
+                          ? 'text-white font-medium'
+                          : 'text-slate-400 group-hover:text-white'
+                      }`}>
+                      </span>
                     </div>
-                    <span className="text-xs text-slate-400 group-hover:text-white">& up</span>
-                  </div>
+                  </label>
                 ))}
+                {searchState.minRating > 0 && (
+                  <button
+                    onClick={() => searchActions.setMinRating(0)}
+                    className="text-xs text-slate-500 hover:text-[#00a388] underline mt-2"
+                  >
+                    Clear rating filter
+                  </button>
+                )}
               </div>
             </div>
 
@@ -201,6 +250,26 @@ function ShopPage() {
                         size={12} 
                         className="cursor-pointer hover:text-white" 
                         onClick={() => searchActions.setBrand('')}
+                      />
+                    </div>
+                  )}
+                  {(searchState.priceRange.min > 0 || searchState.priceRange.max < 10000) && (
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-[#00a388]/10 border border-[#00a388]/20 rounded-full text-xs text-[#00a388] font-medium">
+                      ${searchState.priceRange.min} - ${searchState.priceRange.max}
+                      <X 
+                        size={12} 
+                        className="cursor-pointer hover:text-white" 
+                        onClick={() => searchActions.setPriceRange(0, 10000)}
+                      />
+                    </div>
+                  )}
+                  {searchState.minRating > 0 && (
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-[#00a388]/10 border border-[#00a388]/20 rounded-full text-xs text-[#00a388] font-medium">
+                      {searchState.minRating}★
+                      <X 
+                        size={12} 
+                        className="cursor-pointer hover:text-white" 
+                        onClick={() => searchActions.setMinRating(0)}
                       />
                     </div>
                   )}

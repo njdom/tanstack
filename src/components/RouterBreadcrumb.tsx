@@ -16,7 +16,6 @@ interface RouterBreadcrumbProps {
 export function RouterBreadcrumb({ variant = 'shop' }: RouterBreadcrumbProps) {
   const matches = useMatches()
   const location = useLocation()
-  console.log("🚀 ~ RouterBreadcrumb ~ matches:", matches)
 
   const latestMatch = matches[matches.length - 1]
   // const breadcrumbItems: BreadcrumbItem[] = matches.flatMap((match) => {

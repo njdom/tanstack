@@ -53,7 +53,7 @@ export const allProducts: Product[] = [
     brand: 'Ironclad',
     price: 849,
     image: '/screen.png',
-    rating: 4.9,
+    rating: 3.9,
     inStock: true,
   },
   {
@@ -73,7 +73,7 @@ export const allProducts: Product[] = [
     brand: 'Ironclad',
     price: 159,
     image: '/cooler.png',
-    rating: 4.8,
+    rating: 2.8,
     inStock: true,
   },
   {
@@ -106,7 +106,7 @@ export const allProducts: Product[] = [
     price: 199,
     image: '/clock.png',
     description: 'Advanced health tracking with AI insights',
-    rating: 4.8,
+    rating: 3.8,
     inStock: true,
   },
   {
@@ -139,7 +139,7 @@ export const allProducts: Product[] = [
     brand: 'Quantum Gear',
     price: 199,
     image: '/holo.png',
-    rating: 4.9,
+    rating: 2.9,
     inStock: true,
   },
   {

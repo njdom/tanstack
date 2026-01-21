@@ -8,11 +8,12 @@ export interface SearchState {
     min: number
     max: number
   }
+  minRating: number
   sortBy: 'name' | 'priceAsc' | 'priceDesc' | 'rating'
   showOutOfStock: boolean
 }
 
-export const searchStore = new Store<SearchState>({
+const defaultState: SearchState = {
   searchTerm: '',
   selectedCategory: '',
   selectedBrand: '',
@@ -20,9 +21,12 @@ export const searchStore = new Store<SearchState>({
     min: 0,
     max: 10000,
   },
+  minRating: 0,
   sortBy: 'name',
   showOutOfStock: true,
-})
+}
+
+export const searchStore = new Store<SearchState>(defaultState)
 
 export const searchActions = {
   setSearchTerm: (term: string) => {
@@ -53,6 +57,13 @@ export const searchActions = {
     }))
   },
 
+  setMinRating: (rating: number) => {
+    searchStore.setState((state) => ({
+      ...state,
+      minRating: rating,
+    }))
+  },
+
   setSortBy: (sortBy: SearchState['sortBy']) => {
     searchStore.setState((state) => ({
       ...state,
@@ -68,14 +79,7 @@ export const searchActions = {
   },
 
   resetFilters: () => {
-    searchStore.setState({
-      searchTerm: '',
-      selectedCategory: '',
-      selectedBrand: '',
-      priceRange: { min: 0, max: 10000 },
-      sortBy: 'name',
-      showOutOfStock: true,
-    })
+    searchStore.setState(defaultState)
   },
 
   clearSearch: () => {
@@ -96,12 +100,13 @@ export const searchSelectors = {
   hasActiveFilters: () => {
     const state = searchStore.state
     return (
-      state.searchTerm !== '' ||
-      state.selectedCategory !== '' ||
-      state.selectedBrand !== '' ||
-      state.priceRange.min !== 0 ||
-      state.priceRange.max !== 10000 ||
-      !state.showOutOfStock
+      state.searchTerm !== defaultState.searchTerm ||
+      state.selectedCategory !== defaultState.selectedCategory ||
+      state.selectedBrand !== defaultState.selectedBrand ||
+      state.priceRange.min !== defaultState.priceRange.min ||
+      state.priceRange.max !== defaultState.priceRange.max ||
+      state.minRating !== defaultState.minRating ||
+      state.showOutOfStock !== defaultState.showOutOfStock
     )
   },
 }

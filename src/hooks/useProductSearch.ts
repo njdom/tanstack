@@ -6,7 +6,6 @@ import { Product } from '@/types'
 
 export function useProductSearch() {
   const searchState = useStore(searchStore)
-  console.log("🚀 ~ useProductSearch ~ searchState:", searchState)
 
   const query = useLiveQuery((q) => {
     let query = q.from({product: productsCollection})
@@ -28,6 +27,9 @@ export function useProductSearch() {
     if (!searchState.showOutOfStock) {
       query = query.where(({product}) => eq(product.inStock, true))
     }
+    if (searchState.minRating) {
+      query = query.where(({product}) => gte(product.rating, searchState.minRating))
+    }
     if (searchState.sortBy) {
       if (searchState.sortBy === 'priceAsc') {
         query = query.orderBy(({product}) => product.price, 'asc')
@@ -46,6 +48,7 @@ export function useProductSearch() {
     searchState.selectedCategory,
     searchState.selectedBrand,
     searchState.priceRange,
+    searchState.minRating,
     searchState.sortBy,
     searchState.showOutOfStock,
   ])
@@ -60,7 +63,10 @@ export function useProductSearch() {
     searchTerm: searchState.searchTerm,
     hasActiveFilters: searchState.searchTerm !== '' || 
                       searchState.selectedCategory !== '' || 
-                      searchState.selectedBrand !== '',
+                      searchState.selectedBrand !== '' ||
+                      searchState.priceRange.min > 0 ||
+                      searchState.priceRange.max < 10000 ||
+                      searchState.minRating > 0,
   }
 }
 
