@@ -1,3 +1,6 @@
+import { z } from 'zod'
+import { productSchema } from './db/products.db'
+
 export interface PunkSong {
   id: number
   name: string
@@ -22,6 +25,8 @@ export interface Product {
   inStock: boolean
   badge?: 'trending' | 'new' | 'sale' | 'out-of-stock'
 }
+export type ProductSchema = z.infer<typeof productSchema>
+
 
 export interface Deal {
   id: string

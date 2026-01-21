@@ -4,7 +4,7 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 import { PropsWithChildren, useEffect } from "react";
 
 import Header from "../components/Header";
-import { initializeCartDB } from "../db/cart.db";
+import { initializeCartDB } from "@/db/cart.db";
 
 import appCss from "../styles.css?url";
 
@@ -22,11 +22,9 @@ export const Route = createRootRoute({
 });
 
 function RootDocument({ children }: PropsWithChildren) {
-  // Initialize cart database on app start
   useEffect(() => {
     initializeCartDB();
   }, []);
-
   return (
     <html lang='en'>
       <head>

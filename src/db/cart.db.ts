@@ -4,7 +4,6 @@ const CART_STORAGE_KEY = 'tanstack-cart-items'
 
 // Database operations using localStorage
 export const cartDBOperations = {
-  // Save all cart items
   saveAllItems(items: CartItem[]) {
     try {
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items))
@@ -13,7 +12,6 @@ export const cartDBOperations = {
     }
   },
 
-  // Get all cart items from storage
   getAllItems(): CartItem[] {
     try {
       const stored = localStorage.getItem(CART_STORAGE_KEY)
@@ -26,7 +24,6 @@ export const cartDBOperations = {
     return []
   },
 
-  // Clear all items
   clearAll() {
     try {
       localStorage.removeItem(CART_STORAGE_KEY)
@@ -35,7 +32,6 @@ export const cartDBOperations = {
     }
   },
 
-  // Initialize cart from storage
   initializeCart() {
     try {
       const items = this.getAllItems()
@@ -47,7 +43,6 @@ export const cartDBOperations = {
     }
   },
 
-  // Sync store to storage
   syncToStorage(items: CartItem[]) {
     try {
       this.saveAllItems(items)
@@ -62,7 +57,6 @@ export function setupCartSync() {
   let isInitialized = false
 
   cartStore.subscribe(() => {
-    // Don't sync during initial load
     if (!isInitialized) {
       isInitialized = true
       return
