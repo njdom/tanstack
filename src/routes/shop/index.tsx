@@ -232,7 +232,7 @@ function ShopPage() {
             </div>
 
             {/* Product Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-12">
+            <div key={searchState.sortBy} className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-12">
               {isLoading ? (
                 // Loading skeleton
                 Array.from({ length: 8 }).map((_, i) => (
@@ -261,7 +261,7 @@ function ShopPage() {
                 </div>
               ) : (
                 products.map((product) => (
-                  <ShopProductCard key={product.id} product={product as Product} />
+                  <ShopProductCard key={`${searchState.sortBy}-${product.id}`} product={product as Product} />
                 ))
               )}
 

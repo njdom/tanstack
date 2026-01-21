@@ -30,9 +30,9 @@ export function useProductSearch() {
     }
     if (searchState.sortBy) {
       if (searchState.sortBy === 'priceAsc') {
-        query = query.orderBy(({product}) => product.price)
+        query = query.orderBy(({product}) => product.price, 'asc')
       } else if (searchState.sortBy === 'priceDesc') {
-        query = query.orderBy(({product}) => -product.price)
+        query = query.orderBy(({product}) => product.price, 'desc')
       } else if (searchState.sortBy === 'rating') {
         query = query.orderBy(({product}) => product.rating, 'desc')
       } else if (searchState.sortBy === 'name') {
