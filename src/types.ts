@@ -52,12 +52,6 @@ export interface TrendingProduct extends Omit<Product, 'brand' | 'inStock' | 'ra
 }
 
 export interface CartItem {
-  id: string
-  productId: string
-  name: string
-  description: string
-  price: number
+  productId: Product['id']
   quantity: number
-  image: string
-  badge?: 'best-value' | 'limited' | 'new'
 }
