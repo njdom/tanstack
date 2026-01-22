@@ -1,9 +1,9 @@
-import { cartActions, type CartItem } from '../store/cart.store'
+import { cartActions } from '../store/cart.store'
+import type { CartItem } from '../types'
 
 const CART_STORAGE_KEY = 'tanstack-cart-items'
 
-// Database operations using localStorage
-export const cartDBOperations = {
+export const cartLocalStorageOperations = {
   saveAllItems(items: CartItem[]) {
     try {
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items))
@@ -52,7 +52,6 @@ export const cartDBOperations = {
   },
 }
 
-// Subscribe to cart store changes and sync to storage
 export function setupCartSync() {
   let isInitialized = false
 
@@ -63,15 +62,13 @@ export function setupCartSync() {
     }
     
     const items = cartStore.state.items
-    cartDBOperations.syncToStorage(items)
+    cartLocalStorageOperations.syncToStorage(items)
   })
 }
 
-// Initialize cart on app start
 export function initializeCartDB() {
-  cartDBOperations.initializeCart()
+  cartLocalStorageOperations.initializeCart()
   setupCartSync()
 }
 
-// Import cartStore to set up subscription
 import { cartStore } from '../store/cart.store'

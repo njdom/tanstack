@@ -1,28 +1,21 @@
 import { Link } from '@tanstack/react-router'
 import { Database, Search, ShoppingBag, User, X } from 'lucide-react'
 import { useCart } from '../hooks/useCart'
+import { searchStore, SearchState} from '../store/search.store'
 import { useStore } from '@tanstack/react-store'
-import { searchStore, searchActions } from '../store/search.store'
-import { useState, useEffect } from 'react'
 
 export function ShopHeader() {
   const { itemCount } = useCart()
+  const setSearchTerm = (term: SearchState["searchTerm"]) => {
+    searchStore.setState((state) => ({ ...state,searchTerm: term }))
+  }
   const searchState = useStore(searchStore)
-  const [localSearchTerm, setLocalSearchTerm] = useState(searchState.searchTerm)
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      searchActions.setSearchTerm(localSearchTerm)
-    }, 300)
-
-    return () => clearTimeout(timer)
-  }, [localSearchTerm])
-
+  
   const handleClearSearch = () => {
-    setLocalSearchTerm('')
-    searchActions.clearSearch()
+    setSearchTerm('')
   }
 
+  const searchTerm = searchState.searchTerm
   return (
     <header className="sticky top-0 z-50 glass-panel border-b border-white/10 px-6 py-3">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-8">
@@ -58,13 +51,13 @@ export function ShopHeader() {
               size={18}
             />
             <input
-              value={localSearchTerm}
-              onChange={(e) => setLocalSearchTerm(e.target.value)}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full bg-white/5 border border-white/10 rounded-full py-2.5 pl-12 pr-10 focus:ring-2 focus:ring-[#00a388]/50 focus:border-[#00a388] outline-none text-sm transition-all"
               placeholder="Search products, brands, categories..."
               type="text"
             />
-            {localSearchTerm && (
+            {searchTerm && (
               <button
                 onClick={handleClearSearch}
                 className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors"
