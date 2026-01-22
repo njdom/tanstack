@@ -34,7 +34,7 @@ export function RouterBreadcrumb({ variant = 'shop' }: RouterBreadcrumbProps) {
 
   if (/^\d+$/.test(pathSegments[pathSegments.length - 1])) {
     breadcrumbItems.push({
-      label: latestMatch.loaderData.product.name,
+      label: latestMatch.loaderData?.product?.name ?? '',
     })
   }
 
