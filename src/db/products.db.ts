@@ -30,6 +30,9 @@ export const productsCollection = createCollection(
       return allProducts as ProductSchema[]
     },
     queryKey: ['products', 'all'],
+    onInsert: async (product) => {
+      
+    }
   })
 )
 
