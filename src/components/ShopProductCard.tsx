@@ -16,7 +16,7 @@ export function ShopProductCard({ product }: ShopProductCardProps) {
     <Link
       to="/shop/$productId"
       params={{ productId: product._id }}
-      className="product-card group relative bg-[#161b22] border border-white/5 rounded-2xl overflow-hidden hover:border-[#00a388]/40 hover:shadow-[0_0_30px_rgba(0,163,136,0.15)] transition-all duration-300 block"
+      className="product-card group relative bg-[#161b22] border border-white/5 rounded-2xl overflow-hidden hover:border-[#00a388]/40 hover:shadow-[0_0_30px_rgba(0,163,136,0.15)] transition-all duration-300 flex flex-col"
     >
       {/* Badge */}
       {product.badge && (
@@ -75,7 +75,7 @@ export function ShopProductCard({ product }: ShopProductCardProps) {
       </div>
 
       {/* Product Info */}
-      <div className="p-5">
+      <div className="p-5 flex flex-col flex-1">
         <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">{product.brand}</p>
         <h3
           className={`font-bold text-base mb-3 leading-tight transition-colors ${isOutOfStock ? 'text-slate-400' : 'text-white group-hover:text-[#00a388]'
@@ -117,7 +117,7 @@ export function ShopProductCard({ product }: ShopProductCardProps) {
               addItem(product);
             }
           }}
-          className={`w-full py-2.5 rounded-xl text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 ${isOutOfStock
+          className={`w-full py-2.5 mt-auto rounded-xl text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 ${isOutOfStock
             ? 'bg-white/5 border border-white/10 text-slate-500 cursor-not-allowed'
             : inCart
               ? 'bg-[#00a388] border-[#00a388] text-white'
