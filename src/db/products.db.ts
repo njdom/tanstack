@@ -1,9 +1,9 @@
 import { createCollection } from '@tanstack/react-db'
 import { queryCollectionOptions } from '@tanstack/query-db-collection'
 import type { Product, ProductSchema } from '../types'
-import { allProducts } from '../data/shop'
 import { z } from 'zod'
 import { QueryClient } from "@tanstack/query-core"
+import { productsApi } from '@/lib/api/products.client'
 
 export const productSchema = z.object({
   id: z.number(),
@@ -26,12 +26,14 @@ export const productsCollection = createCollection(
     queryClient: queryClient,
     getKey: (product) => product.id,
     queryFn: async () => {
-      await new Promise(resolve => setTimeout(resolve, 500))
-      return allProducts as ProductSchema[]
+      const products = await productsApi.getAll()
+      return products as ProductSchema[]
     },
     queryKey: ['products', 'all'],
-    onInsert: async (product) => {
-      
+    onInsert: async ({ transaction }) => {
+      transaction.mutations.map((m) => {
+        productsApi.create(m.modified)
+      })
     }
   })
 )

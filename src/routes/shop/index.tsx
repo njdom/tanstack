@@ -8,16 +8,23 @@ import { useProductSearch, useProductBrands } from '../../hooks/useProductSearch
 import { useStore } from '@tanstack/react-store'
 import { searchStore, searchActions } from '../../store/search.store'
 import type { Product } from '../../types'
+// import { mongodb } from '@/server/mongodb'
 
 export const Route = createFileRoute('/shop/')({
   component: ShopPage,
   staticData: {
     breadcrumb: [{ label: 'Home', path: '/' }, { label: 'Products' }],
   },
-  ssr: false,
+  // ssr: 'data-only',
+  // loader: async () => {
+  //   const products = await mongodb.getAllProducts()
+  //   console.log("🚀 ~ products:", products)
+  //   return { products }
+  // },
 })
 
 function ShopPage() {
+  // const loaderData = Route.useLoaderData()
   const { products, isLoading, totalResults, hasActiveFilters, searchTerm } = useProductSearch()
   const brands = useProductBrands()
   const searchState = useStore(searchStore)

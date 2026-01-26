@@ -1,11 +1,12 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { useState } from 'react'
 import { Package, DollarSign, Star, Image, Tag, Box, ArrowLeft } from 'lucide-react'
 import { ShopHeader } from '@/components/ShopHeader'
 import { ShopFooter } from '@/components/ShopFooter'
 import { Product } from '@/types'
+import { productsCollection } from '@/db/products.db'
 
-type FormData = Omit<Product, 'id'>
+type FormData = Omit<Product, 'id' | '_id'>
 const defaultFormData: FormData = {
   name: '',
   category: '',
@@ -25,13 +26,35 @@ export const Route = createFileRoute('/admin/create/')({
 })
 
 function RouteComponent() {
+  const router = useRouter()
   const [formData, setFormData] = useState<FormData>(defaultFormData)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Product data:', formData)
-    // Here you would typically send the data to your backend
-    alert('Product created successfully!')
+    setIsSubmitting(true)
+    setError(null)
+
+    try {
+      const newProduct = {
+        ...formData,
+        id: Date.now(),
+        price: Number(formData.price),
+        originalPrice: formData.originalPrice ? Number(formData.originalPrice) : undefined,
+        rating: Number(formData.rating),
+      }
+
+      await productsCollection.insert(newProduct)
+      alert('Product created successfully!')
+      
+      router.navigate({ to: '/shop' })
+    } catch (err) {
+      console.error('Error creating product:', err)
+      setError(err instanceof Error ? err.message : 'Failed to create product')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -300,20 +323,30 @@ function RouteComponent() {
             </div>
           </div>
 
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 text-red-400">
+              <p className="font-semibold">Error creating product:</p>
+              <p className="text-sm mt-1">{error}</p>
+            </div>
+          )}
+
           {/* Form Actions */}
           <div className="flex gap-4 justify-end">
             <button
               type="button"
               onClick={() => window.history.back()}
-              className="px-8 py-3 bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl font-bold transition-all"
+              disabled={isSubmitting}
+              className="px-8 py-3 bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-8 py-3 bg-[#00a388] hover:bg-[#008f77] text-white font-bold rounded-xl transition-all shadow-[0_0_20px_rgba(0,163,136,0.3)] hover:shadow-[0_0_30px_rgba(0,163,136,0.5)]"
+              disabled={isSubmitting}
+              className="px-8 py-3 bg-[#00a388] hover:bg-[#008f77] text-white font-bold rounded-xl transition-all shadow-[0_0_20px_rgba(0,163,136,0.3)] hover:shadow-[0_0_30px_rgba(0,163,136,0.5)] disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Create Product
+              {isSubmitting ? 'Creating...' : 'Create Product'}
             </button>
           </div>
         </form>

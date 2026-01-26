@@ -13,7 +13,8 @@ export interface Todo {
 }
 
 export interface Product {
-  id: number
+  _id: any // MongoDB ObjectId
+  id: number  // Todo: Remove this field
   name: string
   category: string
   brand: string

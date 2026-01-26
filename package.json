@@ -6,7 +6,12 @@
     "dev": "vite dev --port 3000",
     "build": "vite build",
     "serve": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "db:seed": "tsx src/server/seed.ts",
+    "db:shell": "docker exec -it tanstack-mongodb mongosh -u admin -p admin123 --authenticationDatabase admin tanstack_products",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.6",
@@ -21,6 +26,7 @@
     "@tanstack/react-store": "^0.8.0",
     "@tanstack/router-plugin": "^1.132.0",
     "lucide-react": "^0.544.0",
+    "mongodb": "^6.12.0",
     "nitro": "latest",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
@@ -37,6 +43,7 @@
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^5.0.4",
     "jsdom": "^27.0.0",
+    "tsx": "^4.19.2",
     "typescript": "^5.7.2",
     "vite": "^7.1.7",
     "vitest": "^3.0.5",
