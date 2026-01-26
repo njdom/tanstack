@@ -1,4 +1,5 @@
 import type { Product } from '@/types';
+import { ApiClient } from './api.client';
 
 const API_BASE = '/api/products';
 
@@ -9,7 +10,7 @@ interface GetAllParams {
   inStock?: Product['inStock'];
 }
 
-export const productsApi = {
+export class ProductsApi extends ApiClient {
   async getAll(params?: GetAllParams): Promise<Product[]> {
     const searchParams = new URLSearchParams();
 
@@ -21,47 +22,24 @@ export const productsApi = {
     const queryString = searchParams.toString();
     const url = queryString ? `${API_BASE}?${queryString}` : API_BASE;
 
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`Failed to fetch products: ${response.statusText}`);
-    return response.json();
-  },
+    return this.get(url);
+  }
 
   async getById(id: Product['_id']) {
-    const response = await fetch(`${API_BASE}/${id}`);
-
-    if (!response.ok)
-      throw new Error(
-        response.status === 404 ? 'Product not found' : `Failed to fetch product: ${response.statusText}`,
-      );
-
-    return response.json() as Promise<Product>;
-  },
+    return this.get(`${API_BASE}/${id}`);
+  }
 
   async create(product: Omit<Product, '_id'>): Promise<Product> {
-    const response = await fetch(API_BASE, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(product),
-    });
-    if (!response.ok) throw new Error(`Failed to create product: ${response.statusText}`);
-    return response.json();
-  },
+    return this.post(API_BASE, product);
+  }
 
   async update(id: Product['_id'], updates: Partial<Product>): Promise<void> {
-    const response = await fetch(`${API_BASE}/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updates),
-    });
-
-    if (!response.ok) throw new Error(`Failed to update product: ${response.statusText}`);
-  },
+    return this.put(`${API_BASE}/${id}`, updates);
+  }
 
   async delete(id: Product['_id']): Promise<void> {
-    const response = await fetch(`${API_BASE}/${id}`, {
-      method: 'DELETE',
-    });
-
-    if (!response.ok) throw new Error(`Failed to delete product: ${response.statusText}`);
-  },
+    return this.delete(`${API_BASE}/${id}`);
+  }
 };
+
+export const productsApi = new ProductsApi();
