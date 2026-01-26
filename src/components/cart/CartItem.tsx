@@ -33,14 +33,14 @@ export function CartItem({ item }: CartItemProps) {
             <div className="flex items-center gap-6">
               <div className="flex items-center bg-white/5 rounded-lg p-1 border border-white/10">
                 <button
-                  onClick={() => decrementQuantity(item.id)}
+                  onClick={() => decrementQuantity(item._id)}
                   className="size-8 flex items-center justify-center hover:bg-white/10 rounded-md transition-colors"
                 >
                   <Minus size={14} />
                 </button>
                 <span className="w-10 text-center font-bold">{item.quantity.toString().padStart(2, '0')}</span>
                 <button
-                  onClick={() => incrementQuantity(item.id)}
+                  onClick={() => incrementQuantity(item._id)}
                   className="size-8 flex items-center justify-center bg-[#00a388]/20 text-[#00a388] hover:bg-[#00a388]/30 rounded-md transition-colors"
                 >
                   <Plus size={14} />
@@ -53,7 +53,7 @@ export function CartItem({ item }: CartItemProps) {
                   Save
                 </button>
                 <button
-                  onClick={() => removeItem(item.id)}
+                  onClick={() => removeItem(item._id)}
                   className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-red-400 transition-colors"
                 >
                   <Trash2 size={18} />

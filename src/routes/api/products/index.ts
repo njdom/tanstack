@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { json } from '@tanstack/react-start';
-import { mongodb } from '@/server/mongodb';
+import { productMongo } from '@/server/product.mongo';
 
 export const Route = createFileRoute('/api/products/')({
   server: {
@@ -15,7 +15,7 @@ export const Route = createFileRoute('/api/products/')({
             inStock: url.searchParams.get('inStock') === 'true' ? true : undefined,
           };
 
-          const products = await mongodb.getAllProducts(params);
+          const products = await productMongo.findAll(params);
           return json(products);
         } catch (error) {
           console.error('Error fetching products:', error);
@@ -26,7 +26,7 @@ export const Route = createFileRoute('/api/products/')({
       POST: async ({ request }) => {
         try {
           const body = await request.json();
-          const product = await mongodb.createProduct(body);
+          const product = await productMongo.create(body);
           return json(product, { status: 201 });
         } catch (error) {
           console.error('Error creating product:', error);

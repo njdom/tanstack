@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { json } from '@tanstack/react-start';
-import { mongodb } from '@/server/mongodb';
+import { productMongo } from '@/server/product.mongo';
 
 export const Route = createFileRoute('/api/products/$id')({
   server: {
@@ -12,7 +12,7 @@ export const Route = createFileRoute('/api/products/$id')({
             return json({ error: 'Invalid product ID' }, { status: 400 });
           }
 
-          const product = await mongodb.getProductById(id);
+          const product = await productMongo.findById(params.id);
 
           if (!product) {
             return json({ error: 'Product not found' }, { status: 404 });
@@ -33,7 +33,7 @@ export const Route = createFileRoute('/api/products/$id')({
           }
 
           const body = await request.json();
-          const success = await mongodb.updateProduct(id, body);
+          const success = await productMongo.update(params.id, body);
 
           if (!success) {
             return json({ error: 'Product not found or not updated' }, { status: 404 });
@@ -53,7 +53,7 @@ export const Route = createFileRoute('/api/products/$id')({
             return json({ error: 'Invalid product ID' }, { status: 400 });
           }
 
-          const success = await mongodb.deleteProduct(id);
+          const success = await productMongo.delete(params.id);
 
           if (!success) {
             return json({ error: 'Product not found or not deleted' }, { status: 404 });

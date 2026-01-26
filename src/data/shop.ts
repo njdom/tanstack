@@ -2,7 +2,7 @@ import type { Product, Deal, Category, TrendingProduct } from '../types';
 
 export const allProducts: Product[] = [
   {
-    id: 1,
+    _id: '000000000000000000000001',
     name: 'AeroShift Pro Mechanical Keyboard',
     category: 'Peripherals',
     brand: 'Apex Peripherals',
@@ -13,7 +13,7 @@ export const allProducts: Product[] = [
     badge: 'trending',
   },
   {
-    id: 2,
+    _id: '000000000000000000000002',
     name: 'Sonic-X Zero Latency Headset',
     category: 'Audio',
     brand: 'Nova Labs',
@@ -24,7 +24,7 @@ export const allProducts: Product[] = [
     badge: 'new',
   },
   {
-    id: 3,
+    _id: '000000000000000000000003',
     name: 'GlidePoint Z Lightweight Mouse',
     category: 'Peripherals',
     brand: 'Quantum Gear',
@@ -36,7 +36,7 @@ export const allProducts: Product[] = [
     badge: 'sale',
   },
   {
-    id: 4,
+    _id: '000000000000000000000004',
     name: 'X-Core Portable Workstation',
     category: 'Computing',
     brand: 'Nova Labs',
@@ -47,7 +47,7 @@ export const allProducts: Product[] = [
     badge: 'out-of-stock',
   },
   {
-    id: 5,
+    _id: '000000000000000000000005',
     name: 'Horizon Ultra-Wide 34"',
     category: 'Displays',
     brand: 'Ironclad',
@@ -57,7 +57,7 @@ export const allProducts: Product[] = [
     inStock: true,
   },
   {
-    id: 6,
+    _id: '000000000000000000000006',
     name: 'Lux Glow Workspace Ambient',
     category: 'Accessories',
     brand: 'Nova Labs',
@@ -67,7 +67,7 @@ export const allProducts: Product[] = [
     inStock: true,
   },
   {
-    id: 7,
+    _id: '000000000000000000000007',
     name: 'CryoNode Liquid Cooler 360',
     category: 'Components',
     brand: 'Ironclad',
@@ -77,7 +77,7 @@ export const allProducts: Product[] = [
     inStock: true,
   },
   {
-    id: 8,
+    _id: '000000000000000000000008',
     name: 'Forge RTX High-Power GPU',
     category: 'Components',
     brand: 'Quantum Gear',
@@ -88,7 +88,7 @@ export const allProducts: Product[] = [
   },
   // Featured products
   {
-    id: 101,
+    _id: '000000000000000000000065',
     name: 'Quantum Pro Headphones',
     category: 'Audio',
     brand: 'Apex Peripherals',
@@ -99,7 +99,7 @@ export const allProducts: Product[] = [
     inStock: true,
   },
   {
-    id: 102,
+    _id: '000000000000000000000066',
     name: 'Apex Smartwatch V2',
     category: 'Wearables',
     brand: 'Nova Labs',
@@ -110,7 +110,7 @@ export const allProducts: Product[] = [
     inStock: true,
   },
   {
-    id: 103,
+    _id: '000000000000000000000067',
     name: 'Neural Link Glasses',
     category: 'Vision',
     brand: 'Quantum Gear',
@@ -121,7 +121,7 @@ export const allProducts: Product[] = [
     inStock: true,
   },
   {
-    id: 104,
+    _id: '000000000000000000000068',
     name: 'Titan Gaming Mouse',
     category: 'Gaming',
     brand: 'Ironclad',
@@ -133,7 +133,7 @@ export const allProducts: Product[] = [
   },
   // Trending products
   {
-    id: 201,
+    _id: '0000000000000000000000c9',
     name: 'Holo-Pad Pro',
     category: 'Tech Wearables',
     brand: 'Quantum Gear',
@@ -143,7 +143,7 @@ export const allProducts: Product[] = [
     inStock: true,
   },
   {
-    id: 202,
+    _id: '0000000000000000000000ca',
     name: 'Ghost Keys K1',
     category: 'Mechanical Keyboards',
     brand: 'Apex Peripherals',
@@ -153,7 +153,7 @@ export const allProducts: Product[] = [
     inStock: true,
   },
   {
-    id: 203,
+      _id: '0000000000000000000000cb',
     name: 'Neon Parka V3',
     category: 'Techwear Fashion',
     brand: 'Nova Labs',
@@ -163,7 +163,7 @@ export const allProducts: Product[] = [
     inStock: true,
   },
   {
-    id: 204,
+    _id: '0000000000000000000000cc',
     name: 'Studio Stream M1',
     category: 'Content Creation',
     brand: 'Ironclad',
@@ -174,7 +174,7 @@ export const allProducts: Product[] = [
   },
   // Cart products
   {
-    id: 301,
+    _id: '00000000000000000000012d',
     name: 'Quantum-X 34" Curved Monitor',
     category: 'Displays',
     brand: 'Quantum Gear',
@@ -186,7 +186,7 @@ export const allProducts: Product[] = [
     badge: 'sale',
   },
   {
-    id: 302,
+    _id: '00000000000000000000012e',
     name: 'Haptic-Pro Mechanical Deck',
     category: 'Peripherals',
     brand: 'Apex Peripherals',
@@ -197,7 +197,7 @@ export const allProducts: Product[] = [
     inStock: true,
   },
   {
-    id: 303,
+    _id: '00000000000000000000012f',
     name: 'Sonic-Neural Studio Hub',
     category: 'Audio',
     brand: 'Nova Labs',
@@ -209,7 +209,7 @@ export const allProducts: Product[] = [
   },
   // Recommended products
   {
-    id: 401,
+    _id: '000000000000000000000191',
     name: 'Neural-Point X1',
     category: 'Peripherals',
     brand: 'Quantum Gear',
@@ -221,7 +221,7 @@ export const allProducts: Product[] = [
     badge: 'new',
   },
   {
-    id: 402,
+    _id: '000000000000000000000192',
     name: 'Orbital Stand',
     category: 'Accessories',
     brand: 'Nova Labs',
@@ -232,7 +232,7 @@ export const allProducts: Product[] = [
     inStock: true,
   },
   {
-    id: 403,
+    _id: '000000000000000000000193',
     name: 'Hyper-Hub 12-in-1',
     category: 'Accessories',
     brand: 'Ironclad',
@@ -243,7 +243,7 @@ export const allProducts: Product[] = [
     inStock: true,
   },
   {
-    id: 404,
+    _id: '000000000000000000000194',
     name: 'Lumina Pro Lightbar',
     category: 'Accessories',
     brand: 'Nova Labs',
@@ -256,7 +256,12 @@ export const allProducts: Product[] = [
 ];
 
 // Featured products for homepage
-export const featuredProducts: number[] = [101, 102, 103, 104];
+export const featuredProducts: Product['_id'][] = [
+  '000000000000000000000065',
+  '000000000000000000000066',
+  '000000000000000000000067',
+  '000000000000000000000068',
+];
 
 export const categories: Category[] = [
   {
@@ -283,26 +288,31 @@ export const categories: Category[] = [
 ];
 
 // Trending products metadata
-export const trendingProductsMetadata: Record<number, { matchPercentage: number; trendReason: string }> = {
-  201: {
+export const trendingProductsMetadata: Record<string, { matchPercentage: number; trendReason: string }> = {
+  '0000000000000000000000c9': {
     matchPercentage: 98,
     trendReason: 'Trending in Tech Wearables this week.',
   },
-  202: {
+  '0000000000000000000000ca': {
     matchPercentage: 95,
     trendReason: 'High demand in Mechanical Keyboards.',
   },
-  203: {
+  '0000000000000000000000cb': {
     matchPercentage: 92,
     trendReason: 'Rising popularity in Techwear Fashion.',
   },
-  204: {
+  '0000000000000000000000cc': {
     matchPercentage: 89,
     trendReason: 'Essentials for Content Creators.',
   },
 };
 
-export const trendingProducts: number[] = [201, 202, 203, 204];
+export const trendingProducts: Product['_id'][] = [
+  '0000000000000000000000c9',
+  '0000000000000000000000ca',
+  '0000000000000000000000cb',
+  '0000000000000000000000cc',
+];
 
 export const deals: Deal[] = [
   {
@@ -334,22 +344,27 @@ export const deals: Deal[] = [
   },
 ];
 
-export const cartItemsData: Array<{ productId: number; quantity: number }> = [
-  { productId: 301, quantity: 1 },
-  { productId: 302, quantity: 1 },
-  { productId: 303, quantity: 1 },
+export const cartItemsData: Array<{ productId: Product['_id']; quantity: number }> = [
+  { productId: '00000000000000000000012d', quantity: 1 },
+  { productId: '00000000000000000000012e', quantity: 1 },
+  { productId: '00000000000000000000012f', quantity: 1 },
 ];
 
-export const cartItems: number[] = [301, 302, 303];
+export const cartItems: Product['_id'][] = [
+  '00000000000000000000012d',
+  '00000000000000000000012e',
+  '00000000000000000000012f',
+];
 
-export const recommendedProducts: number[] = [401, 402, 403, 404];
+export const recommendedProductsIds: Product['_id'][] = [
+  '000000000000000000000191',
+  '000000000000000000000192',
+  '000000000000000000000193',
+  '000000000000000000000194',
+];
 
-export const getProductById = (id: number): Product | undefined => {
-  return allProducts.find((p) => p.id === id);
-};
-
-export const getProductsByIds = (ids: number[]): Product[] => {
-  return ids.map((id) => getProductById(id)).filter((p): p is Product => p !== undefined);
+export const getProductById = (id: Product['_id']): Product | undefined => {
+  return allProducts.find((p) => p._id === id);
 };
 
 export const getTrendingProducts = (): TrendingProduct[] => {
@@ -359,7 +374,7 @@ export const getTrendingProducts = (): TrendingProduct[] => {
       const metadata = trendingProductsMetadata[id];
       if (!product || !metadata) return null;
       return {
-        id: product.id,
+        _id: product._id,
         name: product.name,
         category: product.category,
         price: product.price,

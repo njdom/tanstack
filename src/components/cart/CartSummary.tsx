@@ -16,7 +16,7 @@ export function CartSummary({ onClose }: CartSummaryProps) {
 
   const populatedItems = items
     .map(({ productId, quantity }) => {
-      const product = allProducts.find((p) => p.id === productId);
+      const product = allProducts.find((p) => p._id === productId);
       return product ? { ...product, quantity } : null;
     })
     .filter((item): item is NonNullable<typeof item> => item !== null);
@@ -45,7 +45,7 @@ export function CartSummary({ onClose }: CartSummaryProps) {
     <div className="max-w-md">
       <div className="max-h-96 overflow-y-auto">
         {populatedItems.map((item) => (
-          <div key={item.id} className="flex gap-4 p-4 border-b border-white/10 hover:bg-white/5 transition-colors">
+          <div key={item._id} className="flex gap-4 p-4 border-b border-white/10 hover:bg-white/5 transition-colors">
             <div className="size-16 bg-black rounded-lg overflow-hidden shrink-0">
               <img className="w-full h-full object-cover" alt={item.name} src={item.image} />
             </div>
@@ -57,7 +57,7 @@ export function CartSummary({ onClose }: CartSummaryProps) {
               <p className="font-bold text-[#00a388]">${(item.price * item.quantity).toFixed(2)}</p>
             </div>
             <button
-              onClick={() => removeItem(item.id)}
+              onClick={() => removeItem(item._id)}
               className="size-8 flex items-center justify-center hover:bg-white/10 rounded-lg transition-colors text-slate-400 hover:text-red-400"
             >
               <X size={16} />

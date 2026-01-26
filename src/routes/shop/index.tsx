@@ -326,7 +326,7 @@ function ShopPage() {
                 </div>
               ) : (
                 products.map((product) => (
-                  <ShopProductCard key={`${searchState.sortBy}-${product.id}`} product={product as Product} />
+                  <ShopProductCard key={`${searchState.sortBy}-${product._id}`} product={product as Product} />
                 ))
               )}
 

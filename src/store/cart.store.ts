@@ -10,29 +10,29 @@ export const cartStore = new Store<CartState>({ items: [] });
 export const cartActions = {
   addItem: (product: Product, quantity = 1) => {
     cartStore.setState((state) => {
-      const existingItem = state.items.find((item) => item.productId === product.id);
+      const existingItem = state.items.find((item) => item.productId === product._id);
 
       if (existingItem) {
         return {
           items: state.items.map((item) =>
-            item.productId === product.id ? { ...item, quantity: item.quantity + quantity } : item,
+            item.productId === product._id ? { ...item, quantity: item.quantity + quantity } : item,
           ),
         };
       }
 
       return {
-        items: [...state.items, { productId: product.id, quantity }],
+        items: [...state.items, { productId: product._id, quantity }],
       };
     });
   },
 
-  removeItem: (productId: number) => {
+  removeItem: (productId: Product['_id']) => {
     cartStore.setState((state) => ({
       items: state.items.filter((item) => item.productId !== productId),
     }));
   },
 
-  updateQuantity: (productId: number, quantity: number) => {
+  updateQuantity: (productId: Product['_id'], quantity: number) => {
     cartStore.setState((state) => {
       if (quantity <= 0) {
         return {
@@ -46,7 +46,7 @@ export const cartActions = {
     });
   },
 
-  incrementQuantity: (productId: number) => {
+  incrementQuantity: (productId: Product['_id']) => {
     cartStore.setState((state) => ({
       items: state.items.map((item) =>
         item.productId === productId ? { ...item, quantity: item.quantity + 1 } : item,
@@ -54,7 +54,7 @@ export const cartActions = {
     }));
   },
 
-  decrementQuantity: (productId: number) => {
+  decrementQuantity: (productId: Product['_id']) => {
     cartStore.setState((state) => {
       const item = state.items.find((i) => i.productId === productId);
       if (!item || item.quantity <= 1) {
@@ -84,14 +84,14 @@ export const cartSelectors = {
 
   getCartTotal: (products: Product[]) => {
     return cartStore.state.items.reduce((total, item) => {
-      const product = products.find((p) => p.id === item.productId);
+      const product = products.find((p) => p._id === item.productId);
       return total + (product ? product.price * item.quantity : 0);
     }, 0);
   },
 
-  isInCart: (productId: number) => cartStore.state.items.some((item) => item.productId === productId),
+  isInCart: (productId: Product['_id']) => cartStore.state.items.some((item) => item.productId === productId),
 
-  getQuantity: (productId: number) => {
+  getQuantity: (productId: Product['_id']) => {
     const item = cartStore.state.items.find((i) => i.productId === productId);
     return item ? item.quantity : 0;
   },

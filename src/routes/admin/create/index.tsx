@@ -6,7 +6,7 @@ import { ShopFooter } from '@/components/ShopFooter';
 import { Product } from '@/types';
 import { productsCollection } from '@/db/products.db';
 
-type FormData = Omit<Product, 'id' | '_id'>;
+type FormData = Omit<Product, '_id'>;
 const defaultFormData: FormData = {
   name: '',
   category: '',
@@ -38,7 +38,7 @@ function RouteComponent() {
     try {
       const newProduct = {
         ...formData,
-        id: Date.now(),
+        _id: crypto.randomUUID(), // temporary id
         price: Number(formData.price),
         originalPrice: formData.originalPrice ? Number(formData.originalPrice) : undefined,
         rating: Number(formData.rating),

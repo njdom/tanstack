@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { productSchema } from './db/products.db';
 
 export interface PunkSong {
   id: number;
@@ -12,21 +11,21 @@ export interface Todo {
   name: string;
 }
 
-export interface Product {
-  _id: any; // MongoDB ObjectId
-  id: number; // Todo: Remove this field
-  name: string;
-  category: string;
-  brand: string;
-  price: number;
-  originalPrice?: number;
-  image: string;
-  description?: string;
-  rating: number;
-  inStock: boolean;
-  badge?: 'trending' | 'new' | 'sale' | 'out-of-stock';
-}
-export type ProductSchema = z.infer<typeof productSchema>;
+export const productSchema = z.object({
+  _id: z.string(),
+  name: z.string(),
+  category: z.string(),
+  brand: z.string(),
+  price: z.number(),
+  originalPrice: z.number().optional(),
+  image: z.string(),
+  description: z.string().optional(),
+  rating: z.number(),
+  inStock: z.boolean(),
+  badge: z.enum(['trending', 'new', 'sale', 'out-of-stock']).optional(),
+});
+
+export type Product = z.infer<typeof productSchema>;
 
 export interface Deal {
   id: string;
@@ -52,6 +51,6 @@ export interface TrendingProduct extends Omit<Product, 'brand' | 'inStock' | 'ra
 }
 
 export interface CartItem {
-  productId: Product['id'];
+  productId: Product['_id'];
   quantity: number;
 }

@@ -1,4 +1,4 @@
-import { createLiveQueryCollection, eq, gte, ilike, lte, useLiveQuery } from '@tanstack/react-db';
+import { createLiveQueryCollection, eq, gte, ilike, inArray, lte, useLiveQuery } from '@tanstack/react-db';
 import { useStore } from '@tanstack/react-store';
 import { productsCollection } from '../db/products.db';
 import { hasActiveFilters, searchStore } from '../store/search.store';
@@ -72,18 +72,17 @@ export function useProductBrands() {
   return brands;
 }
 
-export function useProduct(id: Product['id']) {
-  const { data: product, isLoading } = useLiveQuery(
+export function useProducts(ids: Product['_id'][]) {
+  const { data: products, isLoading } = useLiveQuery(
     (q) =>
       q
         .from({ products: productsCollection })
-        .where(({ products }) => eq(products.id, id))
-        .findOne(),
-    [id],
+        .where(({ products }) => inArray(products._id, ids)),
+    [ids],
   );
 
   return {
-    product,
+    products,
     isLoading,
   };
 }

@@ -2,21 +2,31 @@ import type { Product } from '@/types';
 
 const API_BASE = '/api/products';
 
+interface GetAllParams {
+  search?: Product['name'];
+  category?: Product['category'];
+  brand?: Product['brand'];
+  inStock?: Product['inStock'];
+}
+
 export const productsApi = {
-  async getAll(params?: { search?: string; category?: string; brand?: string; inStock?: boolean }): Promise<Product[]> {
-    const url = new URL(API_BASE, window.location.origin);
+  async getAll(params?: GetAllParams): Promise<Product[]> {
+    const searchParams = new URLSearchParams();
 
-    if (params?.search) url.searchParams.set('search', params.search);
-    if (params?.category) url.searchParams.set('category', params.category);
-    if (params?.brand) url.searchParams.set('brand', params.brand);
-    if (params?.inStock) url.searchParams.set('inStock', 'true');
+    if (params?.search) searchParams.set('search', params.search);
+    if (params?.category) searchParams.set('category', params.category);
+    if (params?.brand) searchParams.set('brand', params.brand);
+    if (params?.inStock) searchParams.set('inStock', 'true');
 
-    const response = await fetch(url.toString());
+    const queryString = searchParams.toString();
+    const url = queryString ? `${API_BASE}?${queryString}` : API_BASE;
+
+    const response = await fetch(url);
     if (!response.ok) throw new Error(`Failed to fetch products: ${response.statusText}`);
     return response.json();
   },
 
-  async getById(id: number): Promise<Product> {
+  async getById(id: Product['_id']) {
     const response = await fetch(`${API_BASE}/${id}`);
 
     if (!response.ok)
@@ -24,7 +34,7 @@ export const productsApi = {
         response.status === 404 ? 'Product not found' : `Failed to fetch product: ${response.statusText}`,
       );
 
-    return response.json();
+    return response.json() as Promise<Product>;
   },
 
   async create(product: Omit<Product, '_id'>): Promise<Product> {
@@ -37,7 +47,7 @@ export const productsApi = {
     return response.json();
   },
 
-  async update(id: number, updates: Partial<Product>): Promise<void> {
+  async update(id: Product['_id'], updates: Partial<Product>): Promise<void> {
     const response = await fetch(`${API_BASE}/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -47,7 +57,7 @@ export const productsApi = {
     if (!response.ok) throw new Error(`Failed to update product: ${response.statusText}`);
   },
 
-  async delete(id: number): Promise<void> {
+  async delete(id: Product['_id']): Promise<void> {
     const response = await fetch(`${API_BASE}/${id}`, {
       method: 'DELETE',
     });

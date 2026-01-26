@@ -1,33 +1,18 @@
 import { createCollection } from '@tanstack/react-db';
 import { queryCollectionOptions } from '@tanstack/query-db-collection';
-import type { Product, ProductSchema } from '../types';
-import { z } from 'zod';
+import { productSchema, type Product } from '../types';
 import { QueryClient } from '@tanstack/query-core';
 import { productsApi } from '@/lib/api/products.client';
-
-export const productSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  category: z.string(),
-  brand: z.string(),
-  price: z.number(),
-  originalPrice: z.number().optional(),
-  image: z.string(),
-  description: z.string().optional(),
-  rating: z.number(),
-  inStock: z.boolean(),
-  badge: z.enum(['trending', 'new', 'sale', 'out-of-stock']).optional(),
-});
 
 const queryClient = new QueryClient();
 export const productsCollection = createCollection(
   queryCollectionOptions({
     schema: productSchema,
     queryClient: queryClient,
-    getKey: (product) => product.id,
+    getKey: (product: Product) => product._id,
     queryFn: async () => {
       const products = await productsApi.getAll();
-      return products as ProductSchema[];
+      return products as Product[];
     },
     queryKey: ['products', 'all'],
     onInsert: async ({ transaction }) => {

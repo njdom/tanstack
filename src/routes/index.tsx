@@ -5,19 +5,21 @@ import { TrendingCard } from '../components/TrendingCard';
 import { CategoryCard } from '../components/CategoryCard';
 import { ShopHeader } from '../components/ShopHeader';
 import { ShopFooter } from '../components/ShopFooter';
-import { featuredProducts, categories, deals, getProductsByIds, getTrendingProducts } from '../data/shop';
+import { categories, deals, getTrendingProducts } from '../data/shop';
 import { CategoryCardLarge } from '../components/CategoryCardLarge';
 import { Zap, ArrowRight, Sparkles } from 'lucide-react';
+import { productsApi } from '@/lib/api/products.client';
 
 export const Route = createFileRoute('/')({
   component: Homepage,
   loader: async () => {
-    // Simulating server-side data fetching
-    // In a real app, this would fetch from a database or API
+    const featured = await productsApi.getAll({ category: 'featured' });
+    const trending = getTrendingProducts();
+    
     return {
-      featuredProducts: getProductsByIds(featuredProducts),
+      featuredProducts: featured,
       categories,
-      trendingProducts: getTrendingProducts(),
+      trendingProducts: trending,
       deals,
     };
   },
@@ -78,7 +80,7 @@ function Homepage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product._id} product={product as any} />
             ))}
           </div>
         </section>
@@ -107,7 +109,7 @@ function Homepage() {
             </div>
             <div className="flex gap-6 overflow-x-auto pb-6 no-scrollbar">
               {trendingProducts.map((product) => (
-                <TrendingCard key={product.id} product={product} />
+                <TrendingCard key={product._id} product={product as any} />
               ))}
             </div>
           </div>

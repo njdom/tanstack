@@ -1,13 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { useMemo } from 'react';
 import { ShopHeader } from '@/components/ShopHeader';
 import { ShopFooter } from '@/components/ShopFooter';
-import { allProducts } from '@/data/shop';
 import { useCart } from '@/hooks/useCart';
 import { EmptyBag } from '@/components/cart/EmptyBag';
 import { ProgressBar } from '@/components/cart/ProgressBar';
 import { CartItem } from '@/components/cart/CartItem';
 import { Summary } from '@/components/cart/Summary';
 import { Recomendations } from '@/components/cart/Recomendations';
+import { useProducts } from '@/hooks/useProductSearch';
 
 export const Route = createFileRoute('/cart/')({
   component: CartPage,
@@ -17,16 +18,11 @@ export const Route = createFileRoute('/cart/')({
 
 function CartPage() {
   const { items } = useCart();
-
-  const populatedCartItems = items
-    .map(({ productId, quantity }) => {
-      const product = allProducts.find((p) => p.id === productId);
-      return product ? { ...product, quantity } : null;
-    })
-    .filter((item): item is NonNullable<typeof item> => item !== null);
+  const productIds = useMemo(() => items.map((item) => item.productId), [items]);
+  const { products: populatedCartItems = [] } = useProducts(productIds);
 
   // Calculate cart totals
-  const subtotal = populatedCartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const subtotal = populatedCartItems?.reduce((sum, item) => sum + item.price * (items.find((i) => i.productId === item._id)?.quantity ?? 0), 0) ?? 0;
   const shipping = 0; // Free shipping
   const tax = subtotal * 0.08; // 8% tax
   const total = subtotal + shipping + tax;
@@ -58,7 +54,7 @@ function CartPage() {
 
                 <div className="space-y-4">
                   {populatedCartItems.map((item) => (
-                    <CartItem key={item.id} item={item} />
+                    <CartItem key={item._id} item={{ ...item, quantity: items.find((i) => i.productId === item._id)?.quantity ?? 0 }} />
                   ))}
                 </div>
               </div>

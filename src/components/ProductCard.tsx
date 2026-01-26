@@ -10,7 +10,7 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       to="/shop/$productId"
-      params={{ productId: product.id.toString() }}
+      params={{ productId: product._id }}
       className="bg-[#1C1E22] border border-white/5 rounded-xl p-4 group hover:border-[#00a388]/50 transition-all duration-300 shadow-xl block"
     >
       <div className="relative aspect-square rounded-lg overflow-hidden bg-white/5 mb-4">

@@ -2,9 +2,9 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { ShopHeader } from '../../components/ShopHeader';
 import { ShopFooter } from '../../components/ShopFooter';
 import { RouterBreadcrumb } from '../../components/RouterBreadcrumb';
-import { allProducts } from '../../data/shop';
 import { Star, Zap, Heart, AlertCircle, ArrowLeft, ArrowRight } from 'lucide-react';
 import { useCart } from '../../hooks/useCart';
+import { productsApi } from '@/lib/api/products.client';
 
 export const Route = createFileRoute('/shop/$productId')({
   component: ProductDetailPage,
@@ -16,16 +16,16 @@ export const Route = createFileRoute('/shop/$productId')({
   },
   // Full SSR - Critical for SEO on product pages
   loader: async ({ params }) => {
-    const productId = Number(params.productId);
-    const product = allProducts.find((p) => p.id === productId);
-
+    const productId = params.productId;
+    const product = await productsApi.getById(productId);
     if (!product) throw new Error('Product not found');
 
-    const similarProducts = allProducts
-      .filter((p) => p.id !== product.id && (p.category === product.category || p.brand === product.brand))
-      .slice(0, 4);
-
-    return { product, similarProducts };
+    const similarProducts = await productsApi.getAll({ category: product.category, brand: product.brand });
+    
+    return {
+      product,
+      similarProducts,
+    };
   },
 });
 
@@ -33,7 +33,7 @@ function ProductDetailPage() {
   const { product, similarProducts } = Route.useLoaderData();
   const { addItem, isInCart } = useCart();
   const navigate = useNavigate();
-  const inCart = isInCart(product.id);
+  const inCart = isInCart(product._id);
 
   const handleAddToCart = () => {
     addItem(product);
@@ -263,7 +263,7 @@ function ProductDetailPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {similarProducts.map((similarProduct) => (
-              <a key={similarProduct.id} href={`/shop/${similarProduct.id}`} className="group cursor-pointer">
+              <a key={similarProduct._id} href={`/shop/${similarProduct._id}`} className="group cursor-pointer">
                 <div className="aspect-4/5 rounded-2xl bg-[#161c24] border border-white/5 overflow-hidden mb-4 relative">
                   <div className="absolute inset-0 bg-[#00a388]/0 group-hover:bg-[#00a388]/10 transition-colors z-10"></div>
                   <img

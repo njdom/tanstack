@@ -1,9 +1,10 @@
 import { ShoppingCart, Sparkles } from 'lucide-react';
-import { getProductsByIds, recommendedProducts } from '@/data/shop';
+import { recommendedProductsIds } from '@/data/shop';
 import { useCart } from '@/hooks/useCart';
+import { useProducts } from '@/hooks/useProductSearch';
 
 export function Recomendations() {
-  const recommendedProductsList = getProductsByIds(recommendedProducts);
+  const { products: recommendedProductsList = [] } = useProducts(recommendedProductsIds);
   const { addItem } = useCart();
 
   return (
@@ -23,7 +24,7 @@ export function Recomendations() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {recommendedProductsList.map((product, index) => (
           <div
-            key={product.id}
+            key={product._id}
             className="bg-[#1C1E22]/40 border border-white/5 rounded-xl p-4 group hover:border-[#E6FF00]/40 transition-all cursor-pointer ai-glow relative overflow-hidden"
           >
             {index === 0 && (

@@ -10,12 +10,12 @@ interface ShopProductCardProps {
 export function ShopProductCard({ product }: ShopProductCardProps) {
   const { addItem, isInCart } = useCart();
   const isOutOfStock = !product.inStock;
-  const inCart = isInCart(product.id);
+  const inCart = isInCart(product._id);
 
   return (
     <Link
       to="/shop/$productId"
-      params={{ productId: String(product.id) }}
+      params={{ productId: product._id }}
       className="product-card group relative bg-[#161b22] border border-white/5 rounded-2xl overflow-hidden hover:border-[#00a388]/40 hover:shadow-[0_0_30px_rgba(0,163,136,0.15)] transition-all duration-300 block"
     >
       {/* Badge */}
@@ -78,9 +78,8 @@ export function ShopProductCard({ product }: ShopProductCardProps) {
       <div className="p-5">
         <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">{product.brand}</p>
         <h3
-          className={`font-bold text-base mb-3 leading-tight transition-colors ${
-            isOutOfStock ? 'text-slate-400' : 'text-white group-hover:text-[#00a388]'
-          }`}
+          className={`font-bold text-base mb-3 leading-tight transition-colors ${isOutOfStock ? 'text-slate-400' : 'text-white group-hover:text-[#00a388]'
+            }`}
         >
           {product.name}
         </h3>
@@ -118,13 +117,12 @@ export function ShopProductCard({ product }: ShopProductCardProps) {
               addItem(product);
             }
           }}
-          className={`w-full py-2.5 rounded-xl text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 ${
-            isOutOfStock
-              ? 'bg-white/5 border border-white/10 text-slate-500 cursor-not-allowed'
-              : inCart
-                ? 'bg-[#00a388] border-[#00a388] text-white'
-                : 'bg-white/5 border border-white/10 hover:bg-[#00a388] hover:border-[#00a388]'
-          }`}
+          className={`w-full py-2.5 rounded-xl text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 ${isOutOfStock
+            ? 'bg-white/5 border border-white/10 text-slate-500 cursor-not-allowed'
+            : inCart
+              ? 'bg-[#00a388] border-[#00a388] text-white'
+              : 'bg-white/5 border border-white/10 hover:bg-[#00a388] hover:border-[#00a388]'
+            }`}
           disabled={isOutOfStock}
         >
           {isOutOfStock ? <Bell size={18} /> : <ShoppingCart size={18} />}
