@@ -1,8 +1,8 @@
-import type { Deal } from '../types'
-import { Timer, Clock } from 'lucide-react'
+import type { Deal } from '../types';
+import { Timer, Clock } from 'lucide-react';
 
 interface DealCardProps {
-  deal: Deal
+  deal: Deal;
 }
 
 export function DealCard({ deal }: DealCardProps) {
@@ -30,5 +30,5 @@ export function DealCard({ deal }: DealCardProps) {
         Claim Deal
       </button>
     </div>
-  )
+  );
 }

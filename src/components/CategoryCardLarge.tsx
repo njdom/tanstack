@@ -1,8 +1,8 @@
-import type { Category } from '../types'
+import type { Category } from '../types';
 
 interface CategoryCardProps {
-  category: Category
-  className?: string
+  category: Category;
+  className?: string;
 }
 
 export function CategoryCardLarge({ category, className = '' }: CategoryCardProps) {
@@ -19,11 +19,8 @@ export function CategoryCardLarge({ category, className = '' }: CategoryCardProp
       <div className="absolute bottom-10 left-10">
         <h3 className="text-4xl font-bold mb-2">{category.name}</h3>
         <p className="text-slate-300 mb-6">{category.description}</p>
-        <span className="bg-[#00a388] px-6 py-3 rounded-xl font-bold inline-block">
-          Shop {category.name}
-        </span>
+        <span className="bg-[#00a388] px-6 py-3 rounded-xl font-bold inline-block">Shop {category.name}</span>
       </div>
     </div>
-  )
-
+  );
 }

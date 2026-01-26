@@ -1,6 +1,6 @@
-import { ShoppingBag } from "lucide-react"
-import { Link } from "@tanstack/react-router"
-import { ArrowRight } from "lucide-react"
+import { ShoppingBag } from 'lucide-react';
+import { Link } from '@tanstack/react-router';
+import { ArrowRight } from 'lucide-react';
 
 export function EmptyBag() {
   return (
@@ -20,5 +20,5 @@ export function EmptyBag() {
         <ArrowRight size={18} />
       </Link>
     </div>
-  )
+  );
 }

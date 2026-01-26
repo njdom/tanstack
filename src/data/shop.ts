@@ -1,4 +1,4 @@
-import type { Product, Deal, Category, TrendingProduct } from '../types'
+import type { Product, Deal, Category, TrendingProduct } from '../types';
 
 export const allProducts: Product[] = [
   {
@@ -253,10 +253,10 @@ export const allProducts: Product[] = [
     rating: 4.6,
     inStock: true,
   },
-]
+];
 
 // Featured products for homepage
-export const featuredProducts: number[] = [101, 102, 103, 104]
+export const featuredProducts: number[] = [101, 102, 103, 104];
 
 export const categories: Category[] = [
   {
@@ -280,7 +280,7 @@ export const categories: Category[] = [
     slug: 'home-core',
     image: '/shelf.png',
   },
-]
+];
 
 // Trending products metadata
 export const trendingProductsMetadata: Record<number, { matchPercentage: number; trendReason: string }> = {
@@ -300,9 +300,9 @@ export const trendingProductsMetadata: Record<number, { matchPercentage: number;
     matchPercentage: 89,
     trendReason: 'Essentials for Content Creators.',
   },
-}
+};
 
-export const trendingProducts: number[] = [201, 202, 203, 204]
+export const trendingProducts: number[] = [201, 202, 203, 204];
 
 export const deals: Deal[] = [
   {
@@ -332,39 +332,41 @@ export const deals: Deal[] = [
     discount: 40,
     endsIn: '12:05:59',
   },
-]
+];
 
 export const cartItemsData: Array<{ productId: number; quantity: number }> = [
   { productId: 301, quantity: 1 },
   { productId: 302, quantity: 1 },
   { productId: 303, quantity: 1 },
-]
+];
 
-export const cartItems: number[] = [301, 302, 303]
+export const cartItems: number[] = [301, 302, 303];
 
-export const recommendedProducts: number[] = [401, 402, 403, 404]
+export const recommendedProducts: number[] = [401, 402, 403, 404];
 
 export const getProductById = (id: number): Product | undefined => {
-  return allProducts.find(p => p.id === id)
-}
+  return allProducts.find((p) => p.id === id);
+};
 
 export const getProductsByIds = (ids: number[]): Product[] => {
-  return ids.map(id => getProductById(id)).filter((p): p is Product => p !== undefined)
-}
+  return ids.map((id) => getProductById(id)).filter((p): p is Product => p !== undefined);
+};
 
 export const getTrendingProducts = (): TrendingProduct[] => {
-  return trendingProducts.map(id => {
-    const product = getProductById(id)
-    const metadata = trendingProductsMetadata[id]
-    if (!product || !metadata) return null
-    return {
-      id: product.id,
-      name: product.name,
-      category: product.category,
-      price: product.price,
-      image: product.image,
-      matchPercentage: metadata.matchPercentage,
-      trendReason: metadata.trendReason,
-    }
-  }).filter((p): p is TrendingProduct => p !== null)
-}
+  return trendingProducts
+    .map((id) => {
+      const product = getProductById(id);
+      const metadata = trendingProductsMetadata[id];
+      if (!product || !metadata) return null;
+      return {
+        id: product.id,
+        name: product.name,
+        category: product.category,
+        price: product.price,
+        image: product.image,
+        matchPercentage: metadata.matchPercentage,
+        trendReason: metadata.trendReason,
+      };
+    })
+    .filter((p): p is TrendingProduct => p !== null);
+};

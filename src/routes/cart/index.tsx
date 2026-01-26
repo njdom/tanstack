@@ -1,39 +1,40 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { ShopHeader } from '@/components/ShopHeader'
-import { ShopFooter } from '@/components/ShopFooter'
-import { allProducts } from '@/data/shop'
-import { useCart } from '@/hooks/useCart'
-import { EmptyBag } from '@/components/cart/EmptyBag'
-import { ProgressBar } from '@/components/cart/ProgressBar'
-import { CartItem } from '@/components/cart/CartItem'
-import { Summary } from '@/components/cart/Summary'
-import { Recomendations } from '@/components/cart/Recomendations'
+import { createFileRoute } from '@tanstack/react-router';
+import { ShopHeader } from '@/components/ShopHeader';
+import { ShopFooter } from '@/components/ShopFooter';
+import { allProducts } from '@/data/shop';
+import { useCart } from '@/hooks/useCart';
+import { EmptyBag } from '@/components/cart/EmptyBag';
+import { ProgressBar } from '@/components/cart/ProgressBar';
+import { CartItem } from '@/components/cart/CartItem';
+import { Summary } from '@/components/cart/Summary';
+import { Recomendations } from '@/components/cart/Recomendations';
 
 export const Route = createFileRoute('/cart/')({
   component: CartPage,
   // SPA Mode - Cart is interactive, authenticated, no SEO needed
   ssr: false,
-})
+});
 
 function CartPage() {
-  const { items } = useCart()
+  const { items } = useCart();
 
-  const populatedCartItems = items.map(({ productId, quantity }) => {
-    const product = allProducts.find(p => p.id === productId)
-    return product ? { ...product, quantity } : null
-  }).filter((item): item is NonNullable<typeof item> => item !== null)
-
+  const populatedCartItems = items
+    .map(({ productId, quantity }) => {
+      const product = allProducts.find((p) => p.id === productId);
+      return product ? { ...product, quantity } : null;
+    })
+    .filter((item): item is NonNullable<typeof item> => item !== null);
 
   // Calculate cart totals
-  const subtotal = populatedCartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
-  const shipping = 0 // Free shipping
-  const tax = subtotal * 0.08 // 8% tax
-  const total = subtotal + shipping + tax
+  const subtotal = populatedCartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const shipping = 0; // Free shipping
+  const tax = subtotal * 0.08; // 8% tax
+  const total = subtotal + shipping + tax;
 
   // Free shipping progress (need $200 for free shipping)
-  const freeShippingThreshold = 200
-  const amountToFreeShipping = Math.max(0, freeShippingThreshold - subtotal)
-  const shippingProgress = Math.min(100, (subtotal / freeShippingThreshold) * 100)
+  const freeShippingThreshold = 200;
+  const amountToFreeShipping = Math.max(0, freeShippingThreshold - subtotal);
+  const shippingProgress = Math.min(100, (subtotal / freeShippingThreshold) * 100);
 
   return (
     <div className="dark bg-[#0d1217] text-slate-100 min-h-screen font-['Space_Grotesk'] grid-overlay">
@@ -72,5 +73,5 @@ function CartPage() {
 
       <ShopFooter />
     </div>
-  )
+  );
 }

@@ -1,16 +1,16 @@
-import { Link } from '@tanstack/react-router'
-import type { Product } from '../types'
-import { Star, ShoppingCart, Bell } from 'lucide-react'
-import { useCart } from '../hooks/useCart'
+import { Link } from '@tanstack/react-router';
+import type { Product } from '../types';
+import { Star, ShoppingCart, Bell } from 'lucide-react';
+import { useCart } from '../hooks/useCart';
 
 interface ShopProductCardProps {
-  product: Product
+  product: Product;
 }
 
 export function ShopProductCard({ product }: ShopProductCardProps) {
-  const { addItem, isInCart } = useCart()
-  const isOutOfStock = !product.inStock
-  const inCart = isInCart(product.id)
+  const { addItem, isInCart } = useCart();
+  const isOutOfStock = !product.inStock;
+  const inCart = isInCart(product.id);
 
   return (
     <Link
@@ -45,9 +45,7 @@ export function ShopProductCard({ product }: ShopProductCardProps) {
       )}
 
       {/* Image */}
-      <div
-        className={`relative aspect-square overflow-hidden bg-white/5 ${isOutOfStock ? 'grayscale' : ''}`}
-      >
+      <div className={`relative aspect-square overflow-hidden bg-white/5 ${isOutOfStock ? 'grayscale' : ''}`}>
         <img
           className={`w-full h-full object-cover ${!isOutOfStock ? 'transition-transform duration-700 group-hover:scale-110' : ''}`}
           alt={product.name}
@@ -78,14 +76,10 @@ export function ShopProductCard({ product }: ShopProductCardProps) {
 
       {/* Product Info */}
       <div className="p-5">
-        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">
-          {product.brand}
-        </p>
+        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">{product.brand}</p>
         <h3
           className={`font-bold text-base mb-3 leading-tight transition-colors ${
-            isOutOfStock
-              ? 'text-slate-400'
-              : 'text-white group-hover:text-[#00a388]'
+            isOutOfStock ? 'text-slate-400' : 'text-white group-hover:text-[#00a388]'
           }`}
         >
           {product.name}
@@ -98,45 +92,38 @@ export function ShopProductCard({ product }: ShopProductCardProps) {
                 ${product.originalPrice.toFixed(2)}
               </span>
               <span
-                className={`text-xl font-bold tracking-tighter ${
-                  isOutOfStock ? 'text-slate-500' : 'text-[#00a388]'
-                }`}
+                className={`text-xl font-bold tracking-tighter ${isOutOfStock ? 'text-slate-500' : 'text-[#00a388]'}`}
               >
                 ${product.price.toFixed(2)}
               </span>
             </div>
           ) : (
             <span
-              className={`text-xl font-bold tracking-tighter ${
-                isOutOfStock ? 'text-slate-500' : 'text-[#00a388]'
-              }`}
+              className={`text-xl font-bold tracking-tighter ${isOutOfStock ? 'text-slate-500' : 'text-[#00a388]'}`}
             >
               ${product.price.toFixed(2)}
             </span>
           )}
 
           <div className={`flex items-center gap-1 ${isOutOfStock ? 'text-slate-500' : ''}`}>
-            <Star 
-              size={14}
-              className={!isOutOfStock ? 'text-[#E6FF00] fill-[#E6FF00]' : ''}
-            />
+            <Star size={14} className={!isOutOfStock ? 'text-[#E6FF00] fill-[#E6FF00]' : ''} />
             <span className="text-xs font-bold">{product.rating.toFixed(1)}</span>
           </div>
         </div>
 
         <button
           onClick={(e) => {
-            e.preventDefault()
+            e.preventDefault();
             if (!isOutOfStock) {
-              addItem(product)
+              addItem(product);
             }
           }}
           className={`w-full py-2.5 rounded-xl text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 ${
             isOutOfStock
               ? 'bg-white/5 border border-white/10 text-slate-500 cursor-not-allowed'
               : inCart
-              ? 'bg-[#00a388] border-[#00a388] text-white'
-              : 'bg-white/5 border border-white/10 hover:bg-[#00a388] hover:border-[#00a388]'
+                ? 'bg-[#00a388] border-[#00a388] text-white'
+                : 'bg-white/5 border border-white/10 hover:bg-[#00a388] hover:border-[#00a388]'
           }`}
           disabled={isOutOfStock}
         >
@@ -145,5 +132,5 @@ export function ShopProductCard({ product }: ShopProductCardProps) {
         </button>
       </div>
     </Link>
-  )
+  );
 }

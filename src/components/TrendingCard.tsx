@@ -1,7 +1,7 @@
-import type { TrendingProduct } from '../types'
+import type { TrendingProduct } from '../types';
 
 interface TrendingCardProps {
-  product: TrendingProduct
+  product: TrendingProduct;
 }
 
 export function TrendingCard({ product }: TrendingCardProps) {
@@ -22,5 +22,5 @@ export function TrendingCard({ product }: TrendingCardProps) {
         Analyze Product
       </button>
     </div>
-  )
+  );
 }

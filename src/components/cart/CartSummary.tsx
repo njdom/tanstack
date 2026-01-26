@@ -1,10 +1,10 @@
-import { Link } from '@tanstack/react-router'
-import { ShoppingCart, X } from 'lucide-react'
-import { useCart } from '@/hooks/useCart'
-import { allProducts } from '@/data/shop'
+import { Link } from '@tanstack/react-router';
+import { ShoppingCart, X } from 'lucide-react';
+import { useCart } from '@/hooks/useCart';
+import { allProducts } from '@/data/shop';
 
 interface CartSummaryProps {
-  onClose?: () => void
+  onClose?: () => void;
 }
 
 /**
@@ -12,14 +12,16 @@ interface CartSummaryProps {
  * Can be used in dropdowns, sidebars, or modals
  */
 export function CartSummary({ onClose }: CartSummaryProps) {
-  const { items, removeItem, getCartTotal } = useCart()
+  const { items, removeItem, getCartTotal } = useCart();
 
-  const populatedItems = items.map(({ productId, quantity }) => {
-    const product = allProducts.find(p => p.id === productId)
-    return product ? { ...product, quantity } : null
-  }).filter((item): item is NonNullable<typeof item> => item !== null)
+  const populatedItems = items
+    .map(({ productId, quantity }) => {
+      const product = allProducts.find((p) => p.id === productId);
+      return product ? { ...product, quantity } : null;
+    })
+    .filter((item): item is NonNullable<typeof item> => item !== null);
 
-  const total = getCartTotal(allProducts)
+  const total = getCartTotal(allProducts);
 
   if (items.length === 0) {
     return (
@@ -36,32 +38,23 @@ export function CartSummary({ onClose }: CartSummaryProps) {
           Browse Products
         </Link>
       </div>
-    )
+    );
   }
 
   return (
     <div className="max-w-md">
       <div className="max-h-96 overflow-y-auto">
         {populatedItems.map((item) => (
-          <div
-            key={item.id}
-            className="flex gap-4 p-4 border-b border-white/10 hover:bg-white/5 transition-colors"
-          >
+          <div key={item.id} className="flex gap-4 p-4 border-b border-white/10 hover:bg-white/5 transition-colors">
             <div className="size-16 bg-black rounded-lg overflow-hidden shrink-0">
-              <img
-                className="w-full h-full object-cover"
-                alt={item.name}
-                src={item.image}
-              />
+              <img className="w-full h-full object-cover" alt={item.name} src={item.image} />
             </div>
             <div className="flex-1 min-w-0">
               <h4 className="font-bold text-sm mb-1 truncate">{item.name}</h4>
               <p className="text-xs text-slate-500 mb-2">
                 Qty: {item.quantity} × ${item.price.toFixed(2)}
               </p>
-              <p className="font-bold text-[#00a388]">
-                ${(item.price * item.quantity).toFixed(2)}
-              </p>
+              <p className="font-bold text-[#00a388]">${(item.price * item.quantity).toFixed(2)}</p>
             </div>
             <button
               onClick={() => removeItem(item.id)}
@@ -87,5 +80,5 @@ export function CartSummary({ onClose }: CartSummaryProps) {
         </Link>
       </div>
     </div>
-  )
+  );
 }

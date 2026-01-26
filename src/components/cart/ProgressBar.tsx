@@ -1,19 +1,15 @@
 interface ProgressBarProps {
-  amountToFreeShipping: number
-  shippingProgress: number
+  amountToFreeShipping: number;
+  shippingProgress: number;
 }
 
 export function ProgressBar({ amountToFreeShipping, shippingProgress }: ProgressBarProps) {
   return (
     <div className="mb-10 max-w-2xl">
       <div className="flex justify-between items-end mb-2">
-        <p className="text-sm font-medium text-slate-400 uppercase tracking-widest">
-          Free Express Shipping
-        </p>
+        <p className="text-sm font-medium text-slate-400 uppercase tracking-widest">Free Express Shipping</p>
         {amountToFreeShipping > 0 ? (
-          <p className="text-sm font-bold text-[#00a388]">
-            ${amountToFreeShipping.toFixed(2)} more to go
-          </p>
+          <p className="text-sm font-bold text-[#00a388]">${amountToFreeShipping.toFixed(2)} more to go</p>
         ) : (
           <p className="text-sm font-bold text-[#E6FF00]">Unlocked!</p>
         )}
@@ -25,5 +21,5 @@ export function ProgressBar({ amountToFreeShipping, shippingProgress }: Progress
         ></div>
       </div>
     </div>
-  )
+  );
 }

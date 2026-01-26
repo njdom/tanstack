@@ -1,10 +1,10 @@
-import { ShoppingCart, Sparkles } from "lucide-react"
-import { getProductsByIds, recommendedProducts } from "@/data/shop"
-import { useCart } from "@/hooks/useCart"
+import { ShoppingCart, Sparkles } from 'lucide-react';
+import { getProductsByIds, recommendedProducts } from '@/data/shop';
+import { useCart } from '@/hooks/useCart';
 
 export function Recomendations() {
-  const recommendedProductsList = getProductsByIds(recommendedProducts)
-  const { addItem } = useCart()
+  const recommendedProductsList = getProductsByIds(recommendedProducts);
+  const { addItem } = useCart();
 
   return (
     <section className="mt-24 mb-20">
@@ -13,9 +13,7 @@ export function Recomendations() {
         <div className="flex flex-col items-center">
           <div className="flex items-center gap-2 mb-2">
             <Sparkles className="text-[#E6FF00] animate-pulse" size={20} />
-            <h2 className="text-xl font-bold uppercase tracking-widest text-[#E6FF00]">
-              Recommended for You
-            </h2>
+            <h2 className="text-xl font-bold uppercase tracking-widest text-[#E6FF00]">Recommended for You</h2>
           </div>
           <p className="text-sm text-slate-500">Based on your neural hardware preferences</p>
         </div>
@@ -51,17 +49,15 @@ export function Recomendations() {
               />
             </div>
 
-            <h4 className="font-bold text-lg mb-1 group-hover:text-[#E6FF00] transition-colors">
-              {product.name}
-            </h4>
+            <h4 className="font-bold text-lg mb-1 group-hover:text-[#E6FF00] transition-colors">{product.name}</h4>
             <p className="text-sm text-slate-500 mb-4">{product.description}</p>
 
             <div className="flex items-center justify-between">
               <span className="font-black text-xl">${product.price.toFixed(2)}</span>
               <button
                 onClick={(e) => {
-                  e.preventDefault()
-                  addItem(product)
+                  e.preventDefault();
+                  addItem(product);
                 }}
                 className="size-10 bg-white/5 hover:bg-[#E6FF00] hover:text-[#0d1217] rounded-full flex items-center justify-center transition-all"
               >
@@ -72,5 +68,5 @@ export function Recomendations() {
         ))}
       </div>
     </section>
-  )
+  );
 }

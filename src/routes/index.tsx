@@ -1,19 +1,13 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { ProductCard } from '../components/ProductCard'
-import { DealCard } from '../components/DealCard'
-import { TrendingCard } from '../components/TrendingCard'
-import { CategoryCard } from '../components/CategoryCard'
-import { ShopHeader } from '../components/ShopHeader'
-import { ShopFooter } from '../components/ShopFooter'
-import {
-  featuredProducts,
-  categories,
-  deals,
-  getProductsByIds,
-  getTrendingProducts,
-} from '../data/shop'
-import { CategoryCardLarge } from '../components/CategoryCardLarge'
-import { Zap, ArrowRight, Sparkles } from 'lucide-react'
+import { createFileRoute } from '@tanstack/react-router';
+import { ProductCard } from '../components/ProductCard';
+import { DealCard } from '../components/DealCard';
+import { TrendingCard } from '../components/TrendingCard';
+import { CategoryCard } from '../components/CategoryCard';
+import { ShopHeader } from '../components/ShopHeader';
+import { ShopFooter } from '../components/ShopFooter';
+import { featuredProducts, categories, deals, getProductsByIds, getTrendingProducts } from '../data/shop';
+import { CategoryCardLarge } from '../components/CategoryCardLarge';
+import { Zap, ArrowRight, Sparkles } from 'lucide-react';
 
 export const Route = createFileRoute('/')({
   component: Homepage,
@@ -25,12 +19,12 @@ export const Route = createFileRoute('/')({
       categories,
       trendingProducts: getTrendingProducts(),
       deals,
-    }
+    };
   },
-})
+});
 
 function Homepage() {
-  const { featuredProducts, categories, trendingProducts, deals } = Route.useLoaderData()
+  const { featuredProducts, categories, trendingProducts, deals } = Route.useLoaderData();
 
   return (
     <div className="dark bg-[#0d1217] text-white min-h-screen overflow-x-hidden font-['Space_Grotesk']">
@@ -56,8 +50,8 @@ function Homepage() {
                 <span className="text-[#00a388] italic">REALITY.</span>
               </h1>
               <p className="text-lg text-slate-400 leading-relaxed">
-                Experience high-performance gear engineered for the next generation. AI-driven
-                personalization meets premium industrial design.
+                Experience high-performance gear engineered for the next generation. AI-driven personalization meets
+                premium industrial design.
               </p>
               <div className="flex items-center gap-4 mt-4">
                 <button className="bg-[#00a388] hover:bg-[#00a388]/90 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all transform hover:-translate-y-1 shadow-lg shadow-[#00a388]/25">
@@ -78,10 +72,7 @@ function Homepage() {
               <h2 className="text-3xl font-bold tracking-tight">Featured Products</h2>
               <p className="text-slate-400 mt-1">Curated selections from our expert lab</p>
             </div>
-            <a
-              className="text-[#00a388] font-semibold flex items-center gap-1 hover:underline"
-              href="#"
-            >
+            <a className="text-[#00a388] font-semibold flex items-center gap-1 hover:underline" href="#">
               View All <ArrowRight size={14} />
             </a>
           </div>
@@ -138,5 +129,5 @@ function Homepage() {
 
       <ShopFooter />
     </div>
-  )
+  );
 }

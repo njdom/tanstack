@@ -1,41 +1,44 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { ShopHeader } from '../../components/ShopHeader'
-import { ShopFooter } from '../../components/ShopFooter'
-import { RouterBreadcrumb } from '../../components/RouterBreadcrumb'
-import { allProducts } from '../../data/shop'
-import { Star, Zap, Heart, AlertCircle, ArrowLeft, ArrowRight } from 'lucide-react'
-import { useCart } from '../../hooks/useCart'
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { ShopHeader } from '../../components/ShopHeader';
+import { ShopFooter } from '../../components/ShopFooter';
+import { RouterBreadcrumb } from '../../components/RouterBreadcrumb';
+import { allProducts } from '../../data/shop';
+import { Star, Zap, Heart, AlertCircle, ArrowLeft, ArrowRight } from 'lucide-react';
+import { useCart } from '../../hooks/useCart';
 
 export const Route = createFileRoute('/shop/$productId')({
   component: ProductDetailPage,
   staticData: {
-    breadcrumb: [{ label: 'Home', path: '/' }, { label: 'Products', path: '/shop' }],
+    breadcrumb: [
+      { label: 'Home', path: '/' },
+      { label: 'Products', path: '/shop' },
+    ],
   },
   // Full SSR - Critical for SEO on product pages
   loader: async ({ params }) => {
-    const productId = Number(params.productId)
-    const product = allProducts.find((p) => p.id === productId)
-    
-    if (!product) throw new Error('Product not found')
+    const productId = Number(params.productId);
+    const product = allProducts.find((p) => p.id === productId);
+
+    if (!product) throw new Error('Product not found');
 
     const similarProducts = allProducts
       .filter((p) => p.id !== product.id && (p.category === product.category || p.brand === product.brand))
-      .slice(0, 4)
+      .slice(0, 4);
 
-    return { product, similarProducts }
+    return { product, similarProducts };
   },
-})
+});
 
 function ProductDetailPage() {
-  const { product, similarProducts } = Route.useLoaderData()
-  const { addItem, isInCart } = useCart()
-  const navigate = useNavigate()
-  const inCart = isInCart(product.id)
+  const { product, similarProducts } = Route.useLoaderData();
+  const { addItem, isInCart } = useCart();
+  const navigate = useNavigate();
+  const inCart = isInCart(product.id);
 
   const handleAddToCart = () => {
-    addItem(product)
-    navigate({ to: '/cart' })
-  }
+    addItem(product);
+    navigate({ to: '/cart' });
+  };
 
   return (
     <div className="dark bg-[#0d1217] text-slate-100 min-h-screen font-['Space_Grotesk']">
@@ -84,11 +87,7 @@ function ProductDetailPage() {
               <div className="flex items-center gap-2 mb-4">
                 <div className="flex text-[#e6ff00]">
                   {[...Array(5)].map((_, i) => (
-                    <Star 
-                      key={i} 
-                      size={14}
-                      className={i < 4 ? 'fill-[#e6ff00]' : ''}
-                    />
+                    <Star key={i} size={14} className={i < 4 ? 'fill-[#e6ff00]' : ''} />
                   ))}
                 </div>
                 <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">
@@ -101,19 +100,16 @@ function ProductDetailPage() {
                 <span className="text-[#00a388]">{product.name.split(' ').slice(-1)}</span>
               </h1>
               <p className="text-slate-400 text-lg leading-relaxed max-w-md">
-                {product.description || 'The world\'s first decentralized processing unit designed for high-frequency data synthesis and creative automation.'}
+                {product.description ||
+                  "The world's first decentralized processing unit designed for high-frequency data synthesis and creative automation."}
               </p>
             </div>
 
             <div className="flex items-baseline gap-4">
-              <span className="text-4xl font-black text-white tracking-tighter">
-                ${product.price.toFixed(2)}
-              </span>
+              <span className="text-4xl font-black text-white tracking-tighter">${product.price.toFixed(2)}</span>
               {product.originalPrice && (
                 <>
-                  <span className="text-slate-500 line-through text-lg">
-                    ${product.originalPrice.toFixed(2)}
-                  </span>
+                  <span className="text-slate-500 line-through text-lg">${product.originalPrice.toFixed(2)}</span>
                   <span className="text-[#e6ff00] text-sm font-bold bg-[#e6ff00]/10 px-2 py-0.5 rounded uppercase tracking-wider">
                     -{Math.round((1 - product.price / product.originalPrice) * 100)}% Early Bird
                   </span>
@@ -141,9 +137,7 @@ function ProductDetailPage() {
               </div>
 
               <div className="space-y-3">
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
-                  Finish
-                </span>
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Finish</span>
                 <div className="flex gap-4">
                   <div className="size-10 rounded-full bg-[#0d1217] active-ring cursor-pointer border border-white/20"></div>
                   <div className="size-10 rounded-full bg-[#1e293b] cursor-pointer border border-white/20"></div>
@@ -155,15 +149,15 @@ function ProductDetailPage() {
             {/* Actions */}
             <div className="space-y-4">
               <div className="flex gap-4">
-                <button 
+                <button
                   onClick={handleAddToCart}
                   disabled={!product.inStock}
                   className={`flex-1 py-5 rounded-xl font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all active:scale-95 group ${
                     !product.inStock
                       ? 'bg-white/5 text-slate-500 cursor-not-allowed'
                       : inCart
-                      ? 'bg-[#00a388] text-white'
-                      : 'bg-[#00a388] hover:bg-[#008f77] text-white'
+                        ? 'bg-[#00a388] text-white'
+                        : 'bg-[#00a388] hover:bg-[#008f77] text-white'
                   }`}
                 >
                   <Zap className="group-hover:rotate-12 transition-transform" size={18} />
@@ -239,9 +233,7 @@ function ProductDetailPage() {
                     <div className="flex-1 h-1.5 bg-white/5 rounded-full overflow-hidden">
                       <div className="h-full bg-[#00a388]" style={{ width: `${rating.percent}%` }}></div>
                     </div>
-                    <span className="w-8 text-xs font-bold text-slate-500 text-right">
-                      {rating.percent}%
-                    </span>
+                    <span className="w-8 text-xs font-bold text-slate-500 text-right">{rating.percent}%</span>
                   </div>
                 ))}
               </div>
@@ -256,9 +248,7 @@ function ProductDetailPage() {
         <section className="mb-24">
           <div className="flex items-end justify-between mb-12">
             <div>
-              <p className="text-xs font-bold text-[#00a388] uppercase tracking-[0.3em] mb-2">
-                Algorithm Selected
-              </p>
+              <p className="text-xs font-bold text-[#00a388] uppercase tracking-[0.3em] mb-2">Algorithm Selected</p>
               <h2 className="text-4xl font-black uppercase tracking-tighter">Similar Hardware</h2>
             </div>
             <div className="flex gap-2">
@@ -299,5 +289,5 @@ function ProductDetailPage() {
 
       <ShopFooter />
     </div>
-  )
+  );
 }

@@ -1,18 +1,16 @@
-import { useCart } from "@/hooks/useCart"
-import { Product } from "@/types"
-import { Minus, Plus, Heart, Trash2, Sparkles } from "lucide-react"
+import { useCart } from '@/hooks/useCart';
+import { Product } from '@/types';
+import { Minus, Plus, Heart, Trash2, Sparkles } from 'lucide-react';
 
 interface CartItemProps {
-  item: Product & { quantity: number }
+  item: Product & { quantity: number };
 }
 
 export function CartItem({ item }: CartItemProps) {
-  const { incrementQuantity, decrementQuantity, removeItem } = useCart()
+  const { incrementQuantity, decrementQuantity, removeItem } = useCart();
 
   return (
-    <div
-      className="bg-[#1C1E22]/40 backdrop-blur-sm border border-white/5 rounded-xl p-5 group hover:border-[#00a388]/30 transition-all duration-300"
-    >
+    <div className="bg-[#1C1E22]/40 backdrop-blur-sm border border-white/5 rounded-xl p-5 group hover:border-[#00a388]/30 transition-all duration-300">
       <div className="flex flex-col md:flex-row gap-6">
         <div className="w-full md:w-48 h-48 bg-black rounded-lg overflow-hidden shrink-0">
           <img
@@ -40,9 +38,7 @@ export function CartItem({ item }: CartItemProps) {
                 >
                   <Minus size={14} />
                 </button>
-                <span className="w-10 text-center font-bold">
-                  {item.quantity.toString().padStart(2, '0')}
-                </span>
+                <span className="w-10 text-center font-bold">{item.quantity.toString().padStart(2, '0')}</span>
                 <button
                   onClick={() => incrementQuantity(item.id)}
                   className="size-8 flex items-center justify-center bg-[#00a388]/20 text-[#00a388] hover:bg-[#00a388]/30 rounded-md transition-colors"
@@ -76,5 +72,5 @@ export function CartItem({ item }: CartItemProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }

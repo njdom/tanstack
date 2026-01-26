@@ -1,12 +1,12 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router'
-import { useState } from 'react'
-import { Package, DollarSign, Star, Image, Tag, Box, ArrowLeft } from 'lucide-react'
-import { ShopHeader } from '@/components/ShopHeader'
-import { ShopFooter } from '@/components/ShopFooter'
-import { Product } from '@/types'
-import { productsCollection } from '@/db/products.db'
+import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { useState } from 'react';
+import { Package, DollarSign, Star, Image, Tag, Box, ArrowLeft } from 'lucide-react';
+import { ShopHeader } from '@/components/ShopHeader';
+import { ShopFooter } from '@/components/ShopFooter';
+import { Product } from '@/types';
+import { productsCollection } from '@/db/products.db';
 
-type FormData = Omit<Product, 'id' | '_id'>
+type FormData = Omit<Product, 'id' | '_id'>;
 const defaultFormData: FormData = {
   name: '',
   category: '',
@@ -18,23 +18,22 @@ const defaultFormData: FormData = {
   rating: 0,
   inStock: true,
   badge: undefined,
-}
-
+};
 
 export const Route = createFileRoute('/admin/create/')({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  const router = useRouter()
-  const [formData, setFormData] = useState<FormData>(defaultFormData)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const router = useRouter();
+  const [formData, setFormData] = useState<FormData>(defaultFormData);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setError(null)
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
 
     try {
       const newProduct = {
@@ -43,27 +42,27 @@ function RouteComponent() {
         price: Number(formData.price),
         originalPrice: formData.originalPrice ? Number(formData.originalPrice) : undefined,
         rating: Number(formData.rating),
-      }
+      };
 
-      await productsCollection.insert(newProduct)
-      alert('Product created successfully!')
-      
-      router.navigate({ to: '/shop' })
+      await productsCollection.insert(newProduct);
+      alert('Product created successfully!');
+
+      router.navigate({ to: '/shop' });
     } catch (err) {
-      console.error('Error creating product:', err)
-      setError(err instanceof Error ? err.message : 'Failed to create product')
+      console.error('Error creating product:', err);
+      setError(err instanceof Error ? err.message : 'Failed to create product');
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target
-    setFormData(prev => ({
+    const { name, value, type } = e.target;
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
-    }))
-  }
+      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value,
+    }));
+  };
 
   return (
     <div className="dark bg-[#0d1217] text-white min-h-screen font-['Space_Grotesk']">
@@ -71,7 +70,7 @@ function RouteComponent() {
 
       <main className="max-w-4xl mx-auto px-6 lg:px-12 py-8">
         {/* Back Button */}
-        <button 
+        <button
           onClick={() => window.history.back()}
           className="flex items-center gap-2 text-slate-400 hover:text-[#00a388] mb-6 transition-colors"
         >
@@ -130,9 +129,7 @@ function RouteComponent() {
               {/* Brand & Category Row */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-bold uppercase text-slate-400 tracking-widest mb-2">
-                    Brand
-                  </label>
+                  <label className="block text-sm font-bold uppercase text-slate-400 tracking-widest mb-2">Brand</label>
                   <input
                     type="text"
                     name="brand"
@@ -186,9 +183,7 @@ function RouteComponent() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-bold uppercase text-slate-400 tracking-widest mb-2">
-                  Price
-                </label>
+                <label className="block text-sm font-bold uppercase text-slate-400 tracking-widest mb-2">Price</label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">$</span>
                   <input
@@ -257,7 +252,10 @@ function RouteComponent() {
                     Rating
                   </label>
                   <div className="relative">
-                    <Star className="absolute left-4 top-1/2 -translate-y-1/2 text-[#E6FF00] fill-[#E6FF00]" size={18} />
+                    <Star
+                      className="absolute left-4 top-1/2 -translate-y-1/2 text-[#E6FF00] fill-[#E6FF00]"
+                      size={18}
+                    />
                     <input
                       type="number"
                       name="rating"
@@ -298,23 +296,17 @@ function RouteComponent() {
               {/* In Stock Toggle */}
               <div>
                 <label className="flex items-center justify-between cursor-pointer group">
-                  <span className="text-sm font-bold uppercase text-slate-400 tracking-widest">
-                    In Stock
-                  </span>
+                  <span className="text-sm font-bold uppercase text-slate-400 tracking-widest">In Stock</span>
                   <button
                     type="button"
-                    onClick={() => setFormData(prev => ({ ...prev, inStock: !prev.inStock }))}
+                    onClick={() => setFormData((prev) => ({ ...prev, inStock: !prev.inStock }))}
                     className={`w-14 h-7 rounded-full relative border transition-colors ${
-                      formData.inStock
-                        ? 'bg-[#00a388]/20 border-[#00a388]/30'
-                        : 'bg-white/10 border-white/20'
+                      formData.inStock ? 'bg-[#00a388]/20 border-[#00a388]/30' : 'bg-white/10 border-white/20'
                     }`}
                   >
                     <div
                       className={`absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full transition-all ${
-                        formData.inStock
-                          ? 'right-1 bg-[#00a388]'
-                          : 'left-1 bg-slate-400'
+                        formData.inStock ? 'right-1 bg-[#00a388]' : 'left-1 bg-slate-400'
                       }`}
                     ></div>
                   </button>
@@ -354,5 +346,5 @@ function RouteComponent() {
 
       <ShopFooter />
     </div>
-  )
+  );
 }

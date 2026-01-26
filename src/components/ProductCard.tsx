@@ -1,9 +1,9 @@
-import { Link } from '@tanstack/react-router'
-import type { Product } from '../types'
-import { ShoppingCart, Heart } from 'lucide-react'
+import { Link } from '@tanstack/react-router';
+import type { Product } from '../types';
+import { ShoppingCart, Heart } from 'lucide-react';
 
 interface ProductCardProps {
-  product: Product
+  product: Product;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
@@ -24,12 +24,8 @@ export function ProductCard({ product }: ProductCardProps) {
         </button>
       </div>
       <div className="space-y-1">
-        <p className="text-xs uppercase text-slate-500 font-bold tracking-widest">
-          {product.category}
-        </p>
-        <h3 className="text-lg font-bold group-hover:text-[#00a388] transition-colors">
-          {product.name}
-        </h3>
+        <p className="text-xs uppercase text-slate-500 font-bold tracking-widest">{product.category}</p>
+        <h3 className="text-lg font-bold group-hover:text-[#00a388] transition-colors">{product.name}</h3>
         <div className="flex items-center justify-between pt-2">
           <span className="text-xl font-bold">${product.price.toFixed(2)}</span>
           <button className="bg-white/10 hover:bg-[#00a388] rounded-lg size-10 flex items-center justify-center transition-colors">
@@ -38,5 +34,5 @@ export function ProductCard({ product }: ProductCardProps) {
         </div>
       </div>
     </Link>
-  )
+  );
 }

@@ -1,21 +1,21 @@
-import { Link } from '@tanstack/react-router'
-import { Database, Search, ShoppingBag, User, X } from 'lucide-react'
-import { useCart } from '../hooks/useCart'
-import { searchStore, SearchState} from '../store/search.store'
-import { useStore } from '@tanstack/react-store'
+import { Link } from '@tanstack/react-router';
+import { Database, Search, ShoppingBag, User, X } from 'lucide-react';
+import { useCart } from '../hooks/useCart';
+import { searchStore, SearchState } from '../store/search.store';
+import { useStore } from '@tanstack/react-store';
 
 export function ShopHeader() {
-  const { itemCount } = useCart()
-  const setSearchTerm = (term: SearchState["searchTerm"]) => {
-    searchStore.setState((state) => ({ ...state,searchTerm: term }))
-  }
-  const searchState = useStore(searchStore)
-  
-  const handleClearSearch = () => {
-    setSearchTerm('')
-  }
+  const { itemCount } = useCart();
+  const setSearchTerm = (term: SearchState['searchTerm']) => {
+    searchStore.setState((state) => ({ ...state, searchTerm: term }));
+  };
+  const searchState = useStore(searchStore);
 
-  const searchTerm = searchState.searchTerm
+  const handleClearSearch = () => {
+    setSearchTerm('');
+  };
+
+  const searchTerm = searchState.searchTerm;
   return (
     <header className="sticky top-0 z-50 glass-panel border-b border-white/10 px-6 py-3">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-8">
@@ -46,7 +46,7 @@ export function ShopHeader() {
         </div>
         <div className="flex-1 max-w-xl">
           <div className="relative group">
-            <Search 
+            <Search
               className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#00a388] transition-colors"
               size={18}
             />
@@ -68,10 +68,7 @@ export function ShopHeader() {
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <Link
-            to="/cart"
-            className="p-2 hover:bg-white/5 rounded-full transition-colors relative block"
-          >
+          <Link to="/cart" className="p-2 hover:bg-white/5 rounded-full transition-colors relative block">
             <ShoppingBag size={20} />
             {itemCount > 0 && (
               <span className="absolute top-1 right-1 size-4 bg-[#00a388] text-[10px] font-bold flex items-center justify-center rounded-full">
@@ -86,5 +83,5 @@ export function ShopHeader() {
         </div>
       </div>
     </header>
-  )
+  );
 }

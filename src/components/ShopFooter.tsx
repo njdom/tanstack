@@ -1,4 +1,4 @@
-import { Database, AtSign, Globe, Share2, ArrowRight } from 'lucide-react'
+import { Database, AtSign, Globe, Share2, ArrowRight } from 'lucide-react';
 
 export function ShopFooter() {
   return (
@@ -15,8 +15,7 @@ export function ShopFooter() {
               </h2>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed">
-              Redefining the digital shopping experience through AI-integration and premium
-              industrial aesthetics.
+              Redefining the digital shopping experience through AI-integration and premium industrial aesthetics.
             </p>
             <div className="flex items-center gap-4">
               <a
@@ -120,5 +119,5 @@ export function ShopFooter() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

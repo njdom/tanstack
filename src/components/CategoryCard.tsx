@@ -1,8 +1,8 @@
-import type { Category } from '../types'
+import type { Category } from '../types';
 
 interface CategoryCardProps {
-  category: Category
-  className?: string
+  category: Category;
+  className?: string;
 }
 
 export function CategoryCard({ category, className = '' }: CategoryCardProps) {
@@ -21,5 +21,5 @@ export function CategoryCard({ category, className = '' }: CategoryCardProps) {
         <p className="text-slate-300">{category.description}</p>
       </div>
     </div>
-  )
+  );
 }

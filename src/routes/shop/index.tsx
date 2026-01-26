@@ -1,13 +1,13 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { ShopProductCard } from '../../components/ShopProductCard'
-import { ShopHeader } from '../../components/ShopHeader'
-import { ShopFooter } from '../../components/ShopFooter'
-import { RouterBreadcrumb } from '../../components/RouterBreadcrumb'
-import { SlidersHorizontal, LayoutGrid, List, X, ChevronDown, Zap, Star, Loader2, Search } from 'lucide-react'
-import { useProductSearch, useProductBrands } from '../../hooks/useProductSearch'
-import { useStore } from '@tanstack/react-store'
-import { searchStore, searchActions } from '../../store/search.store'
-import type { Product } from '../../types'
+import { createFileRoute } from '@tanstack/react-router';
+import { ShopProductCard } from '../../components/ShopProductCard';
+import { ShopHeader } from '../../components/ShopHeader';
+import { ShopFooter } from '../../components/ShopFooter';
+import { RouterBreadcrumb } from '../../components/RouterBreadcrumb';
+import { SlidersHorizontal, LayoutGrid, List, X, ChevronDown, Zap, Star, Loader2, Search } from 'lucide-react';
+import { useProductSearch, useProductBrands } from '../../hooks/useProductSearch';
+import { useStore } from '@tanstack/react-store';
+import { searchStore, searchActions } from '../../store/search.store';
+import type { Product } from '../../types';
 // import { mongodb } from '@/server/mongodb'
 
 export const Route = createFileRoute('/shop/')({
@@ -21,13 +21,13 @@ export const Route = createFileRoute('/shop/')({
   //   console.log("🚀 ~ products:", products)
   //   return { products }
   // },
-})
+});
 
 function ShopPage() {
   // const loaderData = Route.useLoaderData()
-  const { products, isLoading, totalResults, hasActiveFilters, searchTerm } = useProductSearch()
-  const brands = useProductBrands()
-  const searchState = useStore(searchStore)
+  const { products, isLoading, totalResults, hasActiveFilters, searchTerm } = useProductSearch();
+  const brands = useProductBrands();
+  const searchState = useStore(searchStore);
 
   return (
     <div className="dark bg-[#0d1217] text-white min-h-screen font-['Space_Grotesk']">
@@ -49,8 +49,8 @@ function ShopPage() {
               Shop <span className="text-[#00a388]">All</span>
             </h1>
             <p className="text-slate-400 max-w-xl text-lg leading-relaxed">
-              Uncompromising performance for the digital vanguard. Explore our curated selection
-              of high-end hardware and peripherals.
+              Uncompromising performance for the digital vanguard. Explore our curated selection of high-end hardware
+              and peripherals.
             </p>
           </div>
         </div>
@@ -62,7 +62,7 @@ function ShopPage() {
               <h3 className="text-lg font-bold uppercase tracking-widest flex items-center gap-2">
                 <SlidersHorizontal className="text-[#00a388]" size={20} /> Filters
               </h3>
-              <button 
+              <button
                 onClick={() => searchActions.resetFilters()}
                 disabled={!hasActiveFilters}
                 className="text-xs text-slate-400 hover:text-[#00a388] underline uppercase tracking-tighter disabled:opacity-50 disabled:cursor-not-allowed"
@@ -75,7 +75,7 @@ function ShopPage() {
             <div className="space-y-4">
               <h4 className="text-sm font-bold uppercase text-slate-500 tracking-widest">Brand</h4>
               <div className="space-y-3">
-                {brands.map(({brand}) => (
+                {brands.map(({ brand }) => (
                   <label key={brand} className="flex items-center gap-3 cursor-pointer group">
                     <input
                       className="rounded border-white/10 bg-white/5 text-[#00a388] focus:ring-[#00a388] w-5 h-5"
@@ -84,9 +84,7 @@ function ShopPage() {
                       checked={searchState.selectedBrand === brand}
                       onChange={() => searchActions.setBrand(brand)}
                     />
-                    <span className="text-sm group-hover:text-[#00a388] transition-colors">
-                      {brand}
-                    </span>
+                    <span className="text-sm group-hover:text-[#00a388] transition-colors">{brand}</span>
                   </label>
                 ))}
                 {searchState.selectedBrand && (
@@ -102,9 +100,7 @@ function ShopPage() {
 
             {/* Price Range */}
             <div className="space-y-6">
-              <h4 className="text-sm font-bold uppercase text-slate-500 tracking-widest">
-                Price Range
-              </h4>
+              <h4 className="text-sm font-bold uppercase text-slate-500 tracking-widest">Price Range</h4>
               <div className="px-2">
                 <div className="space-y-4">
                   <div>
@@ -137,9 +133,7 @@ function ShopPage() {
 
             {/* Rating */}
             <div className="space-y-4">
-              <h4 className="text-sm font-bold uppercase text-slate-500 tracking-widest">
-                Customer Rating
-              </h4>
+              <h4 className="text-sm font-bold uppercase text-slate-500 tracking-widest">Customer Rating</h4>
               <div className="space-y-2">
                 {[4, 3, 2].map((rating) => (
                   <label key={rating} className="cursor-pointer group block">
@@ -150,18 +144,20 @@ function ShopPage() {
                       checked={searchState.minRating === rating}
                       onChange={() => searchActions.setMinRating(rating)}
                     />
-                    <div className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
-                      searchState.minRating === rating 
-                        ? 'bg-[#00a388]/20 border border-[#00a388]/50 shadow-[0_0_15px_rgba(0,163,136,0.2)]' 
-                        : 'bg-transparent border border-transparent hover:bg-white/5'
-                    }`}>
+                    <div
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
+                        searchState.minRating === rating
+                          ? 'bg-[#00a388]/20 border border-[#00a388]/50 shadow-[0_0_15px_rgba(0,163,136,0.2)]'
+                          : 'bg-transparent border border-transparent hover:bg-white/5'
+                      }`}
+                    >
                       <div className="flex">
                         {[...Array(5)].map((_, i) => (
                           <Star
                             key={i}
                             size={14}
                             className={`transition-all ${
-                              i < rating 
+                              i < rating
                                 ? searchState.minRating === rating
                                   ? 'fill-[#E6FF00] text-[#E6FF00]'
                                   : 'fill-[#E6FF00]/70 text-[#E6FF00]/70'
@@ -170,12 +166,13 @@ function ShopPage() {
                           />
                         ))}
                       </div>
-                      <span className={`text-xs transition-colors ${
-                        searchState.minRating === rating
-                          ? 'text-white font-medium'
-                          : 'text-slate-400 group-hover:text-white'
-                      }`}>
-                      </span>
+                      <span
+                        className={`text-xs transition-colors ${
+                          searchState.minRating === rating
+                            ? 'text-white font-medium'
+                            : 'text-slate-400 group-hover:text-white'
+                        }`}
+                      ></span>
                     </div>
                   </label>
                 ))}
@@ -192,24 +189,18 @@ function ShopPage() {
 
             {/* Availability */}
             <div className="space-y-4">
-              <h4 className="text-sm font-bold uppercase text-slate-500 tracking-widest">
-                Availability
-              </h4>
+              <h4 className="text-sm font-bold uppercase text-slate-500 tracking-widest">Availability</h4>
               <label className="flex items-center justify-between cursor-pointer group">
                 <span className="text-sm">In Stock Only</span>
                 <button
                   onClick={() => searchActions.toggleShowOutOfStock()}
                   className={`w-10 h-5 rounded-full relative border transition-colors ${
-                    !searchState.showOutOfStock
-                      ? 'bg-[#00a388]/20 border-[#00a388]/30'
-                      : 'bg-white/10 border-white/20'
+                    !searchState.showOutOfStock ? 'bg-[#00a388]/20 border-[#00a388]/30' : 'bg-white/10 border-white/20'
                   }`}
                 >
                   <div
                     className={`absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full transition-all ${
-                      !searchState.showOutOfStock
-                        ? 'right-1 bg-[#00a388]'
-                        : 'left-1 bg-slate-400'
+                      !searchState.showOutOfStock ? 'right-1 bg-[#00a388]' : 'left-1 bg-slate-400'
                     }`}
                   ></div>
                 </button>
@@ -231,9 +222,7 @@ function ShopPage() {
                   ) : (
                     <>
                       <span className="text-[#00a388] font-bold">{totalResults}</span> results
-                      {searchTerm && (
-                        <span className="text-slate-500"> for "{searchTerm}"</span>
-                      )}
+                      {searchTerm && <span className="text-slate-500"> for "{searchTerm}"</span>}
                     </>
                   )}
                 </p>
@@ -253,9 +242,9 @@ function ShopPage() {
                   {searchState.selectedBrand && (
                     <div className="flex items-center gap-2 px-3 py-1.5 bg-[#00a388]/10 border border-[#00a388]/20 rounded-full text-xs text-[#00a388] font-medium">
                       Brand: {searchState.selectedBrand}
-                      <X 
-                        size={12} 
-                        className="cursor-pointer hover:text-white" 
+                      <X
+                        size={12}
+                        className="cursor-pointer hover:text-white"
                         onClick={() => searchActions.setBrand('')}
                       />
                     </div>
@@ -263,9 +252,9 @@ function ShopPage() {
                   {(searchState.priceRange.min > 0 || searchState.priceRange.max < 10000) && (
                     <div className="flex items-center gap-2 px-3 py-1.5 bg-[#00a388]/10 border border-[#00a388]/20 rounded-full text-xs text-[#00a388] font-medium">
                       ${searchState.priceRange.min} - ${searchState.priceRange.max}
-                      <X 
-                        size={12} 
-                        className="cursor-pointer hover:text-white" 
+                      <X
+                        size={12}
+                        className="cursor-pointer hover:text-white"
                         onClick={() => searchActions.setPriceRange(0, 10000)}
                       />
                     </div>
@@ -273,9 +262,9 @@ function ShopPage() {
                   {searchState.minRating > 0 && (
                     <div className="flex items-center gap-2 px-3 py-1.5 bg-[#00a388]/10 border border-[#00a388]/20 rounded-full text-xs text-[#00a388] font-medium">
                       {searchState.minRating}★
-                      <X 
-                        size={12} 
-                        className="cursor-pointer hover:text-white" 
+                      <X
+                        size={12}
+                        className="cursor-pointer hover:text-white"
                         onClick={() => searchActions.setMinRating(0)}
                       />
                     </div>
@@ -283,9 +272,9 @@ function ShopPage() {
                   {!searchState.showOutOfStock && (
                     <div className="flex items-center gap-2 px-3 py-1.5 bg-[#00a388]/10 border border-[#00a388]/20 rounded-full text-xs text-[#00a388] font-medium">
                       In Stock Only
-                      <X 
-                        size={12} 
-                        className="cursor-pointer hover:text-white" 
+                      <X
+                        size={12}
+                        className="cursor-pointer hover:text-white"
                         onClick={() => searchActions.toggleShowOutOfStock()}
                       />
                     </div>
@@ -353,8 +342,8 @@ function ShopPage() {
                   </div>
                   <h2 className="text-3xl font-bold tracking-tight">System Performance Bundle</h2>
                   <p className="text-slate-400">
-                    Save 25% when you combine the AeroShift Pro Keyboard with the GlidePoint Z
-                    Mouse. Limited time offer for the digital elite.
+                    Save 25% when you combine the AeroShift Pro Keyboard with the GlidePoint Z Mouse. Limited time offer
+                    for the digital elite.
                   </p>
                   <button className="px-8 py-3 bg-[#00a388] text-white font-bold rounded-xl hover:shadow-[0_0_20px_rgba(0,163,136,0.4)] transition-all">
                     Claim Bundle Deal
@@ -379,9 +368,7 @@ function ShopPage() {
                 <div className="w-2 h-10 bg-[#00a388]/50 rounded-full animate-pulse"></div>
                 <div className="w-2 h-6 bg-[#00a388]/20 rounded-full"></div>
               </div>
-              <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
-                Loading specialized gear...
-              </p>
+              <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">Loading specialized gear...</p>
             </div>
           </div>
         </div>
@@ -389,5 +376,5 @@ function ShopPage() {
 
       <ShopFooter />
     </div>
-  )
+  );
 }
