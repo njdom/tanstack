@@ -1,12 +1,17 @@
 import { createLiveQueryCollection, eq, gte, ilike, inArray, lte, useLiveQuery } from '@tanstack/react-db';
 import { useStore } from '@tanstack/react-store';
-import { productsCollection } from '../db/products.db';
+import { PRODUCTS_QUERY_KEY, productsCollection, queryClient } from '../db/products.db';
 import { hasActiveFilters, searchStore } from '../store/search.store';
 import { Product } from '@/types';
+import { useEffect } from 'react';
 
 export function useProductSearch(initialProducts: Product[]) {
   const searchState = useStore(searchStore);
 
+  useEffect(() => {
+    queryClient.setQueryData(PRODUCTS_QUERY_KEY, initialProducts);
+  }, []);
+  
   const query = useLiveQuery(
     (q) => {
       let query = q.from({ product: productsCollection });
@@ -41,7 +46,7 @@ export function useProductSearch(initialProducts: Product[]) {
   );
 
   return {
-    products: query.data.length > 0 ? query.data : initialProducts ?? [],
+    products: query.data ?? initialProducts ?? [],
     isLoading: query.isLoading,
     isError: query.isError,
     totalResults: query.data?.length ?? 0,
