@@ -16,15 +16,15 @@ export const Route = createFileRoute('/shop/$productId')({
   },
   loader: async ({ params }) => {
     const productId = params.productId;
-    
+
     const product = await getProductById({ data: { id: productId } });
-    const similarProducts = await getAllProducts({ 
-      data: { 
-        category: product.category, 
-        brand: product.brand 
-      } 
+    const similarProducts = await getAllProducts({
+      data: {
+        category: product.category,
+        brand: product.brand
+      }
     });
-    
+
     return {
       product,
       similarProducts: similarProducts.filter(p => p._id !== product._id).slice(0, 4),
@@ -155,13 +155,12 @@ function ProductDetailPage() {
                 <button
                   onClick={handleAddToCart}
                   disabled={!product.inStock}
-                  className={`flex-1 py-5 rounded-xl font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all active:scale-95 group ${
-                    !product.inStock
-                      ? 'bg-white/5 text-slate-500 cursor-not-allowed'
-                      : inCart
-                        ? 'bg-[#00a388] text-white'
-                        : 'bg-[#00a388] hover:bg-[#008f77] text-white'
-                  }`}
+                  className={`flex-1 py-5 rounded-xl font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all active:scale-95 group ${!product.inStock
+                    ? 'bg-white/5 text-slate-500 cursor-not-allowed'
+                    : inCart
+                      ? 'bg-[#00a388] text-white'
+                      : 'bg-[#00a388] hover:bg-[#008f77] text-white'
+                    }`}
                 >
                   <Zap className="group-hover:rotate-12 transition-transform" size={18} />
                   {inCart ? 'Go to Cart' : 'Add to Cart'}

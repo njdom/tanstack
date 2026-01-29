@@ -30,7 +30,7 @@ function RouteComponent() {
   const [formData, setFormData] = useState<FormData>(defaultFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Use server function for creating products
   const createProductFn = useServerFn(createProduct);
 
@@ -304,14 +304,12 @@ function RouteComponent() {
                   <button
                     type="button"
                     onClick={() => setFormData((prev) => ({ ...prev, inStock: !prev.inStock }))}
-                    className={`w-14 h-7 rounded-full relative border transition-colors ${
-                      formData.inStock ? 'bg-[#00a388]/20 border-[#00a388]/30' : 'bg-white/10 border-white/20'
-                    }`}
+                    className={`w-14 h-7 rounded-full relative border transition-colors ${formData.inStock ? 'bg-[#00a388]/20 border-[#00a388]/30' : 'bg-white/10 border-white/20'
+                      }`}
                   >
                     <div
-                      className={`absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full transition-all ${
-                        formData.inStock ? 'right-1 bg-[#00a388]' : 'left-1 bg-slate-400'
-                      }`}
+                      className={`absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full transition-all ${formData.inStock ? 'right-1 bg-[#00a388]' : 'left-1 bg-slate-400'
+                        }`}
                     ></div>
                   </button>
                 </label>
