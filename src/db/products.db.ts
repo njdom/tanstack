@@ -1,6 +1,7 @@
 import { createCollection } from '@tanstack/react-db';
 import { queryCollectionOptions } from '@tanstack/query-db-collection';
-import { productSchema, type Product } from '../types';
+import { type Product } from '../types';
+import { productSchema } from '@/schemas';
 import { QueryClient } from '@tanstack/query-core';
 import { getAllProducts, createProduct } from '@/server/product.functions';
 
