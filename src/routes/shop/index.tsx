@@ -49,16 +49,16 @@ function ShopPage() {
         <div className="flex flex-col lg:flex-row gap-10">
           {/* Sidebar Filters */}
           <aside className="w-full lg:w-72 shrink-0 space-y-8">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold uppercase tracking-widest flex items-center gap-2">
-                <SlidersHorizontal className="text-[#00a388]" size={20} /> Filters
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-bold uppercase tracking-wider flex items-center gap-3 text-white">
+                <SlidersHorizontal className="text-[#00a388]" size={24} /> FILTERS
               </h3>
               <button
                 onClick={() => searchActions.resetFilters()}
                 disabled={!hasActiveFilters}
-                className="text-xs text-slate-400 hover:text-[#00a388] underline uppercase tracking-tighter disabled:opacity-50 disabled:cursor-not-allowed"
+                className="text-xs text-slate-400 hover:text-white underline uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                Reset All
+                RESET ALL
               </button>
             </div>
 

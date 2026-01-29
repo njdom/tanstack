@@ -10,7 +10,7 @@ export function filterProducts(products: Product[]) {
       return false;
     if (searchState.selectedCategory && product.category !== searchState.selectedCategory) 
       return false;
-    if (searchState.selectedBrand && product.brand !== searchState.selectedBrand) 
+    if (searchState.selectedBrands.length > 0 && !searchState.selectedBrands.includes(product.brand)) 
       return false;
     if (searchState.priceRange.min && product.price < searchState.priceRange.min) 
       return false;

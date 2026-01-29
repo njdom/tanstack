@@ -19,7 +19,8 @@ export function useProductSearch(initialProducts: Product[]) {
         query = query.where(({ product }) => ilike(product.name, `%${searchState.searchTerm}%`));
       if (searchState.selectedCategory)
         query = query.where(({ product }) => eq(product.category, searchState.selectedCategory));
-      if (searchState.selectedBrand) query = query.where(({ product }) => eq(product.brand, searchState.selectedBrand));
+      if (searchState.selectedBrands.length > 0) 
+        query = query.where(({ product }) => inArray(product.brand, searchState.selectedBrands));
       if (searchState.priceRange.min)
         query = query.where(({ product }) => gte(product.price, searchState.priceRange.min));
       if (searchState.priceRange.max)
@@ -37,7 +38,7 @@ export function useProductSearch(initialProducts: Product[]) {
     [
       searchState.searchTerm,
       searchState.selectedCategory,
-      searchState.selectedBrand,
+      searchState.selectedBrands,
       searchState.priceRange,
       searchState.minRating,
       searchState.sortBy,

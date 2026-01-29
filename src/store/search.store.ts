@@ -3,7 +3,7 @@ import { Store } from '@tanstack/react-store';
 export interface SearchState {
   searchTerm: string;
   selectedCategory: string;
-  selectedBrand: string;
+  selectedBrands: string[];
   priceRange: {
     min: number;
     max: number;
@@ -16,7 +16,7 @@ export interface SearchState {
 const defaultState: SearchState = {
   searchTerm: '',
   selectedCategory: '',
-  selectedBrand: '',
+  selectedBrands: [],
   priceRange: {
     min: 0,
     max: 10000,
@@ -37,8 +37,13 @@ export const searchActions = {
     searchStore.setState((state) => ({ ...state, selectedCategory: category }));
   },
 
-  setBrand: (brand: SearchState['selectedBrand']) => {
-    searchStore.setState((state) => ({ ...state, selectedBrand: brand }));
+  toggleBrand: (brand: string) => {
+    searchStore.setState((state) => {
+      const selectedBrands = state.selectedBrands.includes(brand)
+        ? state.selectedBrands.filter(b => b !== brand)
+        : [...state.selectedBrands, brand];
+      return { ...state, selectedBrands };
+    });
   },
 
   setPriceRange: (min: SearchState['priceRange']['min'], max: SearchState['priceRange']['max']) => {
@@ -66,7 +71,7 @@ export const hasActiveFilters = () => {
   return (
     searchStore.state.searchTerm !== '' ||
     searchStore.state.selectedCategory !== '' ||
-    searchStore.state.selectedBrand !== '' ||
+    searchStore.state.selectedBrands.length > 0 ||
     searchStore.state.priceRange.min > 0 ||
     searchStore.state.priceRange.max < 10000 ||
     searchStore.state.minRating > 0 ||
