@@ -5,7 +5,10 @@ import { productSchema } from '@/schemas';
 import { QueryClient } from '@tanstack/query-core';
 import { getAllProducts, createProduct } from '@/server/product.functions';
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
+
+export const PRODUCTS_QUERY_KEY = ['products', 'all'];
+
 export const productsCollection = createCollection(
   queryCollectionOptions({
     schema: productSchema,
@@ -15,7 +18,10 @@ export const productsCollection = createCollection(
       const products = await getAllProducts({ data: {} });
       return products as Product[];
     },
-    queryKey: ['products', 'all'],
+    queryKey: PRODUCTS_QUERY_KEY,
+    // Disable auto-fetch since we hydrate from SSR data
+    enabled: false,
+    staleTime: Infinity,
     onInsert: async ({ transaction }) => {
       transaction.mutations.map((m) => {
         createProduct({ data: m.modified });

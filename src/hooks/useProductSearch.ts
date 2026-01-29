@@ -4,7 +4,7 @@ import { productsCollection } from '../db/products.db';
 import { hasActiveFilters, searchStore } from '../store/search.store';
 import { Product } from '@/types';
 
-export function useProductSearch() {
+export function useProductSearch(initialProducts: Product[]) {
   const searchState = useStore(searchStore);
 
   const query = useLiveQuery(
@@ -41,7 +41,7 @@ export function useProductSearch() {
   );
 
   return {
-    products: query.data ?? [],
+    products: query.data.length > 0 ? query.data : initialProducts ?? [],
     isLoading: query.isLoading,
     isError: query.isError,
     totalResults: query.data?.length ?? 0,
@@ -74,10 +74,7 @@ export function useProductBrands() {
 
 export function useProducts(ids: Product['_id'][]) {
   const { data: products, isLoading } = useLiveQuery(
-    (q) =>
-      q
-        .from({ products: productsCollection })
-        .where(({ products }) => inArray(products._id, ids)),
+    (q) => q.from({ products: productsCollection }).where(({ products }) => inArray(products._id, ids)),
     [ids],
   );
 

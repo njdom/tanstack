@@ -6,7 +6,6 @@ import { SlidersHorizontal } from 'lucide-react';
 import { searchActions } from '../../store/search.store';
 import { getAllProducts, getProductBrands as getProductBrandsServerFn } from '@/server/product.functions';
 import { ProductGrid } from './components/ProductGrid';
-import { filterProducts, sortProducts } from '@/lib/products/filters';
 import PriceRangeFilter from './components/filters/PriceRangeFilter';
 import RatingFilter from './components/filters/RatingFilter';
 import AvailabilityFilter from './components/filters/AvailabilityFilter';
@@ -14,6 +13,7 @@ import Toolbar from './components/Toolbar';
 import HeroHeading from './components/HeroHeading';
 import BrandFilter from './components/filters/BrandFilter';
 import FeaturedModel from './components/FeaturedModel';
+import { useProductSearch } from '@/hooks/useProductSearch';
 
 export const Route = createFileRoute('/shop/')({
   component: ShopPage,
@@ -32,12 +32,9 @@ export const Route = createFileRoute('/shop/')({
 });
 
 function ShopPage() {
-  const { products, brands } = Route.useLoaderData();
+  const { products: initialProducts, brands } = Route.useLoaderData();
+  const { products: filteredProducts, isLoading, hasActiveFilters } = useProductSearch(initialProducts);
 
-  const { filteredProducts, hasActiveFilters } = filterProducts(products);
-  const sortedProducts = sortProducts(filteredProducts);
-
-  const isLoading = false;
   const totalResults = filteredProducts.length;
 
   return (
@@ -69,14 +66,14 @@ function ShopPage() {
             <PriceRangeFilter />
             <RatingFilter />
             <AvailabilityFilter />
-            
+
           </aside>
 
           {/* Main Listing Area */}
           <div className="flex-1">
             <Toolbar isLoading={isLoading} totalResults={totalResults} />
 
-            <ProductGrid products={sortedProducts} />
+            <ProductGrid products={filteredProducts} />
 
             <FeaturedModel />
 
