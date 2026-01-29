@@ -4,7 +4,8 @@ import { Package, DollarSign, Star, Image, Tag, Box, ArrowLeft } from 'lucide-re
 import { ShopHeader } from '@/components/ShopHeader';
 import { ShopFooter } from '@/components/ShopFooter';
 import { Product } from '@/types';
-import { productsCollection } from '@/db/products.db';
+import { useServerFn } from '@tanstack/react-start';
+import { createProduct } from '@/server/product.functions';
 
 type FormData = Omit<Product, '_id'>;
 const defaultFormData: FormData = {
@@ -29,6 +30,9 @@ function RouteComponent() {
   const [formData, setFormData] = useState<FormData>(defaultFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  
+  // Use server function for creating products
+  const createProductFn = useServerFn(createProduct);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,15 +40,15 @@ function RouteComponent() {
     setError(null);
 
     try {
-      const newProduct = {
+      const productData = {
         ...formData,
-        _id: crypto.randomUUID(), // temporary id
         price: Number(formData.price),
         originalPrice: formData.originalPrice ? Number(formData.originalPrice) : undefined,
         rating: Number(formData.rating),
       };
 
-      await productsCollection.insert(newProduct);
+      // Call server function to create product
+      await createProductFn({ data: productData });
       alert('Product created successfully!');
 
       router.navigate({ to: '/shop' });

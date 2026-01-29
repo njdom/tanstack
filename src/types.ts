@@ -1,5 +1,5 @@
 import { z } from 'zod';
-
+import { productSchema } from './schemas';
 export interface PunkSong {
   id: number;
   name: string;
@@ -10,20 +10,6 @@ export interface Todo {
   id: number;
   name: string;
 }
-
-export const productSchema = z.object({
-  _id: z.string(),
-  name: z.string(),
-  category: z.string(),
-  brand: z.string(),
-  price: z.number(),
-  originalPrice: z.number().optional(),
-  image: z.string(),
-  description: z.string().optional(),
-  rating: z.number(),
-  inStock: z.boolean(),
-  badge: z.enum(['trending', 'new', 'sale', 'out-of-stock']).optional(),
-});
 
 export type Product = z.infer<typeof productSchema>;
 

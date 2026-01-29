@@ -1,5 +1,7 @@
 import { Product } from "@/types";
 import { ObjectId } from "mongodb";
+import { productFiltersSchema } from "@/schemas";
+import z from "zod";
 
 interface BaseDocument {
   _id: string;
@@ -14,9 +16,5 @@ export interface BaseModel<T extends BaseDocument> {
 }
 
 export type ProductDocument = Omit<Product, '_id'> & { _id: ObjectId };
-export interface ProductFilters {
-  search?: string;
-  category?: Product['category'];
-  brand?: Product['brand'];
-  inStock?: Product['inStock'];
-}
+
+export type ProductFilters = z.infer<typeof productFiltersSchema>;

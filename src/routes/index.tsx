@@ -8,16 +8,16 @@ import { ShopFooter } from '../components/ShopFooter';
 import { categories, deals, getTrendingProducts } from '../data/shop';
 import { CategoryCardLarge } from '../components/CategoryCardLarge';
 import { Zap, ArrowRight, Sparkles } from 'lucide-react';
-import { productsApi } from '@/lib/api/products.client';
+import { getAllProducts } from '@/server/product.functions';
 
 export const Route = createFileRoute('/')({
   component: Homepage,
   loader: async () => {
-    const featured = await productsApi.getAll({ category: 'featured' });
+    const allProducts = await getAllProducts({ data: {} });
     const trending = getTrendingProducts();
-    
+
     return {
-      featuredProducts: featured,
+      featuredProducts: allProducts.slice(0, 8),
       categories,
       trendingProducts: trending,
       deals,

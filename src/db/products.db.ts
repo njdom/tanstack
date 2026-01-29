@@ -2,7 +2,7 @@ import { createCollection } from '@tanstack/react-db';
 import { queryCollectionOptions } from '@tanstack/query-db-collection';
 import { productSchema, type Product } from '../types';
 import { QueryClient } from '@tanstack/query-core';
-import { productsApi } from '@/lib/api/products.client';
+import { getAllProducts, createProduct } from '@/server/product.functions';
 
 const queryClient = new QueryClient();
 export const productsCollection = createCollection(
@@ -11,13 +11,13 @@ export const productsCollection = createCollection(
     queryClient: queryClient,
     getKey: (product: Product) => product._id,
     queryFn: async () => {
-      const products = await productsApi.getAll();
+      const products = await getAllProducts({ data: {} });
       return products as Product[];
     },
     queryKey: ['products', 'all'],
     onInsert: async ({ transaction }) => {
       transaction.mutations.map((m) => {
-        productsApi.create(m.modified);
+        createProduct({ data: m.modified });
       });
     },
   }),

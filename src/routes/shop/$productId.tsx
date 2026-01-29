@@ -4,7 +4,7 @@ import { ShopFooter } from '../../components/ShopFooter';
 import { RouterBreadcrumb } from '../../components/RouterBreadcrumb';
 import { Star, Zap, Heart, AlertCircle, ArrowLeft, ArrowRight } from 'lucide-react';
 import { useCart } from '../../hooks/useCart';
-import { productsApi } from '@/lib/api/products.client';
+import { getProductById, getAllProducts } from '@/server/product.functions';
 
 export const Route = createFileRoute('/shop/$productId')({
   component: ProductDetailPage,
@@ -14,17 +14,20 @@ export const Route = createFileRoute('/shop/$productId')({
       { label: 'Products', path: '/shop' },
     ],
   },
-  // Full SSR - Critical for SEO on product pages
   loader: async ({ params }) => {
     const productId = params.productId;
-    const product = await productsApi.getById(productId);
-    if (!product) throw new Error('Product not found');
-
-    const similarProducts = await productsApi.getAll({ category: product.category, brand: product.brand });
+    
+    const product = await getProductById({ data: { id: productId } });
+    const similarProducts = await getAllProducts({ 
+      data: { 
+        category: product.category, 
+        brand: product.brand 
+      } 
+    });
     
     return {
       product,
-      similarProducts,
+      similarProducts: similarProducts.filter(p => p._id !== product._id).slice(0, 4),
     };
   },
 });
