@@ -11,7 +11,7 @@ export function useProductSearch(initialProducts: Product[]) {
   useEffect(() => {
     queryClient.setQueryData(PRODUCTS_QUERY_KEY, initialProducts);
   }, []);
-  
+
   const query = useLiveQuery(
     (q) => {
       let query = q.from({ product: productsCollection });
@@ -19,7 +19,7 @@ export function useProductSearch(initialProducts: Product[]) {
         query = query.where(({ product }) => ilike(product.name, `%${searchState.searchTerm}%`));
       if (searchState.selectedCategory)
         query = query.where(({ product }) => eq(product.category, searchState.selectedCategory));
-      if (searchState.selectedBrands.length > 0) 
+      if (searchState.selectedBrands.length > 0)
         query = query.where(({ product }) => inArray(product.brand, searchState.selectedBrands));
       if (searchState.priceRange.min)
         query = query.where(({ product }) => gte(product.price, searchState.priceRange.min));

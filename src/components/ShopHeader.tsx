@@ -1,21 +1,33 @@
 import { Link } from '@tanstack/react-router';
 import { Database, Search, ShoppingBag, User, X } from 'lucide-react';
 import { useCart } from '../hooks/useCart';
-import { searchStore, SearchState } from '../store/search.store';
+import { searchStore } from '../store/search.store';
 import { useStore } from '@tanstack/react-store';
+import { useDebouncer } from '@tanstack/react-pacer';
+import { useState } from 'react';
 
 export function ShopHeader() {
   const { itemCount } = useCart();
-  const setSearchTerm = (term: SearchState['searchTerm']) => {
-    searchStore.setState((state) => ({ ...state, searchTerm: term }));
-  };
   const searchState = useStore(searchStore);
+  const [localSearchTerm, setLocalSearchTerm] = useState(searchState.searchTerm);
+
+  const searchDebouncer = useDebouncer(
+    (term: string) => searchStore.setState((state) => ({ ...state, searchTerm: term })),
+    { wait: 300 }
+  );
+
+  const handleSearchChange = (value: string) => {
+    setLocalSearchTerm(value);
+    searchDebouncer.maybeExecute(value);
+  };
 
   const handleClearSearch = () => {
-    setSearchTerm('');
+    setLocalSearchTerm('');
+    searchDebouncer.cancel();
+    searchStore.setState((state) => ({ ...state, searchTerm: '' }));
   };
 
-  const searchTerm = searchState.searchTerm;
+  const searchTerm = localSearchTerm;
   return (
     <header className="sticky top-0 z-50 glass-panel border-b border-white/10 px-6 py-3">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-8">
@@ -52,7 +64,7 @@ export function ShopHeader() {
             />
             <input
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => handleSearchChange(e.target.value)}
               className="w-full bg-white/5 border border-white/10 rounded-full py-2.5 pl-12 pr-10 focus:ring-2 focus:ring-[#00a388]/50 focus:border-[#00a388] outline-none text-sm transition-all"
               placeholder="Search products, brands, categories..."
               type="text"
