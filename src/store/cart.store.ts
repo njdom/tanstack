@@ -12,17 +12,13 @@ export const cartActions = {
     cartStore.setState((state) => {
       const existingItem = state.items.find((item) => item.productId === product._id);
 
-      if (existingItem) {
-        return {
-          items: state.items.map((item) =>
+      const updatedItems = existingItem
+        ? state.items.map((item) =>
             item.productId === product._id ? { ...item, quantity: item.quantity + quantity } : item,
-          ),
-        };
-      }
+          )
+        : [...state.items, { productId: product._id, quantity }];
 
-      return {
-        items: [...state.items, { productId: product._id, quantity }],
-      };
+      return { items: updatedItems };
     });
   },
 
