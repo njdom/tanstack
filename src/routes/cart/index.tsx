@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useMemo } from 'react';
 import { ShopHeader } from '@/components/ShopHeader';
 import { ShopFooter } from '@/components/ShopFooter';
 import { useCart } from '@/hooks/useCart';
@@ -8,7 +7,6 @@ import { ProgressBar } from '@/components/cart/ProgressBar';
 import { CartItem } from '@/components/cart/CartItem';
 import { Summary } from '@/components/cart/Summary';
 import { Recomendations } from '@/components/cart/Recomendations';
-import { useProducts } from '@/hooks/useProductSearch';
 
 export const Route = createFileRoute('/cart/')({
   component: CartPage,
@@ -17,20 +15,7 @@ export const Route = createFileRoute('/cart/')({
 });
 
 function CartPage() {
-  const { items } = useCart();
-  const productIds = useMemo(() => items.map((item) => item.productId), [items]);
-  const { products: populatedCartItems = [] } = useProducts(productIds);
-
-  // Calculate cart totals
-  const subtotal = populatedCartItems?.reduce((sum, item) => sum + item.price * (items.find((i) => i.productId === item._id)?.quantity ?? 0), 0) ?? 0;
-  const shipping = 0; // Free shipping
-  const tax = subtotal * 0.08; // 8% tax
-  const total = subtotal + shipping + tax;
-
-  // Free shipping progress (need $200 for free shipping)
-  const freeShippingThreshold = 200;
-  const amountToFreeShipping = Math.max(0, freeShippingThreshold - subtotal);
-  const shippingProgress = Math.min(100, (subtotal / freeShippingThreshold) * 100);
+  const { populatedCartItems, items, subtotal, tax, total, amountToFreeShipping, shippingProgress } = useCart();
 
   return (
     <div className="dark bg-[#0d1217] text-slate-100 min-h-screen font-['Space_Grotesk'] grid-overlay">

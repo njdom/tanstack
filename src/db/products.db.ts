@@ -9,26 +9,27 @@ export const queryClient = new QueryClient();
 
 export const PRODUCTS_QUERY_KEY = ['products', 'all'];
 
-export const productsCollection = createCollection(
-  queryCollectionOptions({
-    schema: productSchema,
-    queryClient: queryClient,
-    getKey: (product: Product) => product._id,
-    queryFn: async () => {
-      const products = await getAllProducts({ data: {} });
-      return products as Product[];
-    },
-    queryKey: PRODUCTS_QUERY_KEY,
-    // Disable auto-fetch since we hydrate from SSR data
-    enabled: false,
-    staleTime: Infinity,
-    onInsert: async ({ transaction }) => {
-      transaction.mutations.map((m) => {
-        createProduct({ data: m.modified });
-      });
-    },
-  }),
-);
+const collectionOptions = (enabled: boolean = false) => queryCollectionOptions({
+  schema: productSchema,
+  queryClient: queryClient,
+  getKey: (product: Product) => product._id,
+  queryFn: async () => {
+    const products = await getAllProducts({ data: {} });
+    return products as Product[];
+  },
+  queryKey: PRODUCTS_QUERY_KEY,
+  // Disable auto-fetch since we hydrate from SSR data
+  enabled,
+  staleTime: Infinity,
+  onInsert: async ({ transaction }) => {
+    transaction.mutations.map((m) => {
+      createProduct({ data: m.modified });
+    });
+  },
+});
+
+export const productsCollection = createCollection(collectionOptions());
+export const productsCollectionNoSSR = createCollection(collectionOptions(true));
 
 export const productFilters = {
   bySearchTerm: (searchTerm: string) => (product: Product) => {

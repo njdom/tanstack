@@ -1,6 +1,6 @@
 import { createLiveQueryCollection, eq, gte, ilike, inArray, lte, useLiveQuery } from '@tanstack/react-db';
 import { useStore } from '@tanstack/react-store';
-import { PRODUCTS_QUERY_KEY, productsCollection, queryClient } from '../db/products.db';
+import { PRODUCTS_QUERY_KEY, productsCollection, productsCollectionNoSSR, queryClient } from '../db/products.db';
 import { hasActiveFilters, searchStore } from '../store/search.store';
 import { Product } from '@/types';
 import { useEffect } from 'react';
@@ -78,9 +78,9 @@ export function useProductBrands() {
   return brands;
 }
 
-export function useProducts(ids: Product['_id'][]) {
+export function useProducts(ids: Product['_id'][], withSSR: boolean = true) {
   const { data: products, isLoading } = useLiveQuery(
-    (q) => q.from({ products: productsCollection }).where(({ products }) => inArray(products._id, ids)),
+    (q) => q.from({ products: withSSR ? productsCollection : productsCollectionNoSSR }).where(({ products }) => inArray(products._id, ids)),
     [ids],
   );
 

@@ -19,7 +19,6 @@ export function ProductGrid({ products }: { products: Product[] }) {
           </div>
         ))
       ) : products.length === 0 ? (
-        // No results
         <div className="col-span-full text-center py-20">
           <div className="size-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
             <Search className="text-slate-600" size={40} />

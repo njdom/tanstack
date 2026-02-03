@@ -307,7 +307,7 @@ export const trendingProductsMetadata: Record<string, { matchPercentage: number;
   },
 };
 
-export const trendingProducts: Product['_id'][] = [
+export const trendingProductsIds: Product['_id'][] = [
   '0000000000000000000000c9',
   '0000000000000000000000ca',
   '0000000000000000000000cb',
@@ -368,7 +368,7 @@ export const getProductById = (id: Product['_id']): Product | undefined => {
 };
 
 export const getTrendingProducts = (): TrendingProduct[] => {
-  return trendingProducts
+  return trendingProductsIds
     .map((id) => {
       const product = getProductById(id);
       const metadata = trendingProductsMetadata[id];
