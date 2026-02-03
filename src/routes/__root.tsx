@@ -3,7 +3,6 @@ import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import { PropsWithChildren, useEffect } from 'react';
 
-import Header from '../components/Header';
 import { initializeCartDB } from '@/db/cart.db';
 
 import appCss from '../styles.css?url';
@@ -31,7 +30,6 @@ function RootDocument({ children }: PropsWithChildren) {
         <HeadContent />
       </head>
       <body>
-        <Header />
         {children}
         <TanStackDevtools
           config={{ position: 'bottom-right' }}

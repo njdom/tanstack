@@ -11,8 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShopIndexRouteImport } from './routes/shop/index'
+import { Route as PresentationIndexRouteImport } from './routes/presentation/index'
+import { Route as NuevaIndexRouteImport } from './routes/nueva/index'
 import { Route as CartIndexRouteImport } from './routes/cart/index'
 import { Route as ShopProductIdRouteImport } from './routes/shop/$productId'
+import { Route as PresentationAudienceRouteImport } from './routes/presentation/audience'
 import { Route as ApiProductsIndexRouteImport } from './routes/api/products/index'
 import { Route as AdminCreateIndexRouteImport } from './routes/admin/create/index'
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
@@ -34,6 +37,16 @@ const ShopIndexRoute = ShopIndexRouteImport.update({
   path: '/shop/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PresentationIndexRoute = PresentationIndexRouteImport.update({
+  id: '/presentation/',
+  path: '/presentation/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NuevaIndexRoute = NuevaIndexRouteImport.update({
+  id: '/nueva/',
+  path: '/nueva/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CartIndexRoute = CartIndexRouteImport.update({
   id: '/cart/',
   path: '/cart/',
@@ -42,6 +55,11 @@ const CartIndexRoute = CartIndexRouteImport.update({
 const ShopProductIdRoute = ShopProductIdRouteImport.update({
   id: '/shop/$productId',
   path: '/shop/$productId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PresentationAudienceRoute = PresentationAudienceRouteImport.update({
+  id: '/presentation/audience',
+  path: '/presentation/audience',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiProductsIndexRoute = ApiProductsIndexRouteImport.update({
@@ -97,8 +115,11 @@ const DemoStartSsrDataOnlyRoute = DemoStartSsrDataOnlyRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/presentation/audience': typeof PresentationAudienceRoute
   '/shop/$productId': typeof ShopProductIdRoute
   '/cart': typeof CartIndexRoute
+  '/nueva': typeof NuevaIndexRoute
+  '/presentation': typeof PresentationIndexRoute
   '/shop': typeof ShopIndexRoute
   '/api/products/$id': typeof ApiProductsIdRoute
   '/demo/api/names': typeof DemoApiNamesRoute
@@ -113,8 +134,11 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/presentation/audience': typeof PresentationAudienceRoute
   '/shop/$productId': typeof ShopProductIdRoute
   '/cart': typeof CartIndexRoute
+  '/nueva': typeof NuevaIndexRoute
+  '/presentation': typeof PresentationIndexRoute
   '/shop': typeof ShopIndexRoute
   '/api/products/$id': typeof ApiProductsIdRoute
   '/demo/api/names': typeof DemoApiNamesRoute
@@ -130,8 +154,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/presentation/audience': typeof PresentationAudienceRoute
   '/shop/$productId': typeof ShopProductIdRoute
   '/cart/': typeof CartIndexRoute
+  '/nueva/': typeof NuevaIndexRoute
+  '/presentation/': typeof PresentationIndexRoute
   '/shop/': typeof ShopIndexRoute
   '/api/products/$id': typeof ApiProductsIdRoute
   '/demo/api/names': typeof DemoApiNamesRoute
@@ -148,8 +175,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/presentation/audience'
     | '/shop/$productId'
     | '/cart'
+    | '/nueva'
+    | '/presentation'
     | '/shop'
     | '/api/products/$id'
     | '/demo/api/names'
@@ -164,8 +194,11 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/presentation/audience'
     | '/shop/$productId'
     | '/cart'
+    | '/nueva'
+    | '/presentation'
     | '/shop'
     | '/api/products/$id'
     | '/demo/api/names'
@@ -180,8 +213,11 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/presentation/audience'
     | '/shop/$productId'
     | '/cart/'
+    | '/nueva/'
+    | '/presentation/'
     | '/shop/'
     | '/api/products/$id'
     | '/demo/api/names'
@@ -197,8 +233,11 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PresentationAudienceRoute: typeof PresentationAudienceRoute
   ShopProductIdRoute: typeof ShopProductIdRoute
   CartIndexRoute: typeof CartIndexRoute
+  NuevaIndexRoute: typeof NuevaIndexRoute
+  PresentationIndexRoute: typeof PresentationIndexRoute
   ShopIndexRoute: typeof ShopIndexRoute
   ApiProductsIdRoute: typeof ApiProductsIdRoute
   DemoApiNamesRoute: typeof DemoApiNamesRoute
@@ -228,6 +267,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShopIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/presentation/': {
+      id: '/presentation/'
+      path: '/presentation'
+      fullPath: '/presentation'
+      preLoaderRoute: typeof PresentationIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nueva/': {
+      id: '/nueva/'
+      path: '/nueva'
+      fullPath: '/nueva'
+      preLoaderRoute: typeof NuevaIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cart/': {
       id: '/cart/'
       path: '/cart'
@@ -240,6 +293,13 @@ declare module '@tanstack/react-router' {
       path: '/shop/$productId'
       fullPath: '/shop/$productId'
       preLoaderRoute: typeof ShopProductIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/presentation/audience': {
+      id: '/presentation/audience'
+      path: '/presentation/audience'
+      fullPath: '/presentation/audience'
+      preLoaderRoute: typeof PresentationAudienceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/products/': {
@@ -317,8 +377,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PresentationAudienceRoute: PresentationAudienceRoute,
   ShopProductIdRoute: ShopProductIdRoute,
   CartIndexRoute: CartIndexRoute,
+  NuevaIndexRoute: NuevaIndexRoute,
+  PresentationIndexRoute: PresentationIndexRoute,
   ShopIndexRoute: ShopIndexRoute,
   ApiProductsIdRoute: ApiProductsIdRoute,
   DemoApiNamesRoute: DemoApiNamesRoute,

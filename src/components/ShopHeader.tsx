@@ -51,9 +51,13 @@ export function ShopHeader() {
             <a className="text-sm font-medium hover:text-[#00a388] transition-colors" href="#">
               Categories
             </a>
-            <a className="text-sm font-medium hover:text-[#00a388] transition-colors" href="#">
-              Deals
-            </a>
+            <Link
+              to="/presentation"
+              className="text-sm font-medium hover:text-[#00a388] transition-colors"
+              activeProps={{ className: 'text-sm font-medium text-[#00a388] transition-colors' }}
+            >
+              Presentation
+            </Link>
           </nav>
         </div>
         <div className="flex-1 max-w-xl">
