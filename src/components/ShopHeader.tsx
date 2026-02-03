@@ -1,13 +1,13 @@
 import { Link } from '@tanstack/react-router';
 import { Database, Search, ShoppingBag, User, X } from 'lucide-react';
-import { useCart } from '../hooks/useCart';
+import { useCartCount } from '../hooks/useCartCount';
 import { searchStore } from '../store/search.store';
 import { useStore } from '@tanstack/react-store';
 import { useDebouncer } from '@tanstack/react-pacer';
 import { useState } from 'react';
 
 export function ShopHeader() {
-  const { itemCount } = useCart();
+  const { itemCount } = useCartCount();
   const searchState = useStore(searchStore);
   const [localSearchTerm, setLocalSearchTerm] = useState(searchState.searchTerm);
 
