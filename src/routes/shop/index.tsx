@@ -1,18 +1,18 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { ShopHeader } from '../../components/ShopHeader';
-import { ShopFooter } from '../../components/ShopFooter';
-import { RouterBreadcrumb } from '../../components/RouterBreadcrumb';
+import { ShopHeader } from '@/components/ShopHeader';
+import { ShopFooter } from '@/components/ShopFooter';
+import { RouterBreadcrumb } from '@/components/RouterBreadcrumb';
 import { SlidersHorizontal } from 'lucide-react';
-import { searchActions } from '../../store/search.store';
+import { searchActions } from '@/store/search.store';
 import { getAllProducts, getProductBrands as getProductBrandsServerFn } from '@/server/product.functions';
-import { ProductGrid } from './components/ProductGrid';
-import PriceRangeFilter from './components/filters/PriceRangeFilter';
-import RatingFilter from './components/filters/RatingFilter';
-import AvailabilityFilter from './components/filters/AvailabilityFilter';
-import Toolbar from './components/Toolbar';
-import HeroHeading from './components/HeroHeading';
-import BrandFilter from './components/filters/BrandFilter';
-import FeaturedModel from './components/FeaturedModel';
+import { ProductGrid } from '@/components/shop/ProductGrid';
+import PriceRangeFilter from '@/components/shop/filters/PriceRangeFilter';
+import RatingFilter from '@/components/shop/filters/RatingFilter';
+import AvailabilityFilter from '@/components/shop/filters/AvailabilityFilter';
+import Toolbar from '@/components/shop/Toolbar';
+import HeroHeading from '@/components/shop/HeroHeading';
+import BrandFilter from '@/components/shop/filters/BrandFilter';
+import FeaturedModel from '@/components/shop/FeaturedModel';
 import { useProductSearch } from '@/hooks/useProductSearch';
 
 export const Route = createFileRoute('/shop/')({
