@@ -57,6 +57,34 @@ function AudienceRoute() {
     return () => window.removeEventListener('storage', onStorage);
   }, [slides]);
 
+  // Navigate to a specific slide and persist to localStorage
+  const goToSlide = (slideId: string) => {
+    setActiveSlideId(slideId);
+    localStorage.setItem(storageKey('progress'), JSON.stringify({ activeSlideId: slideId }));
+  };
+
+  // Keyboard navigation: ArrowRight = next, ArrowLeft = previous
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const currentIndex = getSlideIndexById(slides, activeSlideId);
+
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        if (currentIndex < slides.length - 1) {
+          goToSlide(slides[currentIndex + 1].id);
+        }
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        if (currentIndex > 0) {
+          goToSlide(slides[currentIndex - 1].id);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [slides, activeSlideId]);
+
   const activeIndex = useMemo(() => getSlideIndexById(slides, activeSlideId), [slides, activeSlideId]);
   const slide = slides[activeIndex] ?? slides[0];
 

@@ -3,7 +3,7 @@ import type { CartItem } from '../types';
 
 const CART_STORAGE_KEY = 'tanstack-cart-items';
 
-export const cartLocalStorageOperations = {
+const cartLocalStorageOperations = {
   saveAllItems(items: CartItem[]) {
     try {
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
@@ -52,7 +52,7 @@ export const cartLocalStorageOperations = {
   },
 };
 
-export function setupCartSync() {
+function setupCartSync() {
   let isInitialized = false;
 
   cartStore.subscribe(() => {

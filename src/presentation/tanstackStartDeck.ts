@@ -58,11 +58,12 @@ export const tanstackStartSlides: PresentationSlide[] = [
     timebox: '0:45',
     goal: 'Define Start in 2 sentences and list the “framework” features.',
     onScreen: [
-      'Full-stack React framework powered by TanStack Router + Vite',
+      'Full-stack React framework powered by TanStack ROUTER + Vite',
+      'Type-First Architecture',
       'Full-document SSR + streaming',
       'Server Functions (typed RPC)',
       'Server/API Routes, Middleware, Context',
-      'Full-stack bundling + “universal deployment” mindset',
+      '“universal deployment” mindset',
     ],
     say: [
       'TanStack Start is a full-stack React framework powered by TanStack Router and Vite.',
