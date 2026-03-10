@@ -1,6 +1,15 @@
-export class ApiClient {
+import { createIsomorphicFn } from '@tanstack/react-start';
 
-  private baseUrl = process.env.API_BASE_URL || 'http://localhost:3000';
+const getApiBaseUrl = createIsomorphicFn()
+  .server(() => {
+    return process.env.API_BASE_URL || 'http://localhost:3000';
+  })
+  .client(() => {
+    return '';
+  });
+
+export class ApiClient {
+  private baseUrl = getApiBaseUrl();
 
   async get(url: string) {
     return this.apiRequest(url, { method: 'GET' });
@@ -20,14 +29,14 @@ export class ApiClient {
 
   private async apiRequest(url: string, options: RequestInit) {
     try {
-    const response = await fetch(`${this.baseUrl}${url}`, {
-      ...options,
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
-    });
-    return response.json();
+      const response = await fetch(`${this.baseUrl}${url}`, {
+        ...options,
+        headers: {
+          'Content-Type': 'application/json',
+          ...options.headers,
+        },
+      });
+      return response.json();
     } catch (error) {
       console.error('Error fetching data:', error);
       throw error;

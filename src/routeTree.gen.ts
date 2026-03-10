@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShopIndexRouteImport } from './routes/shop/index'
 import { Route as PresentationIndexRouteImport } from './routes/presentation/index'
-import { Route as NuevaIndexRouteImport } from './routes/nueva/index'
 import { Route as CartIndexRouteImport } from './routes/cart/index'
 import { Route as ShopProductIdRouteImport } from './routes/shop/$productId'
 import { Route as PresentationAudienceRouteImport } from './routes/presentation/audience'
@@ -40,11 +39,6 @@ const ShopIndexRoute = ShopIndexRouteImport.update({
 const PresentationIndexRoute = PresentationIndexRouteImport.update({
   id: '/presentation/',
   path: '/presentation/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NuevaIndexRoute = NuevaIndexRouteImport.update({
-  id: '/nueva/',
-  path: '/nueva/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CartIndexRoute = CartIndexRouteImport.update({
@@ -118,7 +112,6 @@ export interface FileRoutesByFullPath {
   '/presentation/audience': typeof PresentationAudienceRoute
   '/shop/$productId': typeof ShopProductIdRoute
   '/cart': typeof CartIndexRoute
-  '/nueva': typeof NuevaIndexRoute
   '/presentation': typeof PresentationIndexRoute
   '/shop': typeof ShopIndexRoute
   '/api/products/$id': typeof ApiProductsIdRoute
@@ -137,7 +130,6 @@ export interface FileRoutesByTo {
   '/presentation/audience': typeof PresentationAudienceRoute
   '/shop/$productId': typeof ShopProductIdRoute
   '/cart': typeof CartIndexRoute
-  '/nueva': typeof NuevaIndexRoute
   '/presentation': typeof PresentationIndexRoute
   '/shop': typeof ShopIndexRoute
   '/api/products/$id': typeof ApiProductsIdRoute
@@ -157,7 +149,6 @@ export interface FileRoutesById {
   '/presentation/audience': typeof PresentationAudienceRoute
   '/shop/$productId': typeof ShopProductIdRoute
   '/cart/': typeof CartIndexRoute
-  '/nueva/': typeof NuevaIndexRoute
   '/presentation/': typeof PresentationIndexRoute
   '/shop/': typeof ShopIndexRoute
   '/api/products/$id': typeof ApiProductsIdRoute
@@ -178,7 +169,6 @@ export interface FileRouteTypes {
     | '/presentation/audience'
     | '/shop/$productId'
     | '/cart'
-    | '/nueva'
     | '/presentation'
     | '/shop'
     | '/api/products/$id'
@@ -197,7 +187,6 @@ export interface FileRouteTypes {
     | '/presentation/audience'
     | '/shop/$productId'
     | '/cart'
-    | '/nueva'
     | '/presentation'
     | '/shop'
     | '/api/products/$id'
@@ -216,7 +205,6 @@ export interface FileRouteTypes {
     | '/presentation/audience'
     | '/shop/$productId'
     | '/cart/'
-    | '/nueva/'
     | '/presentation/'
     | '/shop/'
     | '/api/products/$id'
@@ -236,7 +224,6 @@ export interface RootRouteChildren {
   PresentationAudienceRoute: typeof PresentationAudienceRoute
   ShopProductIdRoute: typeof ShopProductIdRoute
   CartIndexRoute: typeof CartIndexRoute
-  NuevaIndexRoute: typeof NuevaIndexRoute
   PresentationIndexRoute: typeof PresentationIndexRoute
   ShopIndexRoute: typeof ShopIndexRoute
   ApiProductsIdRoute: typeof ApiProductsIdRoute
@@ -272,13 +259,6 @@ declare module '@tanstack/react-router' {
       path: '/presentation'
       fullPath: '/presentation'
       preLoaderRoute: typeof PresentationIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/nueva/': {
-      id: '/nueva/'
-      path: '/nueva'
-      fullPath: '/nueva'
-      preLoaderRoute: typeof NuevaIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cart/': {
@@ -380,7 +360,6 @@ const rootRouteChildren: RootRouteChildren = {
   PresentationAudienceRoute: PresentationAudienceRoute,
   ShopProductIdRoute: ShopProductIdRoute,
   CartIndexRoute: CartIndexRoute,
-  NuevaIndexRoute: NuevaIndexRoute,
   PresentationIndexRoute: PresentationIndexRoute,
   ShopIndexRoute: ShopIndexRoute,
   ApiProductsIdRoute: ApiProductsIdRoute,

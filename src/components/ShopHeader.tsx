@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router';
+import { Link, ClientOnly } from '@tanstack/react-router';
 import { Database, Search, ShoppingBag, User, X } from 'lucide-react';
 import { useCartCount } from '../hooks/useCartCount';
 import { searchStore } from '../store/search.store';
@@ -84,14 +84,16 @@ export function ShopHeader() {
           </div>
         </div>
         <div className="flex items-center gap-4">
+            <ClientOnly>
           <Link to="/cart" className="p-2 hover:bg-white/5 rounded-full transition-colors relative block">
             <ShoppingBag size={20} />
-            {itemCount > 0 && (
-              <span className="absolute top-1 right-1 size-4 bg-[#00a388] text-[10px] font-bold flex items-center justify-center rounded-full">
-                {itemCount > 9 ? '9+' : itemCount}
-              </span>
-            )}
+              {itemCount > 0 && (
+                <span className="absolute top-1 right-1 size-4 bg-[#00a388] text-[10px] font-bold flex items-center justify-center rounded-full">
+                  {itemCount > 9 ? '9+' : itemCount}
+                </span>
+              )}
           </Link>
+            </ClientOnly>
           <button className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 hover:bg-white/10 transition-colors">
             <User size={20} className="text-[#00a388]" />
             <span className="text-sm font-semibold">Account</span>
