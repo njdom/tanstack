@@ -3,7 +3,7 @@ import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import { PropsWithChildren, useEffect } from 'react';
 
-import { initializeCartDB } from '@/db/cart.db';
+import { initializeCartDB } from '@/services/cartStorage.service';
 
 import appCss from '../styles.css?url';
 
