@@ -20,12 +20,23 @@ export type PresentationTable = {
   rows: PresentationTableRow[];
 };
 
+export type PresentationSlideImage = {
+  /** Public URL path, e.g. /presentation/tanstack-db-flow.png */
+  src: string;
+  alt: string;
+  caption?: string;
+  /** Sidebar section title in presenter view (default: "Diagram") */
+  sectionTitle?: string;
+};
+
 export type PresentationSlide = {
   id: string;
   title: string;
   timebox?: string;
   goal?: string;
   onScreen?: string[];
+  /** Optional diagram or screenshot shown above on-screen bullets */
+  image?: PresentationSlideImage;
   table?: PresentationTable;
   say?: string[];
   demoChecklist?: PresentationChecklistItem[];
@@ -39,35 +50,35 @@ export const tanstackStartDeckTitle = 'TanStack Start (vs Next.js)';
 export const tanstackStartSlides: PresentationSlide[] = [
   {
     id: 'title',
-    title: 'Title / Setup',
+    title: 'Título / Preparación',
     timebox: '0:15',
-    goal: 'Set expectations: Start framework only, Router deep-dive later.',
+    goal: 'Establecer expectativas: Solo framework Start, profundización en Router más tarde.',
     onScreen: [
-      'Today: TanStack Start — pros/cons vs Next.js',
-      'Not today: TanStack Router deep dive (separate video)',
-      'Goal: leave with a clear mental model + demo plan',
+      'Hoy: TanStack Start — pros/contras vs Next.js',
+      'Hoy NO: Profundización en TanStack Router (video separado)',
+      'Objetivo: salir con un modelo mental claro + plan de demo',
     ],
     say: [
-      'Today we will focus on TanStack Start as a full-stack React framework and compare it to Next.js at the decision level.',
-      'We will use Router features as needed, but we will save the Router deep dive for a separate video.',
+      'Hoy nos enfocaremos en TanStack Start como framework React full-stack y lo compararemos con Next.js a nivel de decisión.',
+      'Usaremos funciones de Router según sea necesario, pero guardaremos la profundización en Router para un video separado.',
     ],
   },
   {
     id: 'what-is-start',
-    title: 'What is TanStack Start?',
+    title: '¿Qué es TanStack Start?',
     timebox: '0:45',
-    goal: 'Define Start in 2 sentences and list the "framework" features.',
+    goal: 'Definir Start en 2 oraciones y listar las características del framework.',
     onScreen: [
-      'Full-stack React framework powered by TanStack ROUTER + Vite',
-      'Type-First Architecture',
-      'Full-document SSR + streaming',
-      'Server Functions (typed RPC)',
-      'Server/API Routes, Middleware, Context',
-      '"universal deployment" mindset',
+      'Framework React full-stack potenciado por TanStack ROUTER + Vite',
+      'Arquitectura Type-First (tipos primero)',
+      'SSR de documento completo + streaming',
+      'Funciones de Servidor (RPC tipado)',
+      'Rutas Server/API, Middleware, Context',
+      'Mentalidad de "despliegue universal"',
     ],
     say: [
-      'TanStack Start is a full-stack React framework powered by TanStack Router and Vite.',
-      'It aims for explicit control, type safety, and deployment freedom, while still giving you SSR/streaming and a server layer.',
+      'TanStack Start es un framework React full-stack potenciado por TanStack Router y Vite.',
+      'Busca control explícito, seguridad de tipos y libertad de despliegue, mientras te brinda SSR/streaming y una capa de servidor.',
     ],
     links: [
       { label: 'Start Overview (docs)', href: 'https://tanstack.com/start/latest/docs/framework/react/overview' },
@@ -77,37 +88,45 @@ export const tanstackStartSlides: PresentationSlide[] = [
     id: 'mental-model',
     title: 'TanStack Start vs Next.js',
     timebox: '1:30',
-    goal: 'Frame the comparison as defaults + mental model, not a checklist war.',
+    goal: 'Enmarcar la comparación como valores predeterminados + modelo mental, no una guerra de checklists.',
     onScreen: [
-      'Next.js: platform-first, convention-heavy, RSC-first defaults',
-      'Start: developer-first, explicit primitives, interactive-by-default React',
-      // 'Both can SSR; difference is how you control it and how predictable it feels',
+      'Next.js: plataforma primero, convenciones pesadas, valores predeterminados RSC primero',
+      'Start: desarrollador primero, primitivas explícitas, React interactivo por defecto',
+      // 'Ambos pueden SSR; la diferencia es cómo lo controlas y qué tan predecible se siente',
     ],
     say: [
-      'Choosing Start vs Next is less about whether it can do X and more about defaults and mental model.',
-      'Start leans into explicit primitives and end-to-end type safety; Next leans into conventions, platform integration, and RSC-by-default ergonomics.',
+      'Elegir Start vs Next es menos sobre si puede hacer X y más sobre valores predeterminados y modelo mental.',
+      'Start se inclina hacia primitivas explícitas y seguridad de tipos end-to-end; Next se inclina hacia convenciones, integración de plataforma y ergonomía RSC por defecto.',
     ],
     table: {
-      headers: ['Aspect', 'TanStack Start', 'Next.js'],
+      headers: ['Aspecto', 'TanStack Start', 'Next.js'],
       rows: [
         {
-          aspect: 'Philosophy',
-          start: 'Developer control, explicit patterns',
-          next: 'Platform integration, conventions',
+          aspect: 'Filosofía',
+          start: 'Control del desarrollador, patrones explícitos',
+          next: 'Integración de plataforma, convenciones',
         },
-        { aspect: 'Components', start: 'Interactive by default, opt into RSC', next: 'Server Components by default' },
-        { aspect: 'Type safety', start: 'End-to-end, compile-time', next: 'TypeScript support with boundary gaps' },
         {
-          aspect: 'Server functions',
-          start: 'Typed, validated, middleware support',
-          next: 'Untyped boundary, no middleware',
+          aspect: 'Componentes',
+          start: 'Interactivos por defecto, optar por RSC',
+          next: 'Server Components por defecto',
         },
-        { aspect: 'Caching', start: 'Explicit SWR primitives', next: 'Multi-layer implicit caching' },
+        {
+          aspect: 'Seguridad de tipos',
+          start: 'End-to-end, tiempo de compilación',
+          next: 'Soporte TypeScript con brechas en límites',
+        },
+        {
+          aspect: 'Funciones servidor',
+          start: 'Tipadas, validadas, soporte middleware',
+          next: 'Límite sin tipos, sin middleware',
+        },
+        { aspect: 'Caché', start: 'Primitivas SWR explícitas', next: 'Caché implícito multi-capa' },
         { aspect: 'Build tool', start: 'Vite', next: 'Turbopack/Webpack' },
-        { aspect: 'Deployment', start: 'Equal support everywhere', next: 'Optimized for Vercel' },
-        { aspect: 'Routing', start: 'Best-in-class type safety', next: 'File-based, basic types' },
-        { aspect: 'RSC', start: 'Supported', next: 'Supported' },
-        { aspect: 'Maturity', start: '2+ years, approaching 1.0', next: '8+ years, historically unstable APIs' },
+        { aspect: 'Despliegue', start: 'Soporte igual en todos lados', next: 'Optimizado para Vercel' },
+        { aspect: 'Routing', start: 'Seguridad de tipos de primera clase', next: 'Basado en archivos, tipos básicos' },
+        { aspect: 'RSC', start: 'Soportado', next: 'Soportado' },
+        { aspect: 'Madurez', start: '2+ años, acercándose a 1.0', next: '8+ años, APIs históricamente inestables' },
       ],
     },
     links: [
@@ -119,19 +138,20 @@ export const tanstackStartSlides: PresentationSlide[] = [
   },
   {
     id: 'pros-cons',
-    title: 'Pros / Cons (Start vs Next) — the honest slide',
+    title: 'Pros / Contras (Start vs Next) — opinión honesto',
     timebox: '2:00',
-    goal: 'Leave the audience with a fair decision framework.',
+    goal: 'Dejar a la audiencia con un marco de decisión justo.',
     onScreen: [
-      'Pros: explicit primitives, type safety, Vite DX, router capabilities, predictable caching model',
-      'Cons: smaller ecosystem/mindshare, RC maturity trade-offs',
+      'Pros: Control del ssr, seguridad de tipos, DX de Vite, capacidades del router, modelo de caché predecible, adaptación con librerías tanstack',
+      'Contras: ecosistema/mindshare más pequeño, trade-offs de madurez RC, documentación',
+      "migrar a next: https://tanstack.com/start/latest/docs/framework/react/migrate-from-next-js"
     ],
   },
   {
     id: 'close',
-    title: 'Close / Next steps',
+    title: 'Cierre / Próximos pasos',
     timebox: '0:15',
-    goal: 'Point to the next video: Router deep dive.',
-    onScreen: ['Next video: TanStack Router deep dive', 'This deck is your recurring checklist'],
+    goal: 'Apuntar al próximo video: profundización en Router.',
+    onScreen: ['Próximo video: Profundización en TanStack Router', 'Esta presentación es tu checklist recurrente'],
   },
 ];

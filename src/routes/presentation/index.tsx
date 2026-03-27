@@ -1,13 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  tanstackStartDeckId,
-  tanstackStartDeckTitle,
-  tanstackStartSlides,
+  tanstackDbDeckId,
+  tanstackDbDeckTitle,
+  tanstackDbSlides,
   type PresentationChecklistItem,
   type PresentationSlide,
+  type PresentationSlideImage,
   type PresentationTable,
-} from '@/presentation/tanstackStartDeck';
+} from '@/presentation/tanstackDbDeck';
 
 type PresentationProgress = {
   activeSlideId: string;
@@ -16,7 +17,7 @@ type PresentationProgress = {
 };
 
 function storageKey(suffix: string) {
-  return `presentation.${tanstackStartDeckId}.${suffix}`;
+  return `presentation.${tanstackDbDeckId}.${suffix}`;
 }
 
 function clamp(n: number, min: number, max: number) {
@@ -30,7 +31,7 @@ function getSlideIndexById(slides: PresentationSlide[], id: string) {
 
 function getDefaultProgress(): PresentationProgress {
   return {
-    activeSlideId: tanstackStartSlides[0]?.id ?? 'title',
+    activeSlideId: tanstackDbSlides[0]?.id ?? 'hook',
     showNotes: true,
     checkedBySlideId: {},
   };
@@ -50,7 +51,7 @@ export const Route = createFileRoute('/presentation/')({
 });
 
 function PresentationRoute() {
-  const slides = tanstackStartSlides;
+  const slides = tanstackDbSlides;
 
   const [query, setQuery] = useState('');
   const [progress, setProgress] = useState<PresentationProgress>(getDefaultProgress);
@@ -82,6 +83,9 @@ function PresentationRoute() {
       const haystack = [
         s.title,
         s.goal,
+        s.image?.alt,
+        s.image?.caption,
+        s.image?.sectionTitle,
         ...(s.onScreen ?? []),
         ...(s.say ?? []),
         ...(s.demoChecklist?.map((i) => i.label) ?? []),
@@ -199,7 +203,7 @@ function PresentationRoute() {
             <div className="flex items-start justify-between gap-3">
               <div>
                 {/* <div className="text-xs uppercase t racking-[0.2em] text-white/60">Presenter Aid</div> */}
-                <h1 className="text-lg font-bold leading-tight">{tanstackStartDeckTitle}</h1>
+                <h1 className="text-lg font-bold leading-tight">{tanstackDbDeckTitle}</h1>
               </div>
               <button
                 className="shrink-0 text-xs px-3 py-1 rounded-lg bg-white/10 hover:bg-white/15 border border-white/10"
@@ -332,6 +336,8 @@ function PresentationRoute() {
             </div>
 
             <div className="mt-8 grid grid-cols-1 gap-6">
+              {activeSlide.image ? <SlideImage image={activeSlide.image} /> : null}
+
               {activeSlide.onScreen?.length ? <Section title="On screen">{renderBullets(activeSlide.onScreen)}</Section> : null}
 
               {activeSlide.table ? (
@@ -416,6 +422,18 @@ function PresentationRoute() {
         </div>
       </dialog>
     </div>
+  );
+}
+
+function SlideImage({ image }: { image: PresentationSlideImage }) {
+  return (
+    <section className="glass-panel rounded-xl border border-white/10 p-5 overflow-hidden">
+      <div className="text-xs uppercase tracking-[0.2em] text-white/60">{image.sectionTitle ?? 'Diagram'}</div>
+      <div className="mt-3 rounded-lg border border-white/10 bg-black/30 overflow-hidden">
+        <img src={image.src} alt={image.alt} className="w-full h-auto object-contain max-h-[min(420px,50vh)]" loading="lazy" />
+      </div>
+      {image.caption ? <p className="mt-3 text-sm text-white/65 leading-relaxed">{image.caption}</p> : null}
+    </section>
   );
 }
 

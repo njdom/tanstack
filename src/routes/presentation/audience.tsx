@@ -1,19 +1,19 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useMemo, useState } from 'react';
 import {
-  tanstackStartDeckId,
-  tanstackStartDeckTitle,
-  tanstackStartSlides,
+  tanstackDbDeckId,
+  tanstackDbSlides,
   type PresentationSlide,
+  type PresentationSlideImage,
   type PresentationTable,
-} from '@/presentation/tanstackStartDeck';
+} from '@/presentation/tanstackDbDeck';
 
 type PresentationProgress = {
   activeSlideId: string;
 };
 
 function storageKey(suffix: string) {
-  return `presentation.${tanstackStartDeckId}.${suffix}`;
+  return `presentation.${tanstackDbDeckId}.${suffix}`;
 }
 
 function safeParseJSON<T>(value: string | null): T | null {
@@ -35,8 +35,8 @@ export const Route = createFileRoute('/presentation/audience')({
 });
 
 function AudienceRoute() {
-  const slides = tanstackStartSlides;
-  const [activeSlideId, setActiveSlideId] = useState<string>(slides[0]?.id ?? 'title');
+  const slides = tanstackDbSlides;
+  const [activeSlideId, setActiveSlideId] = useState<string>(slides[0]?.id ?? 'hook');
 
   // Initial read + sync on storage events (multi-tab)
   useEffect(() => {
@@ -107,6 +107,8 @@ function AudienceRoute() {
         </header>
 
         <main className="flex-1 mt-10 space-y-8">
+          {slide?.image ? <AudienceSlideImage image={slide.image} /> : null}
+
           {slide?.onScreen?.length ? (
             <ul className="space-y-6">
               {slide.onScreen.map((line, idx) => (
@@ -120,12 +122,33 @@ function AudienceRoute() {
 
           {slide?.table ? <ComparisonTable table={slide.table} /> : null}
 
-          {!slide?.onScreen?.length && !slide?.table ? (
+          {!slide?.onScreen?.length && !slide?.table && !slide?.image ? (
             <div className="glass-panel border border-white/10 rounded-2xl p-10">
               <div className="text-white/70 text-xl">No content for this slide.</div>
             </div>
           ) : null}
         </main>
+      </div>
+    </div>
+  );
+}
+
+function AudienceSlideImage({ image }: { image: PresentationSlideImage }) {
+  return (
+    <div className="space-y-3">
+      {image.sectionTitle ? (
+        <p className="text-sm uppercase tracking-[0.2em] text-white/55">{image.sectionTitle}</p>
+      ) : null}
+      <div className="rounded-2xl border border-white/10 bg-black/25 overflow-hidden">
+      <img
+        src={image.src}
+        alt={image.alt}
+        className="w-full h-auto object-contain max-h-[min(520px,55vh)] mx-auto"
+        loading="lazy"
+      />
+      {image.caption ? (
+        <p className="px-6 py-4 text-lg md:text-xl text-white/70 border-t border-white/10">{image.caption}</p>
+      ) : null}
       </div>
     </div>
   );
