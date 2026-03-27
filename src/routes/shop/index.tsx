@@ -12,6 +12,7 @@ import AvailabilityFilter from '@/components/shop/filters/AvailabilityFilter';
 import Toolbar from '@/components/shop/Toolbar';
 import HeroHeading from '@/components/shop/HeroHeading';
 import BrandFilter from '@/components/shop/filters/BrandFilter';
+import CategoryFilter from '@/components/shop/filters/CategoryFilter';
 import FeaturedModel from '@/components/shop/FeaturedModel';
 import { useProductSearch } from '@/hooks/useProductSearch';
 
@@ -62,6 +63,7 @@ function ShopPage() {
               </button>
             </div>
 
+            <CategoryFilter />
             <BrandFilter brands={brands} />
             <PriceRangeFilter />
             <RatingFilter />

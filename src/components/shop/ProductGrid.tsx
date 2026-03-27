@@ -4,7 +4,7 @@ import { Search } from "lucide-react";
 import { Product } from "@/types";
 import { ShopProductCard } from "@/components/ShopProductCard";
 
-export function ProductGrid({ products }: { products: Product[] }) {
+export function ProductGrid({ products }: Readonly<{ products: Product[] }>) {
   const searchState = useStore(searchStore);
   const isLoading = false;
   
@@ -36,7 +36,7 @@ export function ProductGrid({ products }: { products: Product[] }) {
         </div>
       ) : (
         products.map((product) => (
-          <ShopProductCard key={`${searchState.sortBy}-${product._id}`} product={product as Product} />
+          <ShopProductCard key={`${searchState.sortBy}-${product._id}`} product={product} />
         ))
       )}
 

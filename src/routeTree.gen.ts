@@ -21,6 +21,7 @@ import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.se
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
 import { Route as DemoApiNamesRouteImport } from './routes/demo/api.names'
 import { Route as ApiProductsIdRouteImport } from './routes/api/products/$id'
+import { Route as AdminEditProductIdRouteImport } from './routes/admin/edit/$productId'
 import { Route as DemoStartSsrIndexRouteImport } from './routes/demo/start.ssr.index'
 import { Route as DemoStartSsrSpaModeRouteImport } from './routes/demo/start.ssr.spa-mode'
 import { Route as DemoStartSsrFullSsrRouteImport } from './routes/demo/start.ssr.full-ssr'
@@ -86,6 +87,11 @@ const ApiProductsIdRoute = ApiProductsIdRouteImport.update({
   path: '/api/products/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminEditProductIdRoute = AdminEditProductIdRouteImport.update({
+  id: '/admin/edit/$productId',
+  path: '/admin/edit/$productId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DemoStartSsrIndexRoute = DemoStartSsrIndexRouteImport.update({
   id: '/demo/start/ssr/',
   path: '/demo/start/ssr/',
@@ -114,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/cart': typeof CartIndexRoute
   '/presentation': typeof PresentationIndexRoute
   '/shop': typeof ShopIndexRoute
+  '/admin/edit/$productId': typeof AdminEditProductIdRoute
   '/api/products/$id': typeof ApiProductsIdRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
@@ -132,6 +139,7 @@ export interface FileRoutesByTo {
   '/cart': typeof CartIndexRoute
   '/presentation': typeof PresentationIndexRoute
   '/shop': typeof ShopIndexRoute
+  '/admin/edit/$productId': typeof AdminEditProductIdRoute
   '/api/products/$id': typeof ApiProductsIdRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
@@ -151,6 +159,7 @@ export interface FileRoutesById {
   '/cart/': typeof CartIndexRoute
   '/presentation/': typeof PresentationIndexRoute
   '/shop/': typeof ShopIndexRoute
+  '/admin/edit/$productId': typeof AdminEditProductIdRoute
   '/api/products/$id': typeof ApiProductsIdRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
@@ -171,6 +180,7 @@ export interface FileRouteTypes {
     | '/cart'
     | '/presentation'
     | '/shop'
+    | '/admin/edit/$productId'
     | '/api/products/$id'
     | '/demo/api/names'
     | '/demo/start/api-request'
@@ -189,6 +199,7 @@ export interface FileRouteTypes {
     | '/cart'
     | '/presentation'
     | '/shop'
+    | '/admin/edit/$productId'
     | '/api/products/$id'
     | '/demo/api/names'
     | '/demo/start/api-request'
@@ -207,6 +218,7 @@ export interface FileRouteTypes {
     | '/cart/'
     | '/presentation/'
     | '/shop/'
+    | '/admin/edit/$productId'
     | '/api/products/$id'
     | '/demo/api/names'
     | '/demo/start/api-request'
@@ -226,6 +238,7 @@ export interface RootRouteChildren {
   CartIndexRoute: typeof CartIndexRoute
   PresentationIndexRoute: typeof PresentationIndexRoute
   ShopIndexRoute: typeof ShopIndexRoute
+  AdminEditProductIdRoute: typeof AdminEditProductIdRoute
   ApiProductsIdRoute: typeof ApiProductsIdRoute
   DemoApiNamesRoute: typeof DemoApiNamesRoute
   DemoStartApiRequestRoute: typeof DemoStartApiRequestRoute
@@ -324,6 +337,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiProductsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/edit/$productId': {
+      id: '/admin/edit/$productId'
+      path: '/admin/edit/$productId'
+      fullPath: '/admin/edit/$productId'
+      preLoaderRoute: typeof AdminEditProductIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/start/ssr/': {
       id: '/demo/start/ssr/'
       path: '/demo/start/ssr'
@@ -362,6 +382,7 @@ const rootRouteChildren: RootRouteChildren = {
   CartIndexRoute: CartIndexRoute,
   PresentationIndexRoute: PresentationIndexRoute,
   ShopIndexRoute: ShopIndexRoute,
+  AdminEditProductIdRoute: AdminEditProductIdRoute,
   ApiProductsIdRoute: ApiProductsIdRoute,
   DemoApiNamesRoute: DemoApiNamesRoute,
   DemoStartApiRequestRoute: DemoStartApiRequestRoute,
