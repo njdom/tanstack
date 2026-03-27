@@ -32,7 +32,11 @@ export const createProduct = createServerFn({ method: 'POST' })
 export const updateProduct = createServerFn({ method: 'POST' })
   .inputValidator(updateProductSchema)
   .handler(async ({ data }) => {
-    const success = await productMongo.update(data.id, data.updates);
+    if (data.priceUpdateShouldFail) {
+      await new Promise<void>((_resolve, reject) => setTimeout(reject, 1500));
+      throw new Error('Server Error 500: Price update rejected by server');
+    }
+    const success = await productMongo.update(data._id, data.updates);
     if (!success) throw notFound();
     return { success: true };
   });

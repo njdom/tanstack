@@ -1,7 +1,7 @@
 import { ShoppingCart, Sparkles } from 'lucide-react';
 import { recommendedProductsIds } from '@/data/shop';
 import { useCart } from '@/hooks/useCart';
-import { useProducts } from '@/hooks/useProductSearch';
+import { useProducts } from '@/hooks/useProducts';
 
 export function Recomendations() {
   const { products: recommendedProductsList = [] } = useProducts(recommendedProductsIds);

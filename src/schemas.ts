@@ -6,12 +6,14 @@ export const productSchema = z.object({
   category: z.string(),
   brand: z.string(),
   price: z.number(),
-  originalPrice: z.number().optional(),
+  originalPrice: z.number().nullish(),
   image: z.string(),
-  description: z.string().optional(),
+  description: z.string().nullish(),
   rating: z.number(),
   inStock: z.boolean(),
-  badge: z.enum(['trending', 'new', 'sale', 'out-of-stock']).optional(),
+  badge: z.enum(['trending', 'new', 'sale', 'out-of-stock']).nullish(),
+  /** Client-only: demo flag for simulated server failure (not stored in Mongo). */
+  priceUpdateShouldFail: z.boolean().optional(),
 });
 
 export const productFiltersSchema = z.object({
@@ -24,6 +26,7 @@ export const productFiltersSchema = z.object({
 export const productIdSchema = z.object({ id: z.string().min(1) });
 export const createProductSchema = productSchema.omit({ _id: true });
 export const updateProductSchema = z.object({
-  id: z.string().min(1),
+  _id: z.string().min(1),
   updates: productSchema.partial().omit({ _id: true }),
+  priceUpdateShouldFail: z.boolean().optional(),
 });

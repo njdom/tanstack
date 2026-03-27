@@ -1,10 +1,12 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, useNavigate, Link } from '@tanstack/react-router';
 import { ShopHeader } from '../../components/ShopHeader';
 import { ShopFooter } from '../../components/ShopFooter';
 import { RouterBreadcrumb } from '../../components/RouterBreadcrumb';
-import { Star, Zap, Heart, AlertCircle, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Star, Zap, Heart, AlertCircle, ArrowLeft, ArrowRight, Pencil } from 'lucide-react';
 import { useCart } from '../../hooks/useCart';
 import { getProductById, getAllProducts } from '@/server/product.functions';
+import { useLiveProduct } from '@/hooks/useLiveProduct';
+import { EditPriceInline } from '@/components/edit/EditPriceInline';
 
 export const Route = createFileRoute('/shop/$productId')({
   component: ProductDetailPage,
@@ -33,10 +35,13 @@ export const Route = createFileRoute('/shop/$productId')({
 });
 
 function ProductDetailPage() {
-  const { product, similarProducts } = Route.useLoaderData();
+  const { product: loaderProduct, similarProducts } = Route.useLoaderData();
   const { addItem, isInCart } = useCart();
   const navigate = useNavigate();
-  const inCart = isInCart(product._id);
+
+  const product = useLiveProduct(loaderProduct);
+
+  const inCart = isInCart(loaderProduct._id);
 
   const handleAddToCart = () => {
     addItem(product);
@@ -48,7 +53,6 @@ function ProductDetailPage() {
       <ShopHeader />
 
       <main className="max-w-[1440px] mx-auto px-6 lg:px-20 py-8">
-        {/* Breadcrumbs */}
         <RouterBreadcrumb variant="product" />
 
         {/* Product Hero Section */}
@@ -108,16 +112,19 @@ function ProductDetailPage() {
               </p>
             </div>
 
-            <div className="flex items-baseline gap-4">
-              <span className="text-4xl font-black text-white tracking-tighter">${product.price.toFixed(2)}</span>
-              {product.originalPrice && (
-                <>
-                  <span className="text-slate-500 line-through text-lg">${product.originalPrice.toFixed(2)}</span>
-                  <span className="text-[#e6ff00] text-sm font-bold bg-[#e6ff00]/10 px-2 py-0.5 rounded uppercase tracking-wider">
-                    -{Math.round((1 - product.price / product.originalPrice) * 100)}% Early Bird
-                  </span>
-                </>
-              )}
+            <div className="space-y-2">
+              <div className="flex items-baseline gap-4">
+                <span className="text-4xl font-black text-white tracking-tighter">${product.price.toFixed(2)}</span>
+                {product.originalPrice && (
+                  <>
+                    <span className="text-slate-500 line-through text-lg">${product.originalPrice.toFixed(2)}</span>
+                    <span className="text-[#e6ff00] text-sm font-bold bg-[#e6ff00]/10 px-2 py-0.5 rounded uppercase tracking-wider">
+                      -{Math.round((1 - product.price / product.originalPrice) * 100)}% Early Bird
+                    </span>
+                  </>
+                )}
+              </div>
+              <EditPriceInline productId={product._id} currentPrice={product.price} />
             </div>
 
             {/* Custom Selectors */}
@@ -168,6 +175,14 @@ function ProductDetailPage() {
                 <button className="p-5 border border-white/10 rounded-xl hover:bg-white/5 transition-colors">
                   <Heart size={20} />
                 </button>
+                <Link
+                  to="/admin/edit/$productId"
+                  params={{ productId: product._id }}
+                  title="Edit product"
+                  className="p-5 border border-[#e6ff00]/30 bg-[#e6ff00]/5 hover:bg-[#e6ff00]/10 rounded-xl text-[#e6ff00] transition-colors flex items-center justify-center"
+                >
+                  <Pencil size={20} />
+                </Link>
               </div>
               {!product.inStock && (
                 <div className="flex items-center gap-2 text-[10px] font-bold text-[#e6ff00] uppercase tracking-widest bg-[#e6ff00]/5 p-3 rounded-lg border border-[#e6ff00]/20">

@@ -3,30 +3,36 @@ import { queryCollectionOptions } from '@tanstack/query-db-collection';
 import { type Product } from '../types';
 import { productSchema } from '@/schemas';
 import { QueryClient } from '@tanstack/query-core';
-import { getAllProducts, createProduct } from '@/server/product.functions';
+import { getAllProducts, createProduct, updateProduct } from '@/server/product.functions';
 
 export const queryClient = new QueryClient();
 
 export const PRODUCTS_QUERY_KEY = ['products', 'all'];
 
-const collectionOptions = (enabled: boolean = false) => queryCollectionOptions({
-  schema: productSchema,
-  queryClient: queryClient,
-  getKey: (product: Product) => product._id,
-  queryFn: async () => {
-    const products = await getAllProducts({ data: {} });
-    return products as Product[];
-  },
-  queryKey: PRODUCTS_QUERY_KEY,
-  // Disable auto-fetch since we hydrate from SSR data
-  enabled,
-  staleTime: Infinity,
-  onInsert: async ({ transaction }) => {
-    transaction.mutations.map((m) => {
-      createProduct({ data: m.modified });
-    });
-  },
-});
+const collectionOptions = (enabled: boolean = false) =>
+  queryCollectionOptions({
+    schema: productSchema,
+    queryClient: queryClient,
+    getKey: (product: Product) => product._id,
+    queryKey: PRODUCTS_QUERY_KEY,
+    // Disable auto-fetch since we hydrate from SSR data
+    enabled,
+    staleTime: Infinity,
+    
+    queryFn: () => getAllProducts({ data: {} }),
+    onInsert: async ({ transaction }) => {
+      transaction.mutations.map((m) => {
+        createProduct({ data: m.modified });
+      });
+    },
+    onUpdate: async ({ transaction }) => {
+      for (const mutation of transaction.mutations) {
+        const { original, modified } = mutation;
+        await updateProduct({ data: { _id: original._id, updates: modified, priceUpdateShouldFail: modified.priceUpdateShouldFail } });
+      }
+    },
+    //onDelete: async ({ transaction }) => {
+  });
 
 export const productsCollection = createCollection(collectionOptions());
 export const productsCollectionNoSSR = createCollection(collectionOptions(true));
