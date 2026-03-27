@@ -2,7 +2,7 @@ import { useStore } from '@tanstack/react-store';
 import { cartStore, cartActions, cartSelectors } from '../store/cart.store';
 import type { Product } from '../types';
 import { useMemo } from 'react';
-import { useProducts } from './useProductSearch';
+import { useProducts } from './useProducts';
 
 export function useCart() {
   const { items } = useStore(cartStore);
@@ -21,6 +21,9 @@ export function useCart() {
   const freeShippingThreshold = 200;
   const amountToFreeShipping = Math.max(0, freeShippingThreshold - subtotal);
   const shippingProgress = Math.min(100, (subtotal / freeShippingThreshold) * 100);
+
+  const { addItem, removeItem, updateQuantity, incrementQuantity, decrementQuantity, clearCart } = cartActions;
+
   return {
     items,
     populatedCartItems,
@@ -31,12 +34,12 @@ export function useCart() {
     shippingProgress,
     itemCount: cartSelectors.getItemCount(),
 
-    addItem: cartActions.addItem,
-    removeItem: cartActions.removeItem,
-    updateQuantity: cartActions.updateQuantity,
-    incrementQuantity: cartActions.incrementQuantity,
-    decrementQuantity: cartActions.decrementQuantity,
-    clearCart: cartActions.clearCart,
+    addItem,
+    removeItem,
+    updateQuantity,
+    incrementQuantity,
+    decrementQuantity,
+    clearCart,
 
     getCartTotal: (products: Product[]) => cartSelectors.getCartTotal(products),
     isInCart: cartSelectors.isInCart,
